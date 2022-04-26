@@ -1,0 +1,31 @@
+###########################################
+# 垃圾箱的实现
+###########################################
+mkdir -p ~/.trash
+alias trash=_trash
+alias rmlist='ls ~/.trash'
+alias unrm=_undelfile
+
+function _undelfile() {
+    mv -i ~/.trash/$@ ./
+}
+
+function _trash() {
+    # 带上目录结构
+    local file=$1
+    local abs_path=$(getAbsolutePath $file)
+    local parent_path=$(dirname $abs_path)
+
+    local TRASH="$HOME/.trash"
+    local target_path="$TRASH/$parent_path"
+
+    echo "$file : $abs_path, $parent_path, $target_path"
+
+    mkdir -p "$target_path"
+    mv "$@" $target_path
+}
+
+function cleartrash() {
+    read -p "clear sure?[n]" confirm
+    [ $confirm == 'y' ] || [ $confirm == 'Y' ] && /usr/bin/rm -rf ~/.trash/*
+}

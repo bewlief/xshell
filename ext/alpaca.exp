@@ -1,0 +1,22 @@
+#!/usr/bin/expect
+set timeout 1
+
+set MY_PASS [lindex $argv 0]
+set PAC_URL "http://---/gblproxy.pac"
+
+# set date [exec date "+%Y-%m-%d"]
+# puts $date
+
+# catch { exec sh -c {
+#     source $HOME/.bash_profile
+#     }
+# }
+
+puts "********** start alpaca to logon $PAC_URL"
+
+spawn "/Users/xinj/xsoft/m/system/alpaca.xjm.0410" -C $PAC_URL -d global
+
+expect "Password:"
+send "$MY_PASS\r"
+expect eof
+interact
