@@ -6,7 +6,7 @@ import string
 
 function update() {
     local repo="$1"
-    cd "$1" && git::au # >/dev/null 2>&1
+    cd "$1" && git::au >/dev/null 2>&1
     string::formatKeyValue "$repo" "updated"
 }
 
@@ -19,13 +19,13 @@ function main() {
 
     ui::banner "sync codes to my open source repos"
 
-    # start "$aexe -s xjenkins, xshell, github -e"
+    start "$aexe -s xjenkins, xshell, github -e"
 
     update "$gitee/xjenkins"
     update "$gitee/xshell"
     update "$github/xjenkins"
     update "$github/xshell"
-    update "$private_github/mycodes"
+    update "$private_github/xcodes"
     update "$private_github/xops"
 
     ui::figlet "ALL DONE"
