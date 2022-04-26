@@ -1,0 +1,30 @@
+
+#   ---------------------------------------
+#   10.  Other
+#   ---------------------------------------
+
+eval $(docker-machine env)
+
+drm() { docker rm -f $(docker ps -q -a); }
+
+dri() { docker rmi -f $(docker images -q); }
+
+# run daemonized container
+alias dkd="docker run -d -P"
+#interactive container
+alias dki="docker run -t -i -P"
+
+alias dip="docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
+
+
+# symlink Sublime 3 app:  ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/sublime
+alias subl="open /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
+
+# This content was added by SDKMAN installer
+# THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/jausten/.sdkman"
+[[ -s "/Users/jausten/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/jausten/.sdkman/bin/sdkman-init.sh"
+
+# This content added by iTerm3 installer
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+source ~/.iterm2_shell_integration.bash

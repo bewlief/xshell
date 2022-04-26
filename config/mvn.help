@@ -1,0 +1,2 @@
+mvn clean package: 打包当前应用
+mvn clean package -Dmaven.test.skip=true:略过测试的phase
