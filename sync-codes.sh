@@ -22,7 +22,7 @@ function syncFiles() {
     local s=".git,.idea,.vscode,*xjming*"
     exclude="$s,$exclude"
 
-    file::sync $source $target -x "$exclude" -p
+    path::sync $source $target -x "$exclude" -p
 }
 
 function main() {
@@ -46,12 +46,12 @@ function main() {
     syncFiles "$HOME/xcodes/mycodes" "$private_github/xcodes"
 
     # git commit & push
-    #    gitUpdate "$gitee/xjenkins"
-    #    gitUpdate "$gitee/xshell"
-    #    gitUpdate "$github/xjenkins"
-    #    gitUpdate "$github/xshell"
-    #    gitUpdate "$private_github/mycodes"
-    #    gitUpdate "$private_github/xops"
+    gitUpdate "$gitee/xjenkins"
+    gitUpdate "$gitee/xshell"
+    gitUpdate "$github/xjenkins"
+    gitUpdate "$github/xshell"
+    gitUpdate "$private_github/mycodes"
+    gitUpdate "$private_github/xops"
 
     ui::figlet "ALL DONE"
 }
