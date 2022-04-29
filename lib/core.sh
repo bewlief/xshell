@@ -362,37 +362,22 @@ function setPS1() {
     export PS1="$XLIB_DEFAULT_NORMAL_PS1"
 }
 
-# D:\Download\aaaa\free\shell\vigneshwaranr\bd\bd
-newpwd() {
-    oldpwd=$1
-    case "$2" in
-    -s)
-        pattern=$3
-        NEWPWD=$(echo $oldpwd | sed 's|\(.*/'$pattern'[^/]*/\).*|\1|')
-        ;;
-    -si)
-        pattern=$3
-        NEWPWD=$(echo $oldpwd | perl -pe 's|(.*/'$pattern'[^/]*/).*|$1|i')
-        ;;
-    *)
-        pattern=$2
-        NEWPWD=$(echo $oldpwd | sed 's|\(.*/'$pattern'/\).*|\1|')
-        ;;
-    esac
-}
+# 目录的快速跳转
+# bd <some parent path name>
 function bd() {
-    oldpwd=$(pwd)
-    newpwd "$oldpwd" "$@"
+    local pattern="$1"
+    if [[ -n $pattern ]]; then
+        local oldpwd=$(pwd)
+        # echo $oldpwd | sed 's|\(.*/'$pattern'[^/]*/\).*|\1|'
+        local newpwd=$(echo $oldpwd | sed 's|\(.*/'$pattern'/\).*|\1|')
+        echo "1.-- $oldpwd -> $newpwd"
 
-    if [ "$NEWPWD" = "$oldpwd" ]; then
-        echo "No such occurrence."
-    else
-        echo $NEWPWD
-        cd "$NEWPWD"
+        if [ "$newpwd" != "$oldpwd" ]; then
+            echo $newpwd
+            cdl "$newpwd"
+        fi
+        complete -F _bd bd
     fi
-    unset NEWPWD
-
-    complete -F _bd bd
 }
 
 function _bd() {

@@ -462,7 +462,7 @@ function file::removeBom() {
 # -i: 要包含的文件类型
 # -p: 是否purge，即删除source中不存在的文件
 # 单独的列表和excludeFrom/includeFrom不能混用！
-function file::sync() {
+function path::sync() {
     import meta
 
     local source="$1"
@@ -521,6 +521,29 @@ function file::sync() {
 
     echo "==== $s"
     eval "$s --progress"
+}
+
+# 使用rsync删除目录下的所有文件，速度很快，比 find...|xargs都要快
+# 最主要是可以保留指定的文件！
+# clean <target path> [exclude files:"*.sh,*.md,glao.ini"]
+function path::clean(){
+    local target="$1"
+    local exclude="$2"
+
+    mkdir -p $HOME/empty
+
+    local s
+    if [[ -n $exclude ]]; then
+        local dd=($(string::split $exclude ","))
+        local d
+        for d in "${dd[@]}"; do
+            s+="--exclude=\"$d\" "
+        done
+    fi
+
+    s="rsync -a --delete $HOME/empty/ $1 $s"
+    echo "$s"
+    [[ -d $target ]] && eval "$s"
 }
 
 # extract <compressed-file> [target directory]
@@ -623,5 +646,6 @@ function file::decode() {
     gzip -c -d -n "$tmpFile" >$2
     info "$1 decode to $2"
 }
+
 
 __file_init__
