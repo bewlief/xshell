@@ -186,6 +186,7 @@ function handleGitCate() {
 
     # 获取该目录下的所有repo，循环刷新
     local repos=($(readIniItems $config "$cate"))
+    repos=($(array::remove-dups "${repos[@]}"))
     log::debug "$cate --- ${repos[@]}"
 
     local count=${#repos[@]}

@@ -210,7 +210,7 @@ function file::replaceAll() {
     fi
 
     # 为何把 . 替换为 \. ？？？
-#    searchStr=$(echo "${searchStr}" | sed -e 's/\[/\\[/g' -e 's/\]/\\]/g' -e 's/\./\\./g')
+    #    searchStr=$(echo "${searchStr}" | sed -e 's/\[/\\[/g' -e 's/\]/\\]/g' -e 's/\./\\./g')
     searchStr=$(echo "${searchStr}" | sed -e 's/\[/\\[/g' -e 's/\]/\\]/g')
 
     # 是否包含
@@ -263,7 +263,6 @@ function string::replace-between() {
     error "ERROR" "Replace parameter of ${searchStr} at ${filename} file failed."
     return 1
 }
-
 
 # 解析相对路径
 function path::relative() {
@@ -456,6 +455,74 @@ function file::removeBom() {
     fi
 }
 
+# 同步文件夹
+# sync <source path> <target path> [-x "*.sh,*.md"] [-i "gl.ini"] [-p]
+# sync <source path> <target path> [-x "ex.file"] [-i "in.file"] [-p]
+# -x: 要排除的目录名称列表
+# -i: 要包含的文件类型
+# -p: 是否purge，即删除source中不存在的文件
+# 单独的列表和excludeFrom/includeFrom不能混用！
+function file::sync() {
+    import meta
+
+    local source="$1"
+    local target="$2"
+    echo "source=$source, target=$target"
+    shift 2
+
+    eval "$(meta::getopts 'X:I:x:i:p')"
+
+    # exclude的文件类型
+    local excludeFiles="${x:-}"
+    local excludeFrom="${X:-}"
+
+    # exclude的目录
+    local includeFiles="${i:-}"
+    local includeFrom="${I:-}"
+
+    # todo 检查 xX,iI是否同时存在
+
+    local s
+    s="rsync -a $source/ $target "
+
+    # 是否 purge，默认是
+    local purge="${p:-1}"
+    if [[ $purge -eq 1 ]]; then
+        s+="--delete "
+    fi
+
+# rsync -a --delete --exclude="*.txt" --exclude=".*" source/ destination : 把source/下的内容被分到dest
+# rsync -a source dest：则是备份到 dest/source下了
+# --exclude={'file1.txt','dir1/*'}
+# --exclude-from='exclude-file.txt'
+#  --include="*.txt"
+
+    if [[ -n $includeFiles ]]; then
+        local dd=($(string::split $includeFiles ","))
+        local d
+        for d in "${dd[@]}"; do
+            s+="--include=\"$d\" "
+        done
+    fi
+    if [[ -n $excludeFiles ]]; then
+        local dd=($(string::split $excludeFiles ","))
+        local d
+        for d in "${dd[@]}"; do
+            s+="--exclude=\"$d\" "
+        done
+    fi
+
+    if [[ -n $excludeFrom ]]; then
+        s+="--excludeFrom=\"$excludeFrom\" "
+    fi
+    if [[ -n $includeFrom ]]; then
+        s+="--includeFrom=\"$includeFrom\" "
+    fi
+
+    echo "==== $s"
+    eval "$s --progress"
+}
+
 # extract <compressed-file> [target directory]
 # todo 需要完善指定目录的功能
 function file::extract() {
@@ -555,6 +622,15 @@ function file::decode() {
     cat "$1" | base64 -d >$tmpFile
     gzip -c -d -n "$tmpFile" >$2
     info "$1 decode to $2"
+}
+
+# 删除目录下的所有文件
+# rmdir <target path>
+function file::rmdir(){
+    local target="$1"
+
+    mkdir -p $HOME/.emptry
+    [[ -f $target ]] && rsync -a --delete $HOME/.empty/ "$1"
 }
 
 __file_init__
