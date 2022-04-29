@@ -3,15 +3,29 @@ source "$script_dir/lib/core.sh"
 
 import xdev
 import string
+import file
 
-function update() {
+function gitUpdate() {
     local repo="$1"
     cd "$1" && git::au # >/dev/null 2>&1
     string::formatKeyValue "$repo" "updated"
 }
 
+function syncFiles() {
+    # ecp xtmp temp/r1 //E //XD xshell java
+    # ecp xtmp temp/r1 //E //XD xshell java //XF *.sh *.java *.md
+    local source="$1"
+    local target="$2"
+    local exclude="$3"
+
+    # 强制排除的文件或目录
+    local s=".git,.idea,.vscode,*xjming*"
+    exclude="$s,$exclude"
+
+    file::sync $source $target -x "$exclude" -p
+}
+
 function main() {
-    local aexe="/c/Users/xjming/xsoft/system/Allway Sync/Bin/syncappw.exe"
     local code_root="$HOME/xcodes/xopensource"
     local gitee="$code_root/gitee"
     local github="$code_root/github"
@@ -19,14 +33,25 @@ function main() {
 
     ui::banner "sync codes to my open source repos"
 
-    # start "$aexe -s xjenkins, xshell, github -e"
+    local xshellExclude="test,common-used"
+    local xjenkinsExclude="casc-zna,jenkins-client-java,jenkinsrunner,jkmgmt,sbd"
 
-    update "$gitee/xjenkins"
-    update "$gitee/xshell"
-    update "$github/xjenkins"
-    update "$github/xshell"
-    update "$private_github/mycodes"
-    update "$private_github/xops"
+    # sync files
+    syncFiles "$HOME/xcodes/xops/xshell" "$gitee/xshell" "$xshellExclude"
+    syncFiles "$HOME/xcodes/xops/jenkins" "$gitee/xjenkins" "$xjenkinsExclude"
+    syncFiles "$HOME/xcodes/xops/xshell" "$github/xshell" "$xshellExclude"
+    syncFiles "$HOME/xcodes/xops/jenkins" "$github/xjenkins" "$xjenkinsExclude"
+
+    syncFiles "$HOME/xcodes/xops" "$private_github/myops"
+    syncFiles "$HOME/xcodes/mycodes" "$private_github/xcodes"
+
+    # git commit & push
+    #    gitUpdate "$gitee/xjenkins"
+    #    gitUpdate "$gitee/xshell"
+    #    gitUpdate "$github/xjenkins"
+    #    gitUpdate "$github/xshell"
+    #    gitUpdate "$private_github/mycodes"
+    #    gitUpdate "$private_github/xops"
 
     ui::figlet "ALL DONE"
 }
