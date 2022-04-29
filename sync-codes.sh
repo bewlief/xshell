@@ -22,6 +22,8 @@ function syncFiles() {
     local s=".git,.idea,.vscode,*xjming*"
     exclude="$s,$exclude"
 
+    ui::banner "$source -> $target" "exclude: $s"
+
     path::sync $source $target -x "$exclude" -p
 }
 

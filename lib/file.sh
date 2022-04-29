@@ -519,7 +519,6 @@ function path::sync() {
         s+="--includeFrom=\"$includeFrom\" "
     fi
 
-    echo "==== $s"
     eval "$s --progress"
 }
 
