@@ -467,7 +467,6 @@ function path::sync() {
 
     local source="$1"
     local target="$2"
-    echo "source=$source, target=$target"
     shift 2
 
     eval "$(meta::getopts 'X:I:x:i:p')"
@@ -541,7 +540,6 @@ function path::clean(){
     fi
 
     s="rsync -a --delete $HOME/empty/ $1 $s"
-    echo "$s"
     [[ -d $target ]] && eval "$s"
 }
 
