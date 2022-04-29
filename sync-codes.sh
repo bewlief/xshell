@@ -8,7 +8,7 @@ import file
 function gitUpdate() {
     local repo="$1"
     cd "$1" && git::au # >/dev/null 2>&1
-    string::formatKeyValue "$repo" "updated"
+    ui::banner "$repo updated"
 }
 
 function syncFiles() {
