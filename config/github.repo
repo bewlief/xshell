@@ -328,13 +328,13 @@ rtyley/bfg-repo-cleaner/master
 [shell]
 acmesh-official/acme.sh/master
 arzzen/git-quick-stats/master
-bash-my-aws/bash-my-aws/master
+bash-my-aws/bash-my-aws/
 vlisivka/bash-modules/master
 dylanaraps/pure-bash-bible/master
 dylanaraps/pure-sh-bible/master
 fidian/ansi/master
 jandob/rebash/master
-oldratlee/useful-scripts/dev-2.x
+oldratlee/useful-scripts/
 p8952/bocker/master
 qzb/is.sh/master
 reale/bashlets/master
@@ -343,9 +343,9 @@ rudimeier/bash_ini_parser/master
 shyiko/commacdunixorn
 mateusz-kolecki/rlock-sh/master
 sio/homelab/master
-b4b4r07/gomi/master
+b4b4r07/gomi/
 kdabir/has/master
-suewonjp/lf.sh/master
+suewonjp/lf.sh/
 cal2195/q/master
 rauchg/spot/master
 vigneshwaranr/bd/master
