@@ -36,20 +36,36 @@ function __pathmarks_init__() {
 
 # save current directory to pathmarks
 function pathmark::save {
-    pathmark::help $1
+    local key="$1"
+    pathmark::help $key
+    shift
+    local cmd="$@"
 
-    # 无需检查名称是否合适
-    #    _bookmark_name_valid "$@"
 
-    #    if [ -z "$exit_message" ]; then
-    _purge_line "$SDIRS" "export DIR_$1="
-    CURDIR=$(echo $PWD | sed "s#^$HOME#\$HOME#g")
+    # 注册快速命令
+    if [[ -n $cmd ]]; then
+        echo "cmd reg: $key -> $cmd"
+        local s="alias $key=\"$cmd\""
 
-    # 保存后即可刷新DIR_$1的值
-    local s="export DIR_$1=\"$CURDIR\""
-    echo "$s" >>$SDIRS
-    eval "$s"
-    #    fi
+        _purge_line "$SDIRS" "$s"
+        echo "$s" >>$SDIRS
+
+        eval "$s"
+    # 注册目录
+    else
+        # 无需检查名称是否合适
+        #    _bookmark_name_valid "$@"
+
+        local qpath="export DIR_$1="
+        _purge_line "$SDIRS" "$qpath"
+        CURDIR=$(echo $PWD | sed "s#^$HOME#\$HOME#g")
+
+        # 保存后即可刷新DIR_$1的值
+        local s="$qpath\"$CURDIR\""
+        echo "$s" >>$SDIRS
+
+        eval "$s"
+    fi
 
 }
 
@@ -89,6 +105,7 @@ function pathmark::delete {
     #    _bookmark_name_valid "$@"
     #    if [ -z "$exit_message" ]; then
     _purge_line "$SDIRS" "export DIR_$1="
+    _purge_line "$SDIRS" "alias $1="
     unset "DIR_$1"
     #    fi
 }
