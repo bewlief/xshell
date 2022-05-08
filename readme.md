@@ -1,4 +1,4 @@
-# xops: 让你的开发更加迅速！
+# xops lib: 让你的开发更加迅速！
 
 ## 简介
 这是一个基于git bash的bash脚本开发库！如果你是一个程序员，且是重度自动化爱好者，那么，这个库应该会对你有所裨益。
@@ -11,13 +11,95 @@
 ## 目录说明
 + /config/： 配置文件，包含系统全局变量、git repo config等
 + /ext/： 扩展，该目录下的 *.sh 在bash初始化时会自动导入
-+ /lib/： 核心部分，包含core、meta、string等开发库
++ /lib/： xops lib，核心部分，包含core、meta、string等开发库
 + /tool/： 基于本库开发的一些工具
 + /win/： 适用于windows环境
-+ /xbash-profile.sh： 由.bash_profile引入，构建本机开发环境
++ /\*.\*：多个实用工具，如：
+  + xbash-profile.sh： 由.bash_profile引入，构建本机开发环境
+  + git-refresh.sh: 基于xops lib的git repo刷新工具，用于批量刷新repo
+  + backup.sh：基于xops lib的备份工具，备份内容在脚本中设置
+  + clean.sh：清理垃圾文件
+  + set-win-variables.bat：设置windows系统的环境变量，运行时需要管理员权限
+  + start.jsh：用于jshell，初始化环境
 
 
-## 我的开发环境设置
+## 如何使用
+
+1. 克隆本repo
+
+2. 修改 $HOME/.bash_profile.sh，加入xbash-profile.sh的引用
+
+   ```shell
+   # global configuration file
+   export GLOBAL_INI="$HOME/xcodes/xops/xshell/config/global-xjming.ini"
+   
+   xprofile=$HOME/xcodes/xops/xshell/xbash-profile.sh
+   [[ -f $xprofile ]] && source $xprofile
+   ```
+
+   + GLOBAL_INI：该变量指向系统全局变量 global-xjming.ini，实际上也是一个sh文件，用于设置一些全局变量
+
+   + source $xprofile：调用了 xbash-profile.sh
+
+3. 重启git bash即可
+
+## xops lib使用说明
+
+1. xops lib，指的是 /lib/下的sh文件，是我多年来写shell脚本的积累，大部分都是基于自己的实际需求而来，也参考了网上很多的代码实现。
+
+2. 不以x开头的.sh，是核心的代码，x*.sh则以核心库为基础。
+
+   ### 库文件介绍
+
+   + **core.sh**：最最核心的文件，要使用xops lib，必须首先导入该sh！其他的lib也都是首先引入了它。
+
+     + 定义了多个关键的全局变量：
+
+       + XLIB_BASE_PATH
+       + XLIB_BASE_EXT_PATH
+       + XLIB_CORE
+       + XLIB_BASE_CONFIG_PATH
+
+     + 定义了最基本的alias
+
+     + 定义了最基本的 info，warn，error函数
+
+     + 定义了ext、lib等的引入函数：import，reload
+
+     + 实现了$PATH的添加、去重、移除
+
+       #### 如何导入：
+
+     ```shell
+     function __xbash_init__() {
+         # xbash-profile也是基于lib，core
+         [[ -s $XLIB_CORE ]] && source "$XLIB_CORE" || {
+             local script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
+             source "$script_dir/lib/core.sh"
+         }
+     
+         import meta
+     }
+     ```
+
+     这是xbash-profile.sh中的core.sh的引入。注意source部分，需要指明core.sh的路径。
+
+     在core.sh导入后，即可使用 import color; import xwin等形式去引入其他lib。
+
+   + meta.sh：系统相关，其中的 meta::getopts 比较重要，用于命令行参数的解析。
+
+   + string.sh：string操作相关的函数，如随机字符串、截取、大小写转换、格式化、拆分等。
+
+   + cache.sh：以文件系统实现的cache
+
+   + dict.sh：内存中的key-value存取
+
+   + color.sh：ansi color的操作
+
+   + --
+
+
+## 分享下我的开发环境设置
 ### 基本目录结构
 有3个基本目录，都在$HOME/下，windows环境下，一般是 C:\Users\{your-account}\
 + /xsoft/
@@ -37,89 +119,7 @@
 |-- bin                                                                            
 |   |-- DragExt64.dll                                                              
 |   |-- FileActivityWatch.exe                                                      
-|   |-- InstallCert.class                                                          
-|   |-- LICENCE                                                                    
-|   |-- MSVCR71.DLL                                                                
-|   |-- PUTTY.CNT                                                                  
-|   |-- PUTTY.HLP                                                                  
-|   |-- README.txt                                                                 
-|   |-- SQLCMD.EXE                                                                 
-|   |-- SQLCMD.rll                                                                 
-|   |-- WinSCP.chs                                                                 
-|   |-- WinSCP.com                                                                 
-|   |-- WinSCP.exe                                                                 
-|   |-- WinSCP.ini                                                                 
-|   |-- WinSCP.map                                                                 
-|   |-- WinSCPnet.dll                                                              
-|   |-- ab.exe                                                                     
-|   |-- abs.exe                                                                    
-|   |-- appnetworkcounter.cfg                                                      
-|   |-- appnetworkcounter.exe                                                      
-|   |-- batchparser.dll                                                            
-|   |-- bc.exe                                                                     
-|   |-- bcp.exe                                                                    
-|   |-- bcp.rll                                                                    
-|   |-- bfg-1.14.0.jar                                                             
-|   |-- bfg-readme.md                                                              
-|   |-- cacert.pem                                                                 
-|   |-- crc32.exe                                                                  
-|   |-- ctags.exe                                                                  
-|   |-- curl.exe                                                                   
-|   |-- dc.exe                                                                     
-|   |-- etcd.exe                                                                   
-|   |-- etcdctl.exe                                                                
-|   |-- figlet0.exe                                                                
-|   |-- flf                                                                        
-|   |-- helm.exe                                                                   
-|   |-- hey.exe                                                                    
-|   |-- installedappview.cfg                                                       
-|   |-- installedappview.exe                                                       
-|   |-- jq.exe                                                                     
-|   |-- junction.exe                                                               
-|   |-- kubectl.exe                                                                
-|   |-- libcrypto-1_1.dll                                                          
-|   |-- libssl-1_1.dll                                                             
-|   |-- libxml2.dll                                                                
-|   |-- license.txt                                                                
-|   |-- lsof.exe                                                                   
-|   |-- mmt.cfg                                                                    
-|   |-- mmt.exe                                                                    
-|   |-- netpass.exe                                                                
-|   |-- nircmd.exe                                                                 
-|   |-- nircmdc.exe                                                                
-|   |-- openedfilesview.cfg                                                        
-|   |-- openedfilesview.exe                                                        
-|   |-- osql.exe                                                                   
-|   |-- pageant.exe                                                                
-|   |-- plink.exe                                                                  
-|   |-- pscp.exe                                                                   
-|   |-- psftp.exe                                                                  
-|   |-- pslist64.exe                                                               
-|   |-- putty.chm                                                                  
-|   |-- putty.exe                                                                  
-|   |-- puttygen.exe                                                               
-|   |-- puttytel.exe                                                               
-|   |-- shellcheck.exe                                                             
-|   |-- shellcheck1.exe                                                            
-|   |-- shfmt_v3.4.0_darwin_amd64                                                  
-|   |-- shfmt_v3.4.0_linux_386                                                     
-|   |-- shfmt_v3.4.0_linux_amd64                                                   
-|   |-- shfmt_v3.4.0_windows_386.exe                                               
-|   |-- shfmt_v3.4.1_windows_amd64.exe                                             
-|   |-- stickies.ico                                                               
-|   |-- taskschedulerview.exe                                                      
-|   |-- tcping.exe                                                                 
-|   |-- telnet.exe                                                                 
-|   |-- terraform.exe                                                              
-|   |-- tree.exe                                                                   
-|   |-- upx.exe                                                                    
-|   |-- vix.dll                                                                    
-|   |-- vmrun.exe                                                                  
-|   |-- vnetlib.dll                                                                
-|   |-- wget.exe                                                                   
-|   |-- winhex.exe                                                                 
-|   |-- wirelesskeyview.cfg                                                        
-|   |-- wirelesskeyview.exe                                                        
+。。。。。。                                                   
 |   |-- xml.exe                                                                    
 |   |-- xxd.exe                                                                    
 |   |-- zip.exe                                                                    
@@ -208,20 +208,29 @@
     |-- sysinternals                                                               
     `-- tools                                                                      
 ```
-+ /bin/：所有的命令行应用都放在这里，并加入到$PATH中
-  + /database/：database server及client
-  + /dev/：开发用
-    + /architect/
-    + /build/：git、maven、gradle等
-    + /sdk/：java，golang的sdk
-      + /jdk/：该目录下的所有目录都会被自动处理为jdk
-      + /go/： golang的sd
-      + /lua/
++ /bin/：所有的命令行应用都放在这里，并加入到$PATH中。目前你可以从这里找到我精心收集的命令行工具： [https://github.com/bewlief/myrepo/tree/master/xops-bin](https://github.com/bewlief/myrepo/tree/master/xops-bin)
+
++ /database/：database server及client
+
++ /dev/：开发用
+
+  + /architect/
+
+  + /build/：git、maven、gradle等
+
+  + /sdk/：java，golang的sdk
+
+    + /jdk/：该目录下的所有目录都会被自动处理为jdk
+    + /go/： golang的sdk
+    + /lua/
+
+    
+
     + /servers/：tomcat，jetty，nginx等
     + /test/：测试相关
+
 + /xdata/
-+ /xcodes/
-存放我的代码，如：
++ /xcodes/ ：存放我的代码，如：
   + mycodes: 我的测试代码所在目录
   + xops/：用于OPS代码存放，本库代码即放在该目录的 /xshell/下
 
@@ -247,3 +256,11 @@
   + libxxhash: http://repo.msys2.org/msys/x86_64/libxxhash-0.8.0-1-x86_64.pkg.tar.zst
   + liblzr: http://repo.msys2.org/msys/x86_64/liblz4-1.9.3-1-x86_64.pkg.tar.zst
   + libzstd: http://repo.msys2.org/msys/x86_64/libzstd-1.4.8-1-x86_64.pkg.tar.zst
+
+
+
+## 欢迎bash爱好者的fork与push！
+
+可以加我微信哦： 
+
+![image-20220508230335865](https://s3.bmp.ovh/imgs/2022/05/09/1ed6d05c292ca140.jpg)

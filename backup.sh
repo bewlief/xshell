@@ -68,13 +68,15 @@ files=(
     "C:\Users\xjming\xsoft\dev\JetBrains\idec\bin\idea64C-review.exe.vmoptions"
     "/c/Users/xjming/AppData/Roaming/Sync App Settings/_SYNCAPP/default profile.xml"
     "/c/Users/xjming/AppData/Roaming/Sync App Settings/_SYNCAPP/default settings.xml"
+    "C:\Users\xjming\xsoft\documents\Typora\resources\app.asar"
+    "C:\Users\xjming\AppData\Roaming\Typora\conf\conf.user.json"
 )
 
 OLD_IFS="$IFS"
 IFS=","
 
 for f in "${files[@]}"; do
-    if [ ! -e $f ]; then
+    if [[ ! -e $f ]]; then
         #        error "$f not existing"
         string::formatKeyValue $f "${txtylw}NOT EXISTING${txtrst}"
         continue
@@ -129,7 +131,3 @@ IFS="$OLD_IFS"
 
 string::repeat "*" 120
 showBlue "All files are backed up to ${undred}$target${txtrst}\n"
-
-# warn "delete all .git in $target/codes"
-# find "/Users/xinj/mybak/Users/xinj/codes" -name ".git" -exec rm -rf {} \;
-# info "ALL COMPLETED."

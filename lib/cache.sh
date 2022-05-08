@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# xfscache.sh 以文件系统为存储的简单的cache
+# cache.sh 以文件系统为存储的简单的cache
 # cache::set cache-name key-name value-of-key
 # cache::get cache-name key-name
 
