@@ -261,6 +261,6 @@
 
 ## 欢迎bash爱好者的fork与push！
 
-可以加我微信哦： 
+可以加微信哦： 
 
-![image-20220508230335865](https://s3.bmp.ovh/imgs/2022/05/09/1ed6d05c292ca140.jpg)
+<img width="300" height="300" src="https://s3.bmp.ovh/imgs/2022/05/09/1ed6d05c292ca140.jpg" />&nbsp;&nbsp;&nbsp;<img width="300" height="300" src="https://s3.bmp.ovh/imgs/2022/05/09/ad1f684e8f847147.jpg" />
