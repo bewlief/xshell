@@ -460,7 +460,7 @@ function file::removeBom() {
 # sync <source path> <target path> [-x "ex.file"] [-i "in.file"] [-p]
 # -x: 要排除的目录名称列表
 # -i: 要包含的文件类型
-# -p: 是否purge，即删除source中不存在的文件
+# -p: 是否purge，即删除target目录中的在source中已不存在的文件
 # 单独的列表和excludeFrom/includeFrom不能混用！
 function path::sync() {
     import meta

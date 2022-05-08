@@ -19,7 +19,7 @@ function syncFiles() {
     local exclude="$3"
 
     # 强制排除的文件或目录
-    local s=".git,.idea,.vscode,*xjming*"
+    local s=".git,.idea,.vscode,*xjming*,*/target/*"
     exclude="$s,$exclude"
 
     ui::banner "$source -> $target" "exclude: $s"
@@ -54,6 +54,9 @@ function main() {
     gitUpdate "$github/xshell"
     gitUpdate "$private_github/mycodes"
     gitUpdate "$private_github/xops"
+
+    gitUpdate "$HOME/xcodes/xops"
+    gitUpdate "$HOME/xcodes/mycodes"
 
     ui::figlet "ALL DONE"
 }
