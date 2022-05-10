@@ -1,6 +1,7 @@
 # LINE 1 CANNOT BE REQUIRED DATA 
 
 [devops]
+bewlief/xshell/master
 
 [go]
 koderover/zadig/main
@@ -192,7 +193,7 @@ didispace/SpringBoot-Learning/master
 y_project/RuoYi/master
 shufengC/spring-ldap/master
 zaizaid/SpringBoot-Dubbo-Docker-Jenkins/master
-liujn/spring-boot-ldap/master
+liujn/spring-boot-ldap/
 paascloud/paascloud-master/master
 
 [java-suite]

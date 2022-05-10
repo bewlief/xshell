@@ -17,7 +17,6 @@ function __xnet_init__() {
         source "$script_dir/core.sh"
     }
 
-
     # IP addresses
     alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
     alias localip="ipconfig getifaddr en0"
@@ -25,13 +24,14 @@ function __xnet_init__() {
 
     # Show active network interfaces
     alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
+
+    setup-proxy
 }
 
+# 配置命令行的proxy
+# todo 依赖于xbash-profile中导入的global.ini，需解耦！
+# setup-proxy <proxy user> <proxy pass> <proxy url> <no proxy list>
 function setup-proxy() {
-    # 一般应该是使用当前用户的账户
-    # 定义proxy需要的 USER，PASSWORD，url等
-    # export PROXY_USER="user"
-
     # proxy的密码中需要转义的特殊字符
     # ~: 0x7e
     # !: 0x21：无需转义
@@ -47,8 +47,7 @@ function setup-proxy() {
     # export PROXY_PASS="pass0x7e23K0x25"
 
     #     export PROXY_URL="aa.com:8088"
-    if [[ "$PROXY_ENABLED" == "true" ]]; then
-        echo "proxy enabled"
+    if [[ "${PROXY_ENABLED^^}" == "TRUE" && -n $PROXY_USER && -n $PROXY_PASS ]]; then
         local s="$PROXY_USER:$PROXY_PASS"
         # http://，而不是 https://
         export HTTP_PROXY="http://$s@$PROXY_URL"
@@ -57,6 +56,7 @@ function setup-proxy() {
         # 多个地址用","分隔，aa.com，则匹配*.aa.com
         export NO_PROXY=$NO_PROXY_HOST
     else
+        echo "proxy disabled"
         unset HTTP_PROXY
         unset HTTPS_PROXY
         unset NO_PROXY
@@ -64,7 +64,6 @@ function setup-proxy() {
         unset PROXY_USER
         unset PROXY_PASS
         unset NO_PROXY_HOST
-        unset PROXY_ENABLED
     fi
 }
 

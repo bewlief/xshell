@@ -35,12 +35,12 @@ function __pathmarks_init__() {
 # l - list all pathmarks
 
 # save current directory to pathmarks
+# or reg quick command using alias
 function pathmark::save {
     local key="$1"
     pathmark::help $key
     shift
     local cmd="$@"
-
 
     # 注册快速命令
     if [[ -n $cmd ]]; then
@@ -48,7 +48,6 @@ function pathmark::save {
         local s="alias $key=\"$cmd\""
 
         _purge_line "$SDIRS" "$s"
-        echo "$s" >>$SDIRS
 
         eval "$s"
     # 注册目录
@@ -56,7 +55,7 @@ function pathmark::save {
         # 无需检查名称是否合适
         #    _bookmark_name_valid "$@"
 
-        local qpath="export DIR_$1="
+        local qpath="export DIR_$key="
         _purge_line "$SDIRS" "$qpath"
         CURDIR=$(echo $PWD | sed "s#^$HOME#\$HOME#g")
 
