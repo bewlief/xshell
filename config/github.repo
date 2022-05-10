@@ -167,7 +167,7 @@ JustryDeng/PublicRepository/master
 apkkids/spring_security_exam/master
 LandGrey/spring-boot-upload-file-lead-to-rce-tricks/main
 LandGrey/SpringBootVulExploit/master
-javastacks/spring-boot-best-practice/master
+javastacks/spring-boot-best-practice/
 balajich/resilience4j-helloworld/master
 bbossgroups/springboot-elasticsearch-webservice/master
 chanjarster/spring-boot-all-callbacks/master
@@ -201,7 +201,7 @@ yinjihuan/spring-boot-starter-es-security/master
 yinjihuan/spring-boot-starter-lock-redis/master
 yinjihuan/spring-boot-starter-mongodb-pool/master
 yinjihuan/spring-boot-starter-swagger/master
-xkcoding/spring-boot-demo/master
+xkcoding/spring-boot-demo/
 macrozheng/mall/master
 yifanzheng/spring-security-jwt/master
 Exrick/xboot/master
@@ -328,13 +328,13 @@ rtyley/bfg-repo-cleaner/master
 [shell]
 acmesh-official/acme.sh/master
 arzzen/git-quick-stats/master
-bash-my-aws/bash-my-aws/
+bash-my-aws/bash-my-aws/master
 vlisivka/bash-modules/master
 dylanaraps/pure-bash-bible/master
 dylanaraps/pure-sh-bible/master
 fidian/ansi/master
 jandob/rebash/master
-oldratlee/useful-scripts/
+oldratlee/useful-scripts/dev-2.x
 p8952/bocker/master
 qzb/is.sh/master
 reale/bashlets/master
@@ -343,9 +343,9 @@ rudimeier/bash_ini_parser/master
 shyiko/commacdunixorn
 mateusz-kolecki/rlock-sh/master
 sio/homelab/master
-b4b4r07/gomi/
+b4b4r07/gomi/master
 kdabir/has/master
-suewonjp/lf.sh/
+suewonjp/lf.sh/master
 cal2195/q/master
 rauchg/spot/master
 vigneshwaranr/bd/master
