@@ -349,6 +349,9 @@ function handleGitRepo() {
         # 因此，hint中不显示branch，更新状态等
         # hint="$hint: ${txtgrn}$CURRENT_BRANCH${txtrst}"
 
+        # 刷新下，否则无法获取远程的log hash
+        git remote update origin -p >/dev/null 2>&1
+
         local LOCAL_LOG=$(git log $source_branch -n 1 --pretty=format:"%H")
         local REMOTE_LOG=$(git log remotes/origin/$source_branch -n 1 --pretty=format:"%H")
 
