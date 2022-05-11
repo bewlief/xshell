@@ -1,15 +1,16 @@
 #LINE 1 CANNOT BE REQUIRED DATA 
 
 [devops]
-erda-project/erda
-alibaba/derrick
+erda-project/erda/master
+alibaba/derrick/master
 LarryDpk/pkslow-samples/master
-n8n-io/n8n
+n8n-io/n8n/master
 
 [jenkins]
 jenkinsci/docker/master
 openshift/jenkins/master
 jenkins-zh/jenkins-formulas/master
+jenkinsci/configuration-as-code-plugin
 imanol-dev/jenkins_as_code/develop
 NorseLZJ/lzj-config/master
 prontera/ideavimrc/master
@@ -167,7 +168,7 @@ JustryDeng/PublicRepository/master
 apkkids/spring_security_exam/master
 LandGrey/spring-boot-upload-file-lead-to-rce-tricks/main
 LandGrey/SpringBootVulExploit/master
-javastacks/spring-boot-best-practice/
+javastacks/spring-boot-best-practice/master
 balajich/resilience4j-helloworld/master
 bbossgroups/springboot-elasticsearch-webservice/master
 chanjarster/spring-boot-all-callbacks/master
@@ -201,7 +202,7 @@ yinjihuan/spring-boot-starter-es-security/master
 yinjihuan/spring-boot-starter-lock-redis/master
 yinjihuan/spring-boot-starter-mongodb-pool/master
 yinjihuan/spring-boot-starter-swagger/master
-xkcoding/spring-boot-demo/
+xkcoding/spring-boot-demo/master
 macrozheng/mall/master
 yifanzheng/spring-security-jwt/master
 Exrick/xboot/master

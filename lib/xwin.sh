@@ -70,8 +70,8 @@ function update-win-vars() {
 function nosleep() {
     import string
 
-    #    start cscript "$MY_BASH/win/nosleep.vbs"
-    start $XLIB_BASE_PATH/win/_no-sleep.bat
+    # start cscript "$MY_BASH/win/nosleep.vbs"
+    start $XLIB_BASE_PATH_PARENT/win/_no-sleep.bat
 
     ui::figlet "NO SLEEP"
     ui::banner "close the windows of csript then sleep again"

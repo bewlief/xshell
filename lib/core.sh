@@ -30,10 +30,17 @@ function __core_init__() {
     COLUMNS="$(tput cols)"
     IFS_MINE="XxlyY"
 
-    # 初始化3个基础路径变量，config、lib、ext
+    # 初始化3个基础路径变量
+    # core.sh所在目录, /c/Users/xjming/xcodes/xops/xshell/lib
     export XLIB_BASE_PATH=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
-    # /c/Users/xjming/xcodes/xops/xshell
+    # parent of XLIB_BASE_PATH
+    local d="${XLIB_BASE_PATH%/*}"
+    export XLIB_BASE_PATH_PARENT="$d"
+
+    # $HOME/xcodes/xops/xshell/ext
     export XLIB_BASE_EXT_PATH="${XLIB_BASE_PATH%/*}/ext"
+
+    # $HOME/xcodes/xops/xshell/config
     export XLIB_BASE_CONFIG_PATH="${XLIB_BASE_PATH%/*}/config"
 
     # 设置XLIB_CORE，即本文件
