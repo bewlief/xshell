@@ -504,6 +504,8 @@ function path::sync() {
         done
     fi
     if [[ -n $excludeFiles ]]; then
+        # todo 添加默认排除的文件类型
+        excludeFiles="$excludeFiles,*.log,*.tmp"
         local dd=($(string::split $excludeFiles ","))
         local d
         for d in "${dd[@]}"; do

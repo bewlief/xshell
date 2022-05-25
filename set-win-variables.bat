@@ -7,6 +7,8 @@ setx -m "GRADLE_HOME" "%USERPROFILE%\xsoft\dev\build\gradle"
 setx -m "GRADLE_USER_HOME" "C:\Temp\repos"
 setx -m "EXE4J_JAVA_HOME" %JAVA_HOME%
 setx -m "GROOVY_HOME" "%USERPROFILE%\xsoft\dev\sdk\groovy"
+setx -m "GOROOT" "%USERPROFILE%\xsoft\dev\sdk\go"
+setx -m "GOPATH" "%USERPROFILE%\xcodes\mygo"
 
 set DEFAULT_TEMP="C:\Temp\winTemp"
 setx -m "TEMP" "%DEFAULT_TEMP%"
@@ -29,4 +31,4 @@ rem set git configuration
 
 set DEFAULT_PATH="C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Users\xjming\AppData\Local\Microsoft\WindowsApps"
 @REM set DEFAULT_PATH=""
-setx -m PATH "%JAVA_HOME%\bin;%PYTHON_HOME%;%PYTHON_HOME%\Scripts;%GIT_HOME%;%GRADLE_HOME%\bin;%GROOVY_HOME%\bin;%DEFAULT_PATH%"
+setx -m PATH "%JAVA_HOME%\bin;%GOROOT%\bin;%PYTHON_HOME%;%PYTHON_HOME%\Scripts;%GIT_HOME%;%GRADLE_HOME%\bin;%GROOVY_HOME%\bin;%DEFAULT_PATH%"

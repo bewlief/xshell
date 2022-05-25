@@ -384,7 +384,11 @@ function mvn::package() {
 }
 
 function mvn::test() {
-    _mvn-execute "$1" "package"
+    _mvn-execute "$1" "test"
+}
+
+function mvn::check() {
+    _mvn-execute "$1" "-Dmaven.test.skip=true install"
 }
 
 #
@@ -439,10 +443,10 @@ function _mvn-execute() {
     ui::banner "mvn clean $cmd completed"
 }
 
-# 从pom中获取artifactId等
+# 从pom中获取artifactId等，存入数组中
 # artifact <mvn project path> <bash array name>
 function mvn::artifact() {
-    local source=$1
+    local source=${1:-$PWD}
     source=$(file::absolute $source)
 
     local -n ref=$2
