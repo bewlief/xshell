@@ -263,4 +263,6 @@
 
 可以加微信哦： 
 
-<a href="https://imgtu.com/i/XkIjJg"><img width="300" height="300" src="https://s1.ax1x.com/2022/05/25/XkIjJg.jpg" alt="XkIjJg.jpg" border="0" /></a>&nbsp;&nbsp;&nbsp;<img width="300" height="300" src="https://s3.bmp.ovh/imgs/2022/05/09/ad1f684e8f847147.jpg" />
+![微信名片二维码-xjming.jpg](https://s2.loli.net/2022/06/18/1ZqWpQ3IeayDg9z.jpg)
+
+加了作者微信后，还可以加入专门的聊天群，大家一起来聊聊 shell！
