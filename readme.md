@@ -264,5 +264,6 @@
 可以加微信哦： 
 
 ![微信名片二维码-xjming.jpg](https://s2.loli.net/2022/06/18/1ZqWpQ3IeayDg9z.jpg)
+[![xjming.jpg](https://i.postimg.cc/vZZkmHLN/xjming.jpg)](https://postimg.cc/Vd2DGwhq)
 
 加了作者微信后，还可以加入专门的聊天群，大家一起来聊聊 shell！
