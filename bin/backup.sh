@@ -17,7 +17,7 @@ info "clean: rm -rf ${target}/*"
 rm -rf $target/*
 
 info "start to backup all important files"
-string::repeat "*" 120
+ui::hr "+"
 
 # home of current user
 export soft="$HOME/xsoft/w/"
@@ -72,6 +72,11 @@ files=(
     "C:\Users\xjming\xsoft\documents\Typora\resources\app.asar"
     "C:\Users\xjming\AppData\Roaming\Typora\conf\conf.user.json"
     "C:\Users\xjming\AppData\Roaming\Typora\themes\night.css"
+    "C:\Users\xjming\xcodes\mycodes\.git\config"
+    "C:\Users\xjming\xcodes\myhistory\.git\config"
+    "C:\Users\xjming\xcodes\mypims\.git\config"
+    "C:\Users\xjming\xcodes\myrepo\.git\config"
+    "C:\Users\xjming\xcodes\xops\.git\config"
 )
 
 OLD_IFS="$IFS"
@@ -131,5 +136,5 @@ done
 
 IFS="$OLD_IFS"
 
-string::repeat "*" 120
+ui::hr "+"
 showBlue "All files are backed up to ${undred}$target${txtrst}\n"
