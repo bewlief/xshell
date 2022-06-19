@@ -149,18 +149,16 @@ function git::acp() {
     local now=$(date::now)
     local msg=${1:-"commit ./* @ $now"}
 
+    # save commit msg to last_commit
     local last=$(file::absolute ".")
     last="$last/last_commit"
-    file::new "$last"
     echo "$msg @ $now" > "$last"
 
-    ui::banner "$(pwd)" "git add ." "git commit -m $msg" "git push"
+    ui::banner "$(pwd)" "git add ." "git commit -m \"$msg\"" "git push"
 
     git add .
     git commit -m "$msg"
     git push
-
-    ui::figlet "COMPLETED"
 }
 
 # git update in current directory
