@@ -19,7 +19,7 @@ trap cleanup SIGINT SIGTERM EXIT
 function __git_refresh_init__() {
     [[ -s $XLIB_CORE ]] && source "$XLIB_CORE" || {
         local script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
-        source "$script_dir/lib/core.sh"
+        source "$script_dir/../lib/core.sh"
     }
 
     import meta

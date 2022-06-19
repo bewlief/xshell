@@ -54,49 +54,50 @@
    + **core.sh**：最最核心的文件，要使用xops lib，必须首先导入该sh！其他的lib也都是首先引入了它。
 
      + 定义了多个关键的全局变量：
+       + XLIB_BASE： lib所在的路径，如 $HOME/xcodes/xops/xshell/lib
+       + XLIB_BASE_PARENT： lib所在路径的父目录，如 $HOME/xcodes/xops/xshell
+       + XLIB_BASE_EXT： ext目录的绝对路径
+       + XLIB_BASE_BIN: bin目录的绝对路径
+       + XLIB_BASE_CONFIG： config目录的绝对路径
+       + XLIB_CORE： core.sh的绝对路径 
 
-       + XLIB_BASE_PATH
-       + XLIB_BASE_EXT_PATH
-       + XLIB_CORE
-       + XLIB_BASE_CONFIG_PATH
+   + 定义了最基本的alias
 
-     + 定义了最基本的alias
+   + 定义了最基本的 info，warn，error函数
 
-     + 定义了最基本的 info，warn，error函数
+   + 定义了ext、lib等的引入函数：import，reload
 
-     + 定义了ext、lib等的引入函数：import，reload
+   + 实现了$PATH的添加、去重、移除
 
-     + 实现了$PATH的添加、去重、移除
+     #### 如何导入：
 
-       #### 如何导入：
+```shell
+   function __xbash_init__() {
+       # xbash-profile也是基于lib，core
+       [[ -s $XLIB_CORE ]] && source "$XLIB_CORE" || {
+           local script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
+           source "$script_dir/lib/core.sh"
+       }
+   
+       import meta
+   }
+```
 
-     ```shell
-     function __xbash_init__() {
-         # xbash-profile也是基于lib，core
-         [[ -s $XLIB_CORE ]] && source "$XLIB_CORE" || {
-             local script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
-             source "$script_dir/lib/core.sh"
-         }
-     
-         import meta
-     }
-     ```
+   这是xbash-profile.sh中的core.sh的引入。注意source部分，需要指明core.sh的路径。
 
-     这是xbash-profile.sh中的core.sh的引入。注意source部分，需要指明core.sh的路径。
+   在core.sh导入后，即可使用 import color; import xwin等形式去引入其他lib。
 
-     在core.sh导入后，即可使用 import color; import xwin等形式去引入其他lib。
+ + meta.sh：系统相关，其中的 meta::getopts 比较重要，用于命令行参数的解析。
 
-   + meta.sh：系统相关，其中的 meta::getopts 比较重要，用于命令行参数的解析。
+ + string.sh：string操作相关的函数，如随机字符串、截取、大小写转换、格式化、拆分等。
 
-   + string.sh：string操作相关的函数，如随机字符串、截取、大小写转换、格式化、拆分等。
+ + cache.sh：以文件系统实现的cache
 
-   + cache.sh：以文件系统实现的cache
+ + dict.sh：内存中的key-value存取
 
-   + dict.sh：内存中的key-value存取
+ + color.sh：ansi color的操作
 
-   + color.sh：ansi color的操作
-
-   + --
+ + --
 
 
 ## 分享下我的开发环境设置
@@ -261,6 +262,10 @@
 
 ## 欢迎bash爱好者的fork与push！
 
-可以加微信哦： 
+可以加我的微信哦：
 
-<img width="300" height="300" src="https://s3.bmp.ovh/imgs/2022/05/09/1ed6d05c292ca140.jpg" />&nbsp;&nbsp;&nbsp;<img width="300" height="300" src="https://s3.bmp.ovh/imgs/2022/05/09/ad1f684e8f847147.jpg" />
+[![xjming.jpg](https://i.postimg.cc/vZZkmHLN/xjming.jpg)](https://postimg.cc/Vd2DGwhq)
+
+我还建了个微信群，欢迎您的入伙。
+
+让我们一起来聊shell！

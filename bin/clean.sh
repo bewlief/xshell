@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 SCRIPT_PATH=$(dirname $0)
-source "./lib/core.sh"
+echo "--$SCRIPT_PATH"
+source "$SCRIPT_PATH/../lib/core.sh"
 
 import string
 import file

@@ -3,22 +3,22 @@
 # ------------------------------------------
 # Filename: core.sh
 # core.sh是lib的核心，包含基本的几个常用函数
-# 设置了 XLIB_BASE_PATH， XLIB_BASE_EXT, CORE_LIB等
+# 设置了 XLIB_BASE， XLIB_BASE_EXT, CORE_LIB等
 # 其他lib必须首先source $CORE_LIB
 #
 # 输入
 #
 #
 # 输出
-#    XLIB_BASE_PATH
-#    XLIB_BASE_EXT_PATH
-#    XLIB_BASE_CONFIG_PATH
+#    XLIB_BASE
+#    XLIB_BASE_EXT
+#    XLIB_BASE_CONFIG
 #    XLIB_CORE
 #    XLIB_DEFAULT_NORMAL_PS1
 #    DEFAULT_DATE_FORMAT
 #    DEFAULT_DATE_TIME_FORMAT
 #    LIB_IMPORTED_TIMESTAMP
-#    XLIB_ORIGIN_PATH
+#    XLIB_ORIGIN
 # ------------------------------------------
 
 # 避免重复导入
@@ -32,16 +32,18 @@ function __core_init__() {
 
     # 初始化3个基础路径变量
     # core.sh所在目录, /c/Users/xjming/xcodes/xops/xshell/lib
-    export XLIB_BASE_PATH=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
+    export XLIB_BASE=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
     # parent of XLIB_BASE_PATH
-    local d="${XLIB_BASE_PATH%/*}"
-    export XLIB_BASE_PATH_PARENT="$d"
+    local d="${XLIB_BASE%/*}"
+    export XLIB_BASE_PARENT="$d"
 
     # $HOME/xcodes/xops/xshell/ext
-    export XLIB_BASE_EXT_PATH="${XLIB_BASE_PATH%/*}/ext"
+    export XLIB_BASE_EXT="${XLIB_BASE_PARENT}/ext"
 
     # $HOME/xcodes/xops/xshell/config
-    export XLIB_BASE_CONFIG_PATH="${XLIB_BASE_PATH%/*}/config"
+    export XLIB_BASE_CONFIG="${XLIB_BASE_PARENT}/config"
+
+    export XLIB_BASE_BIN="${XLIB_BASE_PARENT}/bin"
 
     # 设置XLIB_CORE，即本文件
     export XLIB_CORE="${BASH_SOURCE[0]}"
@@ -55,6 +57,15 @@ function __core_init__() {
     export DEFAULT_DATE_TIME_FORMAT="%Y-%m-%d %H:%M:%S"
 
     export LIB_IMPORTED_TIMESTAMP="%F+%T"
+
+    # 添加基础路径到PATH
+    PATH::add $XLIB_BASE
+    PATH::add $XLIB_BASE_EXT
+    PATH::add $XLIB_BASE_BIN
+    PATH::add "$XLIB_BASE_PARENT/tool"
+    PATH::add "$XLIB_BASE_PARENT/tool"
+    PATH::add "$XLIB_BASE_PARENT/test"
+    PATH::add "$XLIB_BASE_PARENT/win"
 
     # 缩短路径时保留的层数
     PROMPT_DIRTRIM=5
@@ -260,7 +271,7 @@ function die() {
 
 # load library like ./lib/xok.sh
 function import() {
-    local lib="$XLIB_BASE_PATH/$1.sh"
+    local lib="$XLIB_BASE/$1.sh"
 
     # -e:文件存在， -s:文件存在且不为空
     if [[ -s $lib ]]; then
@@ -301,7 +312,7 @@ function loadExt() {
     # for d in */; do 仅匹配目录
     #    When looping over a set of files, it's always better to use globs when possible. Using command expansion causes word splitting and glob expansion, which will cause problems for certain filenames (typically first seen when trying to process a file with spaces in the name).
     #    for d in $(ls $ext_dir); do
-    for d in $XLIB_BASE_EXT_PATH/*.sh; do
+    for d in $XLIB_BASE_EXT/*.sh; do
         if [[ -s $d ]]; then
             source "$d"
             string::formatKeyValue "ext $d" "LOADED"
@@ -347,11 +358,11 @@ function cdl() {
 }
 
 # $PATH变量的添加、删除、去重
-function PATH::after() {
+function PATH::append() {
     PATH::remove $1
     export PATH="$PATH:$1"
 }
-function PATH::before() {
+function PATH::add() {
     PATH::remove $1
     export PATH="$1:$PATH"
 }

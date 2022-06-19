@@ -6,11 +6,26 @@ alibaba/derrick/master
 LarryDpk/pkslow-samples/master
 n8n-io/n8n/master
 
+[open-hand]
+open-hand/kubeadm-ha/release-1.20
+open-hand/dockerfile/master
+open-hand/choerodon-starters/master
+open-hand/devops-service/master
+open-hand/choerodon-message/master
+open-hand/choerodon-oauth/master
+open-hand/choerodon-iam/master
+open-hand/dockerfile/master
+open-hand/choerodon-file/master
+open-hand/choerodon-gateway/master
+open-hand/gitlab-service/master
+open-hand/choerodon-framework/master
+
+
 [jenkins]
 jenkinsci/docker/master
 openshift/jenkins/master
 jenkins-zh/jenkins-formulas/master
-jenkinsci/configuration-as-code-plugin
+jenkinsci/configuration-as-code-plugin/master
 imanol-dev/jenkins_as_code/develop
 NorseLZJ/lzj-config/master
 prontera/ideavimrc/master
@@ -137,6 +152,7 @@ xkcoding/magic-starter/master
 spring-io/initializr/main
 
 [java-suite]
+junit-team/junit5-samples/main
 Wechat-Group/awesome-wechat-weapp/master
 Wechat-Group/weapp-demo/master
 Wechat-Group/WxJava/develop
@@ -204,13 +220,13 @@ yinjihuan/spring-boot-starter-mongodb-pool/master
 yinjihuan/spring-boot-starter-swagger/master
 xkcoding/spring-boot-demo/master
 macrozheng/mall/master
-yifanzheng/spring-security-jwt/master
+yifxhoeheng/spring-security-jwt/master
 Exrick/xboot/master
 Exrick/xmall/master
 macrozheng/springcloud-learning/master
 spring-cloud/spring-cloud-jenkins-jobs/main
 spring-cloud/spring-cloud-pipelinesxwjie
-ishuibo/SpringAll/master
+ishuibo/SpringAll/
 TyCoding/cloud-template/master
 yinjihuan/micro-service-dubbo/master
 yinjihuan/monkey-spring-cloud/master
@@ -258,15 +274,15 @@ LucasRGoes/ports-adapters-sample/master
 yuraxdrumz/golang-starter-kit/master
 
 [ja-netfilter]
-ja-netfilter/ja-netfilter/master
-ja-netfilter/plugin-power/master
-ja-netfilter/ja-netfilter/master
-ja-netfilter/plugin-mymap/master
-ja-netfilter/plugin-hideme/master
-ja-netfilter/plugin-dump/master
-ja-netfilter/plugin-native/master
-ja-netfilter/plugin-url/master
-ja-netfilter/plugin-dns/master
+ja-netfilter/ja-netfilter/
+ja-netfilter/plugin-power/
+ja-netfilter/ja-netfilter/
+ja-netfilter/plugin-mymap/
+ja-netfilter/plugin-hideme/
+ja-netfilter/plugin-dump/
+ja-netfilter/plugin-native/
+ja-netfilter/plugin-url/
+ja-netfilter/plugin-dns/
 
 [secure]
 OWASP/CheatSheetSeries

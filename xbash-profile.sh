@@ -132,13 +132,13 @@ function setAppVariables() {
     #     #switchJdk $DEFAULT_JDKVERSION
     #     jdk $DEFAULT_JDK_VERSION
 
-    # todo 判断 PATH::before等函数是否有效
+    # todo 判断 PATH::add等函数是否有效
     local MY_PATH=$PYTHON_HOME:$MY_SOFT/bin:$MY_BASH_HOME:$MAVEN_HOME/bin:$GIT_HOME/bin:$GRADLE_HOME/bin:$VSCODE_HOME/bin
 
-    PATH::before "$MY_PATH"
-    PATH::before "$JAVA_HOME/bin"
-    PATH::after "$SYSINTERNALS_ROOT"
-    PATH::after "$XLIB_ORIGIN_PATH"
+    PATH::add "$MY_PATH"
+    PATH::add "$JAVA_HOME/bin"
+    PATH::append "$SYSINTERNALS_ROOT"
+    PATH::append "$XLIB_ORIGIN_PATH"
 }
 
 # 创建alias
@@ -187,4 +187,4 @@ __xbash_init__
 
 main
 
-ui::figlet "COOL"
+ui::figlet "XLIB - cool"
