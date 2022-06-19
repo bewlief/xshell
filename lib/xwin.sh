@@ -43,20 +43,25 @@ function monitor::help() {
 
     cat <<EOF
 
-switch monitor mode between PBP/PIB using mmt
+switch monitor mode between internal/extend/external/PBP/PIB using mmt.
 
 Usage
     monitor
-    monitor [config name]
+    monitor <config name>
     monitor::help
+
+how to:
+1. setup your monitor using windows monitor configuration.
+2. run mmt, save current configuration to $XLIB_BASE_CONFIG/monitor, as a .cfg file.
+3. setup your monitor to another resolution/config and export again.
 EOF
 
-    string::hr
-    for c in $XLIB_BASE_CONFIG_PATH/monitor/*.cfg; do
+    ui::hr
+    for c in $XLIB_BASE_CONFIG/monitor/*.cfg; do
         local n=$(file::baseName "$c")
         echo "-- $n"
     done
-    string::hr
+    ui::hr
 }
 
 # 根据 global.ini 更新set-win-variables.bat
@@ -71,7 +76,7 @@ function nosleep() {
     import string
 
     # start cscript "$MY_BASH/win/nosleep.vbs"
-    start $XLIB_BASE_PATH_PARENT/win/_no-sleep.bat
+    start $XLIB_BASE_PARENT/win/_no-sleep.bat
 
     ui::figlet "NO SLEEP"
     ui::banner "close the windows of csript then sleep again"

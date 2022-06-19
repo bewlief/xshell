@@ -457,7 +457,8 @@ function file::removeBom() {
 
 # 同步文件夹
 # sync <source path> <target path> [-x "*.sh,*.md"] [-i "gl.ini"] [-p]
-# sync <source path> <target path> [-x "ex.file"] [-i "in.file"] [-p]
+# sync <source path> <target path> [-X "ex.file"] [-I "in.file"] [-p]
+# -X: 排除文件中所包含的列表内容
 # -x: 要排除的目录名称列表
 # -i: 要包含的文件类型
 # -p: 是否purge，即删除target目录中的在source中已不存在的文件
@@ -469,7 +470,16 @@ function path::sync() {
     local target="$2"
     shift 2
 
+    log::debug "0. $source -> $target"
+
+    source=$(file::absolute "$source")
+    target=$(file::absolute "$target")
+
+    log::debug "1. $source -> $target"
+
     eval "$(meta::getopts 'X:I:x:i:p')"
+
+    # rsync会自动创建目标目录
 
     # exclude的文件类型
     local excludeFiles="${x:-}"
@@ -481,26 +491,34 @@ function path::sync() {
 
     # todo 检查 xX,iI是否同时存在
 
-    local s
-    s="rsync -a $source/ $target "
+    # -r: 递归，必需参数。但一般用 -a 替代 -r，同时同步元信息
+    # 注意 “$source/”：复制 $source/下的内容到$target目录下
+    # 而使用“$source”：则把$source整个目录复制到 $target下
+    # windows下，需要前面加上 /cygdrive，否则报错：directory not found!
+    local cmd
+    if [[ $BASE_OS == $WIN ]]; then
+        cmd="rsync -a $(_cygpath $source)/ $(_cygpath $target) "
+    else
+        cmd="rsync -a $source/ $target"
+    fi
 
     # 是否 purge，默认是
     local purge="${p:-1}"
     if [[ $purge -eq 1 ]]; then
-        s+="--delete "
+        cmd+="--delete "
     fi
 
-# rsync -a --delete --exclude="*.txt" --exclude=".*" source/ destination : 把source/下的内容被分到dest
-# rsync -a source dest：则是备份到 dest/source下了
-# --exclude={'file1.txt','dir1/*'}
-# --exclude-from='exclude-file.txt'
-#  --include="*.txt"
+    # rsync -a --delete --exclude="*.txt" --exclude=".*" source/ destination : 把source/下的内容被分到dest
+    # rsync -a source dest：则是备份到 dest/source下了
+    # --exclude={'file1.txt','dir1/*'}
+    # --exclude-from='exclude-file.txt'
+    #  --include="*.txt"
 
     if [[ -n $includeFiles ]]; then
         local dd=($(string::split $includeFiles ","))
         local d
         for d in "${dd[@]}"; do
-            s+="--include=\"$d\" "
+            cmd+="--include=\"$d\" "
         done
     fi
     if [[ -n $excludeFiles ]]; then
@@ -509,28 +527,33 @@ function path::sync() {
         local dd=($(string::split $excludeFiles ","))
         local d
         for d in "${dd[@]}"; do
-            s+="--exclude=\"$d\" "
+            cmd+="--exclude=\"$d\" "
         done
     fi
 
     if [[ -n $excludeFrom ]]; then
-        s+="--excludeFrom=\"$excludeFrom\" "
+        cmd+="--excludeFrom=\"$excludeFrom\" "
     fi
     if [[ -n $includeFrom ]]; then
-        s+="--includeFrom=\"$includeFrom\" "
+        cmd+="--includeFrom=\"$includeFrom\" "
     fi
 
-    eval "$s --progress"
+    log::debug "$cmd --progress"
+
+    eval "$cmd --progress"
 }
 
 # 使用rsync删除目录下的所有文件，速度很快，比 find...|xargs都要快
 # 最主要是可以保留指定的文件！
 # clean <target path> [exclude files:"*.sh,*.md,glao.ini"]
-function path::clean(){
+function path::clean() {
     local target="$1"
     local exclude="$2"
 
-    mkdir -p $HOME/empty
+    target=$(file::absolute $target)
+
+    local empty="$HOME/empty"
+    mkdir -p $empty
 
     local s
     if [[ -n $exclude ]]; then
@@ -541,8 +564,15 @@ function path::clean(){
         done
     fi
 
-    s="rsync -a --delete $HOME/empty/ $1 $s"
+    s="rsync -a --delete $(_cygpath $empty)/ $(_cygpath $target) $s"
+    log::debug "clean: $s"
     [[ -d $target ]] && eval "$s"
+}
+
+# 生成windows下rsync所需要的 "/cygdrive/d/Download/...."
+function _cygpath(){
+    local source=$(file::absolute $1)
+    echo "/cygdrive$source"
 }
 
 # extract <compressed-file> [target directory]
@@ -645,6 +675,5 @@ function file::decode() {
     gzip -c -d -n "$tmpFile" >$2
     info "$1 decode to $2"
 }
-
 
 __file_init__

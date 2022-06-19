@@ -6,7 +6,7 @@
 #
 #pwd=$(cd `dirname $0` || exit; pwd)
 SCRIPT_PATH=`dirname $0`
-source "${SCRIPT_PATH}/core.sh"
+source "$SCRIPT_PATH/../lib/core.sh"
 
 # where to backup
 target="/c/myCodes/myjava/0_system_files/backuped-files"

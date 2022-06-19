@@ -8,7 +8,7 @@ koderover/zadig/main
 nonsense/nkone
 
 [ddd]
-jonathanzyf/uhy-ddd-hexagonal/master
+jonathxhoeyf/uhy-ddd-hexagonal/master
 conkeyn/spring-cloud-contract-sample1/master
 
 [spring]
@@ -76,7 +76,7 @@ openforce/zbus/master
 acrowise/community.kubernetes/master
 cdk8s/sculptor-boot-backend/master
 cdk8s/sculptor-boot-docs/master
-cdk8s/sculptor-boot-generator/master
+cdk8s/sculptor-boot-generator/
 cdk8s/sculptor-boot-test/master
 geek_qi/ace-cache/master
 geek_qi/ace-gate/master
@@ -102,7 +102,7 @@ comsince/kubeadm-ha/master
 [ansible]
 RichardLan/ansible-rabbitmq-cluster/master
 root8088/ansible-install-k8s/master
-shiyanzhe/ansible-playbooks/master
+shiyxhoehe/ansible-playbooks/master
 souliot/k8s-ansible/master
 steeed/ansible-best-practices/master
 superixang/ansible-install-multi-k8s/master
@@ -278,7 +278,9 @@ dromara/cubic/master
 dromara/sureness/master
 dromara/TLog/master
 dromara/MaxKey/main
-dromara/Hutool/v5-master
+dromara/hutool
+dromara/hertzbeat
+dromara/dynamic-tp
 
 [unknown]
 zxporz/ESClientRHL/es7
@@ -313,7 +315,6 @@ liaoshixiong/best-pay-sdk/develop
 lionsoul/ip2region/master
 log4j/kjyw/master
 log4j/pig/master
-log4j/pig/master
 loolly/elasticsearch-definitive-guide-cn/master
 mail_osc/templatespider/master
 mail_osc/wangmarket/master
@@ -336,8 +337,6 @@ roncoocom/roncoo-pay/master
 sanluan/PublicCMS/master
 shimingxy/MaxKey
 shuzheng/zheng/master
-shuzheng/zheng/master
-shuzheng/zheng/master
 smallc/Saber/master
 smallc/SpringBlade/master
 sofastack/sofa-boot/master
@@ -351,19 +350,14 @@ stylefeng-Roses/roses-message/master
 stylefeng-Roses/roses-system/master
 sunyurepository/smart-doc
 thinkgem/jeesite/master
-thinkgem/jeesite/master
-thinkgem/jeesite/master
 tiankong0310/my-shop/master
 tiankong0310/springboot-weixin-alipay/master
 tianyalei/asyncTool/master
-tianyalei/md_blockchain/master
 tianyalei/md_blockchain/master
 tianyalei/zuulauth/master
 tinyframework/tiny/master
 toopoo/wechat_spider/master
 tulaobie/oauthsevice/master
-unifig/unifig/master
-unifig/unifig/master
 unifig/unifig/master
 WeiYe-Jing/datax-web/master
 wewwww/open_shop_applet_mall/master

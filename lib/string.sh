@@ -844,14 +844,14 @@ function ui::icon() {
 
 # todo
 function ui::head(){
-    string::hr "-"
+    ui::hr "-"
     echo -e "$1"
-    string::hr "-"
+    ui::hr "-"
 }
 function ui::foot(){
-    string::hr "-"
+    ui::hr "-"
     echo -e "$1"
-    string::hr "-"
+    ui::hr "-"
 }
 
 # figlet的封装

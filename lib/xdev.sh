@@ -145,7 +145,14 @@ function git::default() {
 # 添加、提交、push当前目录重得所有更新
 function git::acp() {
     import date
-    local msg=${1:-"commit ./* @ $(now)"}
+
+    local now=$(date::now)
+    local msg=${1:-"commit ./* @ $now"}
+
+    local last=$(file::absolute ".")
+    last="$last/last_commit"
+    file::new "$last"
+    echo "$msg @ $now" > "$last"
 
     ui::banner "$(pwd)" "git add ." "git commit -m $msg" "git push"
 
@@ -611,7 +618,7 @@ function mvn::treeid() {
 function mvn::help() {
     ui::figlet "MVN  help"
 
-    local help="$XLIB_BASE_CONFIG_PATH/mvn.help"
+    local help="$XLIB_BASE_CONFIG/mvn.help"
 
     # 直接原格式输出
     [[ -e $help ]] && cat "$help"
@@ -654,7 +661,7 @@ function _switchJdk() {
 
         # set JAVA_HOME to new path
         export JAVA_HOME=$path
-        PATH::before "$JAVA_HOME/bin"
+        PATH::add "$JAVA_HOME/bin"
         PATH::dedup
         #        export PATH=$JAVA_HOME/bin:$MY_PATH:$ORIGIN_PATH
         # export PATH=$JAVA_HOME/bin:$MY_PATH:$ORIGIN_PATH:$SYSINTERNALS_ROOT

@@ -31,4 +31,4 @@ rem set git configuration
 
 set DEFAULT_PATH="C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Users\xjming\AppData\Local\Microsoft\WindowsApps"
 @REM set DEFAULT_PATH=""
-setx -m PATH "%JAVA_HOME%\bin;%GOROOT%\bin;%PYTHON_HOME%;%PYTHON_HOME%\Scripts;%GIT_HOME%;%GRADLE_HOME%\bin;%GROOVY_HOME%\bin;%DEFAULT_PATH%"
+setx -m PATH "%JAVA_HOME%\bin;%GOROOT%\bin;%PYTHON_HOME%;%PYTHON_HOME%\Scripts;%GIT_HOME%;%GRADLE_HOME%\bin;%GROOVY_HOME%\bin;%DEFAULT_PATH%";"%USERPROFILE%\xsoft\bin

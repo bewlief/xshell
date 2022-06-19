@@ -6,9 +6,10 @@
 #
 #pwd=$(cd `dirname $0` || exit; pwd)
 SCRIPT_PATH=$(unset CDPATH && cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
-source "${SCRIPT_PATH}/lib/core.sh"
-source "${SCRIPT_PATH}/lib/string.sh"
-source "${SCRIPT_PATH}/lib/color.sh"
+source "${SCRIPT_PATH}/../lib/core.sh"
+
+import string
+import color
 
 # target=$HOME/xcodes/axin-repos/docs/a11k
 target="$MY_BACKUP"
@@ -70,6 +71,7 @@ files=(
     "/c/Users/xjming/AppData/Roaming/Sync App Settings/_SYNCAPP/default settings.xml"
     "C:\Users\xjming\xsoft\documents\Typora\resources\app.asar"
     "C:\Users\xjming\AppData\Roaming\Typora\conf\conf.user.json"
+    "C:\Users\xjming\AppData\Roaming\Typora\themes\night.css"
 )
 
 OLD_IFS="$IFS"
