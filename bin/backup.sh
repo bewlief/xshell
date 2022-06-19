@@ -77,6 +77,8 @@ files=(
     "C:\Users\xjming\xcodes\mypims\.git\config"
     "C:\Users\xjming\xcodes\myrepo\.git\config"
     "C:\Users\xjming\xcodes\xops\.git\config"
+    "C:\Users\xjming\xopensource\xshell\.git\config"
+    "C:\Users\xjming\xopensource\xjenkins\.git\config"
 )
 
 OLD_IFS="$IFS"
