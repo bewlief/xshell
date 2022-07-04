@@ -443,7 +443,10 @@ function checkTargetStatus() {
         cd "$target" || error "invalid $target"
         local CURRENT_BRANCH=$(git::current)
         if [[ -z $CURRENT_BRANCH ]]; then
-            rm -rf $target/*
+            rm -rf $target
+#            rm -rf $target/* 2>&1
+#            rm -rf $target/.git 2>&1
+#            rm -rf $target/.github 2>&1
             result="$CLONE"
         fi
     fi

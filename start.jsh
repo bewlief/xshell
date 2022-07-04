@@ -22,6 +22,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import java.util.stream.Stream;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.function.*;
 
 
 
@@ -42,6 +48,8 @@ class User {
     private Double salary;
     private int id;
     private List<Address> addresses;
+
+    public User(){ }
 
     public List<Address> getAddresses() {
         return addresses;
@@ -165,22 +173,22 @@ for (int i = 0; i < count; i++) {
 
     User u = new User(i, "name:" + i, k, b.doubleValue());
     List<Address> t = Arrays.asList(
-            new Address("address of user " + i, k + 1029),
-            new Address("address of user " + i, k + 8737),
-            new Address("address of user " + i, k + 67),
-            new Address("address of user " + i, k + 9872),
-            new Address("address of user " + i, k + 1908),
-            new Address("address of user " + i, k + 6834)
+            new Address("address of user " + i, k + r.nextInt(1000)),
+            new Address("address of user " + i, k + r.nextInt(1000)),
+            new Address("address of user " + i, k + r.nextInt(1000)),
+            new Address("address of user " + i, k + r.nextInt(1000)),
+            new Address("address of user " + i, k + r.nextInt(1000)),
+            new Address("address of user " + i, k + r.nextInt(1000))
     );
     u.setAddresses(t);
     list1.add(u);
     map1.put("user:" + i, u);
 }
 // add some duplicated id User
-list1.add(new User(3, "name-3333-1", 3333, 333.333));
-list1.add(new User(3, "name-3333-2", 3334, 333.222));
-list1.add(new User(5, "name-5555-1", 5555, 555.555));
-list1.add(new User(5, "name-5555-2", 5555, 555.222));
+list1.add(new User(3, "name-3333-1", r.nextInt(1000), 333.333));
+list1.add(new User(3, "name-3333-2", r.nextInt(1000), 333.222));
+list1.add(new User(5, "name-5555-1", r.nextInt(1000), 555.555));
+list1.add(new User(5, "name-5555-2", r.nextInt(1000), 555.222));
 
 String s = "hello,world,me,me,world";
 Set<String> set1 = new HashSet<>(Arrays.asList(s.split(",")));

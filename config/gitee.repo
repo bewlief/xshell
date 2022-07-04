@@ -27,8 +27,8 @@ AlanShelby/Course-Chapter
 
 [java-app]
 596392912/mica/master
-596392912/mica-mqtt/master
-596392912/mica-auto/master
+596392912/mica/master
+596392912/mica/master
 spring-cloud-java11
 baomidou/kisso/dev
 bboss/bboss-elastic/master
@@ -76,7 +76,7 @@ openforce/zbus/master
 acrowise/community.kubernetes/master
 cdk8s/sculptor-boot-backend/master
 cdk8s/sculptor-boot-docs/master
-cdk8s/sculptor-boot-generator/
+cdk8s/sculptor-boot-generator/master
 cdk8s/sculptor-boot-test/master
 geek_qi/ace-cache/master
 geek_qi/ace-gate/master
@@ -278,9 +278,9 @@ dromara/cubic/master
 dromara/sureness/master
 dromara/TLog/master
 dromara/MaxKey/main
-dromara/hutool
-dromara/hertzbeat
-dromara/dynamic-tp
+dromara/hutool/v5-master
+dromara/hertzbeat/master
+dromara/dynamic-tp/master
 
 [unknown]
 zxporz/ESClientRHL/es7

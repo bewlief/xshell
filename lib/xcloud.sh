@@ -18,9 +18,10 @@ function __xcloud_init__() {
     }
 }
 
-
 # functions for k8s and cloud
-alias kc='kubectl -n kube-system '
+alias kc="kubectl.exe "
+alias tf="terraform.exe "
+alias hm='helm '
 
 # 先使用 kubectl -n nnnn
 # 然后就可以使用 k 去操作，不用再输入namespace
