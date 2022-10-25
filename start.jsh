@@ -195,3 +195,20 @@ Set<String> set1 = new HashSet<>(Arrays.asList(s.split(",")));
 Stream<User> stream1=list1.stream();
 Stream<Integer> stream3=list3.stream();
 Stream<String> stream2=list2.stream();
+
+
+public enum Week{
+    MON("monday"),
+    TUE("tuesday"),
+    WED("wednensday");
+
+    private final String value;
+
+    Week(String value){
+        this.value=value;
+    }
+
+    public String toString(){
+        return this.value;
+    }
+}

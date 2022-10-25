@@ -71,7 +71,7 @@ function loadGlobalVariables() {
 
     # 设置默认值
     export MY_CODES=${MY_CODES:-$HOME/xcodes}
-    export PS1_GIT_STATUS=${PS1_GIT_STATUS:-true}
+    export PS1_GIT_STATUS=${PS1_GIT_STATUS:-false}
     export MY_OPS=${MY_OPS:-"$HOME/xcodes/xops"}
     export MY_DATA=${MY_DATA:-"$HOME/xdata"}
     export MY_BACKUP=${MY_BACKUP:-"$MY_OPS/0_system_files/backuped-files/${USERNAME}"}
@@ -80,6 +80,7 @@ function loadGlobalVariables() {
     export XTEMP=${XTEMP:-"$HOME/xtmp"}
     export MAVEN_REPOSITORY=${MAVEN_REPOSITORY:-"$HOME/.m2/repository"}
     export MAVEN_OPTS=${MAVEN_OPTS_STR:-"-Xms512m -Xmx2G -Dfile.encoding=UTF-8"}
+    export XLIB_EDITOR=${XLIB_EDITOR:-"vi"}
 
     #
     export MY_SOFT=$HOME/xsoft
@@ -139,6 +140,7 @@ function setAppVariables() {
     PATH::add "$JAVA_HOME/bin"
     PATH::append "$SYSINTERNALS_ROOT"
     PATH::append "$XLIB_ORIGIN_PATH"
+    PATH::append "$MY_SOFT/documents/nppx64"
 }
 
 # 创建alias

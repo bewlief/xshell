@@ -121,7 +121,10 @@ function file::execute() {
 # todo 设置一个全局变量 EDITOR
 function file::open() {
     local file=$1
-    local editor=$2
+
+    local editor=${XLIB_EDITOR:-"vi"}
+    local editor=${2:-$editor}
+
     local s="$editor $file"
     [[ -s $file ]] && eval "$s"
 }

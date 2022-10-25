@@ -171,7 +171,7 @@ baomidou/lock4j-spring-boot-starter
 baomidou/mybatisplus-boot-starterzto_express/hbase-spring-boot-starter
 zhiyubujian/common-starter/master
 yadong.zhang/braum-spring-boot-starterITEater/prometheus-spring-boot-starter
-jiangpingcmt1/spring-boot-starter-hulk-dependencies
+jiangpingcmt1/spring-boot-starter-hulk-dependencies/master
 shunyang/springcloud-starter/master
 
 [spring-boot-cloud]
@@ -291,7 +291,7 @@ zzspace/websocket/master
 cjbi/weshop/master
 cjlgb/cjlgb-cloud-platform/overwrite
 hu1045551753/share-project/master
-cnbba/greenplum/master
+cnbba/greenplum/
 copoile/springcloud-oauth2/master
 duoec/duo-doc/master
 duoec/duo-graphql/master

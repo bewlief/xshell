@@ -79,6 +79,8 @@ files=(
     "C:\Users\xjming\xcodes\xops\.git\config"
     "C:\Users\xjming\xopensource\xshell\.git\config"
     "C:\Users\xjming\xopensource\xjenkins\.git\config"
+    "C:\Users\xjming\xsoft\documents\nppx64\config.xml"
+    "C:\Users\xjming\xsoft\documents\nppx64\session.xml"
 )
 
 OLD_IFS="$IFS"

@@ -21,7 +21,13 @@ function __xdev_init__() {
     # 设置常用的git/maven
     _git-common
     _maven-common
+    _alias
 
+}
+
+function _alias() {
+    alias pkg='mvn clean package -Dmaven.test.skip=true'
+    alias pmd='mvn -q -f pom.xml -Dmaven.test.skip clean install'
 }
 
 function _git-common() {
@@ -34,6 +40,7 @@ function _git-common() {
 function _maven-common() {
     # alias
     alias mtree='mvn::tree -v -t'
+    alias mpkg='mvn clean package -Dmaven.test.skip=true'
 }
 
 # 覆盖xbash-profile中的cdl，因xdev后导入，因此会覆盖之前的定义
@@ -152,7 +159,7 @@ function git::acp() {
     # save commit msg to last_commit
     local last=$(file::absolute ".")
     last="$last/last_commit"
-    echo "$msg @ $now" > "$last"
+    echo "$msg @ $now" >"$last"
 
     ui::banner "$(pwd)" "git add ." "git commit -m \"$msg\"" "git push"
 
@@ -303,6 +310,17 @@ function git::current() {
     setPS1
 }
 
+# 使用worktree初始化一个repo
+# git::init <repo url> <branch>
+function git::init(){
+    local repo=$1
+    local branch=$2
+
+    ui::banner "Using worktree to manager your reopistiory"
+
+    git::worktree::init $repo $branch
+}
+
 # 在当前目录下初始化 worktree
 # worktree::init <repo url> <branch:dev,test,b1,b2>
 function git::worktree::init() {
@@ -401,6 +419,11 @@ function mvn::install() {
     _mvn-execute "$1" "install -Dmaven.test.skip=true"
 }
 
+# 使用pmd扫描
+function mvn::pmd(){
+    _mvn-execute "$1" "-q -f pom.xml -Dmaven.test.skip=true clean install"
+}
+
 # _mvn-check-pom [mvn project path]
 function _mvn-check-pom() {
     # 入参即为绝对路径
@@ -417,9 +440,9 @@ function _mvn-check-pom() {
 # 会自动添加 clean
 # _mvn-execute <mvn project path> <mvn command>
 function _mvn-execute() {
-    local cmd=$2
-    local source=${1:-$(pwd)}
-    source=$(file::absolute $source)
+    local cmd="$2"
+    local source="${1:-$(pwd)}"
+    source="$(file::absolute $source)"
 
     [[ $(_mvn-check-pom $source) == FALSE ]] && error "invalid maven project: $source" && return
 
@@ -583,11 +606,11 @@ function mvn::tree() {
     s1=""
     if [[ $do_tree == TRUE ]]; then
         _mvn-execute "$SOURCE" "dependency:tree ${show_verbose} -DoutputFile=$tree_file"
-        [[ -s $tree_file ]] && file::open $tree_file "code"
+        [[ -s $tree_file ]] && file::open $tree_file "$XLIB_EDITOR"
     fi
     if [[ $do_pom == TRUE ]]; then
         _mvn-execute "$SOURCE" "help:effective-pom ${show_verbose} -Doutput=$pom_file"
-        [[ -s $pom_file ]] && file::open $pom_file "code"
+        [[ -s $pom_file ]] && file::open $pom_file "$XLIB_EDITOR"
     fi
 
     #    [[ $do_tree == TRUE ]] && _mvn-execute "$SOURCE" "dependency:tree ${show_verbose} -DoutputFile=$tree_file"
