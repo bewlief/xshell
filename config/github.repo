@@ -39,7 +39,7 @@ jenkinsci/pipeline-examples/master
 mozmeao/jenkins-pipeline/master
 rootsongjc/istio-tutorial/master
 redhat-cop/pipeline-library/master
-savishy/jenkins-examples/
+savishy/jenkins-examples/master
 spring-cloud/pipeline-base/main
 cookcodeblog/OneDayDevOps/master
 cookcodeblog/pipelines-tutorialcqyisbug
@@ -61,7 +61,7 @@ zowe/jenkins-library/master
 liupeng0518/k8s_bin/master
 heidsoft/devops/master
 zhoutaoo/sentinel-dashboard-docker/master
-binarywang/useful-scripts/master
+binarywang/useful-scripts/
 
 [terraform]
 
@@ -273,10 +273,10 @@ damonkelley/ports-and-adapters-examples/main
 purnima-jain/ports-and-adapters-kafka-with-avro/master
 Hyunk3l/hexagonal-architecture-kotlin-template/main
 ricardohsmello/hexagonal-architecture/main
-Codeflix-FullCycle/hexagonal-architecture/main
+Codeflix-FullCycle/hexagonal-architecture/
 FrederikS/rest-api-blueprint-clean-architecture/main
 LucasRGoes/ports-adapters-sample/master
-yuraxdrumz/golang-starter-kit/master
+yuraxdrumz/golang-starter-kit/
 
 [ja-netfilter]
 ja-netfilter/ja-netfilter/
@@ -309,7 +309,7 @@ liumiaocn/easypack/master
 ciphermagic/spring-tools/master
 didi/kafka-manager/master
 JustDoPython/python-100-day/master
-mrdear/JavaWEB/master
+mrdear/JavaWEB/
 qq53182347/liugh-parent/master
 shenfeng/nio-httpserver/dir-list
 javasync/RxIo/master
@@ -342,7 +342,7 @@ yinjihuan/kitty/master
 yinjihuan/smconf/master
 zhangdaiscott/autopoi/master
 zhoutaoo/article/master
-zhoutaoo/Moss/master
+zhoutaoo/Moss/
 heidsoft/sb-oauth2-mfa-demo/master
 heidsoft/share_ppt/master
 rtyley/bfg-repo-cleaner/master

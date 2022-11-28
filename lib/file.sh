@@ -126,7 +126,7 @@ function file::open() {
     local editor=${2:-$editor}
 
     local s="$editor $file"
-    [[ -s $file ]] && eval "$s"
+    eval "$s"
 }
 
 # fullName <file>

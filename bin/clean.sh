@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# ------------------------------------------
+# Filename: clean.sh
+# Version:   0.1
+# Date: 20221026
+# 文件清理，默认读取 config/clean.list中预定义的文件和目录
+# ------------------------------------------
+
 SCRIPT_PATH=$(dirname $0)
 echo "--$SCRIPT_PATH"
 source "$SCRIPT_PATH/../lib/core.sh"
@@ -13,7 +20,7 @@ IFS=$(echo -en "\n\b")
 showGreen "Clean tools"
 showGreen "1. clean java target directories"
 
-CONFIG_FILE="$SCRIPT_PATH/config/clean.list"
+CONFIG_FILE="$SCRIPT_PATH/../config/clean.list"
 file::read $CONFIG_FILE filesRemoved
 
 for s in "${filesRemoved[@]}"; do

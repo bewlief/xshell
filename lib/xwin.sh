@@ -79,7 +79,7 @@ function nosleep() {
     start $XLIB_BASE_PARENT/win/_no-sleep.bat
 
     ui::figlet "NO SLEEP"
-    ui::banner "close the windows of csript then sleep again"
+    ui::banner "close the windows of cscript then sleep again"
 }
 
 __xwin_init__
