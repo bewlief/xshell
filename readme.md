@@ -265,7 +265,7 @@
 + 可以加我的微信哦：<br/>[![xjming.jpg](https://i.postimg.cc/vZZkmHLN/xjming.jpg)](https://postimg.cc/Vd2DGwhq)
 
 + 我还建了个微信群，欢迎您的入伙。加了我的微信后，拉你入伙。
-+ 公众号：吃土的阿土哥<br/> [![344.jpg](https://i.postimg.cc/hGhh6C49/344.jpg)](https://postimg.cc/06R8J0wQ)
++ 公众号：吃土的阿土哥<br/> [![344.jpg](https://i.postimg.cc/rpCgcxcL/344.jpg)](https://postimg.cc/sBx54Bvn)
 
 
 让我们一起来聊shell！
