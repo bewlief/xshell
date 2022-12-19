@@ -1,7 +1,5 @@
 # LINE 1 CANNOT BE REQUIRED DATA 
 
-[devops]
-bewlief/xshell/master
 
 [go]
 koderover/zadig/main
@@ -259,10 +257,10 @@ nepxion/Permission/master
 nepxion/Zxing/master
 nepxion/Mask/master
 nepxion/Marvel/master
-nepxion/nacos/master
-nepxion/spring-cloud-alibaba/master
-nepxion/nacos/master
-nepxion/apollo/master
+nepxion/nacos/
+nepxion/spring-cloud-alibaba/
+nepxion/nacos/
+nepxion/apollo/
 nepxion/Sentinel/master
 nepxion/Matrix/master
 clougence/hasor/master

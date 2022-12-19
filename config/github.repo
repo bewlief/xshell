@@ -7,17 +7,17 @@ LarryDpk/pkslow-samples/master
 n8n-io/n8n/master
 
 [open-hand]
-open-hand/kubeadm-ha/release-1.20
+open-hand/kubeadm-ha/
 open-hand/dockerfile/master
 open-hand/choerodon-starters/master
-open-hand/devops-service/master
+open-hand/devops-service/
 open-hand/choerodon-message/master
-open-hand/choerodon-oauth/master
+open-hand/choerodon-oauth/
 open-hand/choerodon-iam/master
 open-hand/dockerfile/master
 open-hand/choerodon-file/master
 open-hand/choerodon-gateway/master
-open-hand/gitlab-service/master
+open-hand/gitlab-service/
 open-hand/choerodon-framework/master
 
 
@@ -273,10 +273,10 @@ damonkelley/ports-and-adapters-examples/main
 purnima-jain/ports-and-adapters-kafka-with-avro/master
 Hyunk3l/hexagonal-architecture-kotlin-template/main
 ricardohsmello/hexagonal-architecture/main
-Codeflix-FullCycle/hexagonal-architecture/
+Codeflix-FullCycle/hexagonal-architecture/main
 FrederikS/rest-api-blueprint-clean-architecture/main
 LucasRGoes/ports-adapters-sample/master
-yuraxdrumz/golang-starter-kit/
+yuraxdrumz/golang-starter-kit/master
 
 [ja-netfilter]
 ja-netfilter/ja-netfilter/
@@ -309,7 +309,7 @@ liumiaocn/easypack/master
 ciphermagic/spring-tools/master
 didi/kafka-manager/master
 JustDoPython/python-100-day/master
-mrdear/JavaWEB/
+mrdear/JavaWEB/master
 qq53182347/liugh-parent/master
 shenfeng/nio-httpserver/dir-list
 javasync/RxIo/master
@@ -342,7 +342,7 @@ yinjihuan/kitty/master
 yinjihuan/smconf/master
 zhangdaiscott/autopoi/master
 zhoutaoo/article/master
-zhoutaoo/Moss/
+zhoutaoo/Moss/master
 heidsoft/sb-oauth2-mfa-demo/master
 heidsoft/share_ppt/master
 rtyley/bfg-repo-cleaner/master
