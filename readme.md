@@ -262,7 +262,7 @@
 
 ## 欢迎bash爱好者的fork与push！
 
-+ 可以加我的微信哦：<br/>[![xjming.jpg](https://i.postimg.cc/vZZkmHLN/xjming.jpg)](https://postimg.cc/Vd2DGwhq)
++ 可以加我的微信哦：<br/>[![image.png](https://i.postimg.cc/bwNNVKz3/image.png)](https://postimg.cc/mtJstp1H)
 
 + 我还建了个微信群，欢迎您的入伙。加了我的微信后，拉你入伙。
 + 公众号：吃土的阿土哥<br/> [![344.jpg](https://i.postimg.cc/rpCgcxcL/344.jpg)](https://postimg.cc/sBx54Bvn)
