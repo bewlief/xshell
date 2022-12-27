@@ -7,21 +7,22 @@ LarryDpk/pkslow-samples/master
 n8n-io/n8n/master
 
 [open-hand]
-open-hand/kubeadm-ha/
+open-hand/kubeadm-ha/release-1.20
 open-hand/dockerfile/master
 open-hand/choerodon-starters/master
-open-hand/devops-service/
+open-hand/devops-service/master
 open-hand/choerodon-message/master
-open-hand/choerodon-oauth/
+open-hand/choerodon-oauth/master
 open-hand/choerodon-iam/master
 open-hand/dockerfile/master
 open-hand/choerodon-file/master
 open-hand/choerodon-gateway/master
-open-hand/gitlab-service/
+open-hand/gitlab-service/master
 open-hand/choerodon-framework/master
 
 
 [jenkins]
+jenkinsci/java-client-api/master
 jenkinsci/docker/master
 openshift/jenkins/master
 jenkins-zh/jenkins-formulas/master
@@ -75,6 +76,8 @@ wangyinlong9527/ansible/master
 
 
 [cloud]
+apache/jclouds/master
+apache/jclouds/master
 
 [java]
 hollischuang/toBeTopJavaer/master
