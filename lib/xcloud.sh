@@ -16,12 +16,17 @@ function __xcloud_init__() {
         local script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
         source "$script_dir/core.sh"
     }
-}
 
-# functions for k8s and cloud
-alias kc="kubectl.exe "
-alias tf="terraform.exe "
-alias hm='helm '
+    # set PATH for cloud
+    PATH::append "$CLOUD_VMRUN"
+    PATH::append "$CLOUD_AWS"
+    PATH::append "$CLOUD_BIN"
+
+    # functions for k8s and cloud
+    alias kc="kubectl.exe "
+    alias tf="terraform.exe "
+    alias hm='helm '
+}
 
 # 先使用 kubectl -n nnnn
 # 然后就可以使用 k 去操作，不用再输入namespace
@@ -235,3 +240,5 @@ function cf-in() {
         echo "true"
     fi
 }
+
+__xcloud_init__

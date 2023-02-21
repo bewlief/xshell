@@ -46,12 +46,11 @@ function monitor::help() {
 switch monitor mode between internal/extend/external/PBP/PIB using mmt.
 
 Usage
-    monitor
-    monitor <config name>
-    monitor::help
+    monitor [=monitor::help]: list all pre-defined configurations by mmt
+    monitor <config name>: switch to specific configuration by mmt
 
 how to:
-1. setup your monitor using windows monitor configuration.
+1. setup your monitor using windows monitor configuration
 2. run mmt, save current configuration to $XLIB_BASE_CONFIG/monitor, as a .cfg file.
 3. setup your monitor to another resolution/config and export again.
 EOF

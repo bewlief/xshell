@@ -127,6 +127,7 @@ function _core-alias() {
     #   lrd: list only dir recursive
     alias lrd='find . -type d| sort | sed -e "s/[^--][^\/]*\//  |/g" -e "s/|\([^ ]\)/|--\1/" '
 }
+
 # 定义常用错误代码 0~255
 function _define-error-codes() {
     # 0/1
@@ -208,7 +209,7 @@ showCyan() {
     _color "$1" cyan
 }
 
-# Pring prompt message to screen
+# Print prompt message to screen
 # msg "INFO" "Hello World"
 function _msg() {
     [ $# -ne 2 ] && showRed "Usage: msg message_level message_info"
@@ -275,7 +276,7 @@ function import() {
 
     # -e:文件存在， -s:文件存在且不为空
     if [[ -s $lib ]]; then
-        source $lib
+        source "$lib"
         return $GENERIC_NORMAL
     else
         error "failed to import $1: $lib"
@@ -357,19 +358,32 @@ function cdl() {
     ls -lah --color=auto
 }
 
+function length() {
+    echo -n "$1" | awk '{print length($0)}'
+}
+
 # $PATH变量的添加、删除、去重
 function PATH::append() {
-    PATH::remove $1
-    export PATH="$PATH:$1"
+    local l=$(length "$1")
+
+    if [[ $l -gt 0 ]]; then
+        PATH::remove $1
+        export PATH="$PATH:$1"
+    fi
 }
 function PATH::add() {
-    PATH::remove $1
-    export PATH="$1:$PATH"
+    local l=$(length "$1")
+
+    if [[ $l -gt 0 ]]; then
+        PATH::remove $1
+        export PATH="$1:$PATH"
+    fi
 }
 function PATH::remove() {
     export PATH=$(echo -n $PATH | awk -v RS=: -v ORS=: '$0 != "'$1'"' | sed 's/:$//')
-    PATH::dedup
+    PATH::dedup "$1"
 }
+
 function PATH::dedup() {
     export PATH=$(echo -n $PATH | awk -v RS=: '!($0 in a) {a[$0]; printf("%s%s", length(a) > 1 ? ":" : "", $0)}')
 }

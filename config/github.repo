@@ -7,7 +7,7 @@ LarryDpk/pkslow-samples/master
 n8n-io/n8n/master
 
 [open-hand]
-open-hand/kubeadm-ha/release-1.20
+open-hand/kubeadm-ha/release-1.21
 open-hand/dockerfile/master
 open-hand/choerodon-starters/master
 open-hand/devops-service/master
@@ -46,7 +46,7 @@ cookcodeblog/OneDayDevOps/master
 cookcodeblog/pipelines-tutorialcqyisbug
 eBay/Jenkins-Pipeline-Utils/1.x
 mschuchard/jenkins-devops-libs/master
-puzzle/jenkins-techlab/master
+puzzle/jenkins-techlab/main
 zuxqoj/kubernetes-redis-cluster/master
 cookcodeblog/jenkins-pipeline-examples/master
 cookcodeblog/openshift-demos-ansible/ocp-3.10
@@ -182,7 +182,7 @@ Ahoo-Wang/govern-eventbus/master
 bbossgroups/bboss/master
 bbossgroups/elasticsearchdemo/master
 bbossgroups/elasticsearch-example/master
-seata/seata/develop
+seata/seata/2.x
 heyuxian/mcloud/master
 Javen205/IJPay/dev
 JustryDeng/PublicRepository/master
@@ -370,7 +370,7 @@ mateusz-kolecki/rlock-sh/master
 sio/homelab/master
 b4b4r07/gomi/master
 kdabir/has/master
-suewonjp/lf.sh/master
+suewonjp/lf.sh/
 cal2195/q/master
 rauchg/spot/master
 vigneshwaranr/bd/master

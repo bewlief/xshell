@@ -27,27 +27,28 @@
 
 1. 克隆本repo
 
-2. 修改 $HOME/.bash_profile.sh，加入xbash-profile.sh的引用
+2. 以我的.bash_profile为例说明如何使用
+   1) 修改 $HOME/.bash_profile.sh，加入xbash-profile.sh的引用
 
-   ```shell
-   # global configuration file
-   export GLOBAL_INI="$HOME/xcodes/xops/xshell/config/global-xjming.ini"
+      ```shell
+      # global configuration file
+      export GLOBAL_INI="$HOME/xcodes/xops/xshell/config/global-xjming.ini"
    
-   xprofile=$HOME/xcodes/xops/xshell/xbash-profile.sh
-   [[ -f $xprofile ]] && source $xprofile
-   ```
+      xprofile=$HOME/xcodes/xops/xshell/xbash-profile.sh
+      [[ -f $xprofile ]] && source $xprofile
+      ```
 
-   + GLOBAL_INI：该变量指向系统全局变量 global-xjming.ini，实际上也是一个sh文件，用于设置一些全局变量
+      + GLOBAL_INI：该变量指向系统全局变量 global-xjming.ini，实际上也是一个sh文件，用于设置一些全局变量
 
-   + source $xprofile：调用了 xbash-profile.sh
+      + source $xprofile：调用了 xbash-profile.sh
 
-3. 重启git bash即可
+   2) 重启git bash即可
 
-## xops lib使用说明
+## xops lib代码介绍
 
 1. xops lib，指的是 /lib/下的sh文件，是我多年来写shell脚本的积累，大部分都是基于自己的实际需求而来，也参考了网上很多的代码实现。
 
-2. 不以x开头的.sh，是核心的代码，x*.sh则以核心库为基础。
+2. 不以x开头的.sh，是核心的代码，x*.sh则以核心库为基础。core.sh是其核心中的核心，必须引入！
 
    ### 库文件介绍
 
@@ -69,7 +70,7 @@
 
    + 实现了$PATH的添加、去重、移除
 
-     #### 如何导入：
+   #### 如何导入：
 
 ```shell
    function __xbash_init__() {
@@ -100,11 +101,19 @@
  + --
 
 
+# xlib使用举例
 ## 分享下我的开发环境设置
+其实xlib最初的目的是要构造一个脚本，用于快速的搭建起本地的开发环境。很多时候在重装系统后，各种软件的安装配置、环境配置等都是非常烦人的。
+
+后来又扩大到了mac系统上。
+
+综合考量之后，选择了git bash作为基础运行环境。因为git，这是必须要用的东西，而bash，则是linux下默认的shell。
+
 ### 基本目录结构
 有3个基本目录，都在$HOME/下，windows环境下，一般是 C:\Users\{your-account}\
 + /xsoft/
 尽量使用绿色化软件，除非像vmware workstation之类的必须安装的。
+下面是我收集的一些常用软件，包含很多命令行应用。
 ```shell
 .                                                                                  
 |-- Media                                                                          
@@ -119,8 +128,8 @@
 |   `-- translator                                                                 
 |-- bin                                                                            
 |   |-- DragExt64.dll                                                              
-|   |-- FileActivityWatch.exe                                                      
-。。。。。。                                                   
+|   |-- FileActivityWatch.exe                                                     
+......                                                   
 |   |-- xml.exe                                                                    
 |   |-- xxd.exe                                                                    
 |   |-- zip.exe                                                                    

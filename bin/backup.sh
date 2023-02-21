@@ -35,6 +35,7 @@ files=(
     "$HOME/.pip/pip.conf"
     "C:\Users\xjming\AppData\Roaming\pip\pip.ini"
     "$HOME/.bash_profile"
+    "$HOME/.bashrc"
     "$HOME/.profile"
     "$HOME/.minttyrc"
     "$HOME/.tmux.conf"

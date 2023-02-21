@@ -71,6 +71,8 @@ function loadGlobalVariables() {
 
     # 设置默认值
     export MY_CODES=${MY_CODES:-$HOME/xcodes}
+    # todo 应该将自己定义的变量与xlib需要的变量分开，并加以说明！
+    # 自定义变量不允许出现在xlib中！
     export PS1_GIT_STATUS=${PS1_GIT_STATUS:-false}
     export MY_OPS=${MY_OPS:-"$HOME/xcodes/xops"}
     export MY_DATA=${MY_DATA:-"$HOME/xdata"}
@@ -104,7 +106,9 @@ function setAppVariables() {
     if [[ "$BASE_OS" == "$MAC" ]]; then
         # todo 重新设置MY_SOFT，或可以设置为 $MY_SOFT/win | mac
         export MY_SOFT=$MY_SOFT
-        code() { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args "$@"; }
+
+        # if using vscode
+        vscode() { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args "$@"; }
     elif [[ "$BASE_OS" == "$WIN" ]]; then
         export MY_SOFT=$MY_SOFT
     fi
@@ -140,7 +144,7 @@ function setAppVariables() {
     PATH::add "$JAVA_HOME/bin"
     PATH::append "$SYSINTERNALS_ROOT"
     PATH::append "$XLIB_ORIGIN_PATH"
-    PATH::append "$MY_SOFT/documents/nppx64"
+    PATH::append "$MY_SOFT/documents/NotepadPro"
 }
 
 # 创建alias
@@ -148,7 +152,6 @@ function createAlias() {
 
     # todo codes,xsoft等应放到 ext/local.sh 中
     alias grep='grep -i -nE --color'
-    alias tf='$MY_SOFT/bin/terraform'
     alias codes='cdl $HOME/xcodes'
     alias xsoft='cdl $MY_SOFT'
     alias mybash="cdl $MY_BASH_HOME"
@@ -164,7 +167,6 @@ function createAlias() {
     alias dl="cdl $XDOWNLOAD"
 
     alias sudo="$MY_BASH_HOME/sudo.cmd"
-    alias vmrun="$MY_SOFT/bin/vmrun.exe"
 
     # figlet
     alias fl='figlet0 -f $HOME/xsoft/bin/flf/standard.flf '

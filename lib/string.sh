@@ -64,7 +64,7 @@ function string::length() {
 # isBlank <string>
 # s="ddd"; if string::isBalnk $s; then ...
 function string::isBlank() {
-    local length=$(string::length $1)
+    local length=$(string::length "$1")
     if [[ $length -gt 0 ]]; then
         return 1
     else

@@ -35,6 +35,14 @@ function __meta_init__() {
     alias xkill="meta::kill"
 }
 
+# reset to a clean bash shell
+# it will unload all user defined variables and functions
+function meta::reset(){
+    local bash=$(which bash)
+    warn "THIS WILL clear all user defined variables and reset to a clear $bash"
+    exec env --ignore-environment $bash
+}
+
 # 系统os类型：win, mac
 function meta::os() {
     # OS tag
@@ -66,7 +74,7 @@ function meta::os() {
     esac
 }
 
-# kill
+# kill by id for mac and win
 function meta::kill() {
     import math
 
