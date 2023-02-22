@@ -367,16 +367,18 @@ function PATH::append() {
     local l=$(length "$1")
 
     if [[ $l -gt 0 ]]; then
-        PATH::remove $1
-        export PATH="$PATH:$1"
+        local m=$(cygpath -u -a $1)
+        PATH::remove $m
+        export PATH="$PATH:$m"
     fi
 }
 function PATH::add() {
     local l=$(length "$1")
 
     if [[ $l -gt 0 ]]; then
-        PATH::remove $1
-        export PATH="$1:$PATH"
+        local m=$(cygpath -u -a $1)
+        PATH::remove $m
+        export PATH="$m:$PATH"
     fi
 }
 function PATH::remove() {

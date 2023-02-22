@@ -39,7 +39,7 @@ function __meta_init__() {
 # it will unload all user defined variables and functions
 function meta::reset(){
     local bash=$(which bash)
-    warn "THIS WILL clear all user defined variables and reset to a clear $bash"
+    warn "WARN: this will clear all user defined variables, reset to a clean env using $bash"
     exec env --ignore-environment $bash
 }
 

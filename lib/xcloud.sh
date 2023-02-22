@@ -20,12 +20,14 @@ function __xcloud_init__() {
     # set PATH for cloud
     PATH::append "$CLOUD_VMRUN"
     PATH::append "$CLOUD_AWS"
+    PATH::append "$CLOUD_AWS_SAM/bin"
     PATH::append "$CLOUD_BIN"
 
     # functions for k8s and cloud
     alias kc="kubectl.exe "
     alias tf="terraform.exe "
     alias hm='helm '
+    alias sam="$CLOUD_AWS_SAM/bin/sam.cmd "
 }
 
 # 先使用 kubectl -n nnnn
