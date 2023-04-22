@@ -126,7 +126,7 @@ ansi::color() {
     printf '%s38;5;%sm' "$ANSI_CSI" "$1"
 }
 
-ansi::colorCodes() {
+ansi::colors() {
     local code i j
 
     printf 'Standard: '

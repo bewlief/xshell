@@ -20,9 +20,16 @@ function __xwin_init__() {
     _set-win-global
 
     import string
+
+    # 添加windows的系统路径，git bash无法自动继承
+    # 而conemu下的bash是会自动继承的
+    PATH::add "$WINDIR"
+    PATH::add "$WINDIR/System32"
+    PATH::add "$WINDIR/System32/Wbem"
 }
 
 function _set-win-global() {
+    # 输出为：PID, PPID, PGID, WINPID, TTY, UID, STIME COMMAND，应使用WINPID
     alias ps='ps -W '
 }
 
@@ -32,12 +39,13 @@ function monitor() {
     if [[ -n $type ]]; then
         local MMT="$MY_BASH_HOME/win/_switch-monitor.bat"
         #    local MONITOR_CONFIG_ROOT=$MY_BASH/config/monitor
-
-        start $MMT $type &
+        local command="$MMT $type"
+        $command &
     else
         monitor::help
     fi
 }
+
 function monitor::help() {
     local c
 
@@ -74,8 +82,9 @@ function update-win-vars() {
 function nosleep() {
     import string
 
-    # start cscript "$MY_BASH/win/nosleep.vbs"
-    start $XLIB_BASE_PARENT/win/_no-sleep.bat
+    # bash下调用windows下的环境变量，把%{name}%替换为${name}即可
+    # start $XLIB_BASE_PARENT/win/_no-sleep.bast
+    start cmd /k cscript "$USERPROFILE/xcodes/xops/xshell/win/nosleep.vbs"
 
     ui::figlet "NO SLEEP"
     ui::banner "close the windows of cscript then sleep again"

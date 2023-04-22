@@ -10,25 +10,18 @@
 [[ -n $__XLIB_IMPORTED__MATH ]] && return 0
 __XLIB_IMPORTED_MATH=1
 
-function is-digit() {
-    # 引入core.sh
-    [[ -s $XLIB_CORE ]] && source "$XLIB_CORE" || {
-        local script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
-        source "$script_dir/core.sh"
-    }
+function __math_init__() {
+    local script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
+    source "$script_dir/core.sh"
 
-    # echo "$1" | [ -n "`sed -n '/^[0-9][0-9]*$/p'`" ] && echo 1
-
-    #     if grep '^[[:digit:]]*$' <<< "$1";then
-    #  echo "$1 is number."
-    # else
-    #  echo 'no.'
-    # fi
-
-    echo "$1" | awk '{print($0~/^[-]?([0-9])+[.]?([0-9])+$/)?"1":"0"}'
 }
 
-function abs() {
+function math::is-digit() {
+    local input="$1"
+    echo "$input" | grep -qE '^[0-9]+([.][0-9]+)?$' && echo 1 || echo 0
+}
+
+function math::abs() {
     #    [[ $[ $@ ] -lt 0 ]] && echo "$[ ($@) * -1 ]" || echo "$[ $@ ]"
     echo ${1#-}
 }
@@ -38,17 +31,19 @@ function abs() {
 # Floor    2      1       3
 # Ceil     2      2       4
 # halfup   2      2       3
-function ceil() {
+function math::ceil() {
     # using bc
     #    echo "($1 + $2 - 1)/$2" | bc
 
     # pure bash
     echo $((($1 + $2 - 1) / $2))
 }
+
 function floor() {
     echo $((($1 / $2)))
 }
-function halfup() {
+
+function math::halfup() {
     echo $(((($1 + $2 / 2) / $2)))
 }
 
@@ -57,7 +52,7 @@ function halfup() {
 #   see http://en.wikipedia.org/wiki/Arithmetic-geometric_mean
 
 #@public
-function bashlets::core::math::mean::agm() {
+function mean::agm() {
     local a=${1:-0} b=${2:-0}
     local tol=${3:-.0001}
 
@@ -86,20 +81,31 @@ function bashlets::core::math::mean::agm() {
     '
 }
 
-#@public
-function bashlets::core::math::integer::abs() {
-    local value="$1"
-    local opposite
-    $BASHLETS_NAMESPACE integer validate "$value" || return 1
-    opposite="$((-1 * value))"
-    [[ $value -ge $opposite ]] && echo "$value" || echo "$opposite"
+# 计算整数的绝对值
+# 参数：
+# $1: 整数值
+# 返回值：
+# 整数的绝对值，如果参数不是整数则返回 1
+function integer::abs() {
+    local number="$1"
+
+    # 验证参数是否为整数
+    if ! [[ "$number" =~ ^-?[0-9]+$ ]]; then
+        echo "请输入一个整数值"
+        return 1
+    fi
+
+    # 计算绝对值
+    if ((number < 0)); then
+        echo $((-number))
+    else
+        echo $number
+    fi
 }
 
-#@public
-function bashlets::core::math::integer::sign() {
+function integer::sign() {
     local value="$1"
     local opposite
-    $BASHLETS_NAMESPACE integer validate "$value" || return 1
     [[ $value -eq 0 ]] && {
         echo 0
         return
@@ -108,11 +114,8 @@ function bashlets::core::math::integer::sign() {
     [[ $value -ge $opposite ]] && echo 1 || echo -1
 }
 
-#@public
-function bashlets::core::math::integer::get_unique_factors() {
+function integer::get_unique_factors() {
     local pass_0
-
-    $BASHLETS_NAMESPACE integer validate "$value" || return 1
 
     declare -i n="$1"
     declare -i sign=1
@@ -143,7 +146,7 @@ function bashlets::core::math::integer::get_unique_factors() {
 #
 
 #@public
-function bashlets::core::math::integer::modular_pow() {
+function integer::modular_pow() {
     local base=$1 expon=$2 mod=$3
 
     $BASHLETS_NAMESPACE integer validate $base || return 1
@@ -176,7 +179,7 @@ function bashlets::core::math::integer::modular_pow() {
 }
 
 #@public
-function bashlets::core::math::icomplex::to_real() {
+function icomplex::to_real() {
     declare w="$1"
     (
         IFS=":"
@@ -186,7 +189,7 @@ function bashlets::core::math::icomplex::to_real() {
 }
 
 #@public
-function bashlets::core::math::icomplex::to_img() {
+function icomplex::to_img() {
     declare w="$1"
     (
         IFS=":"
@@ -196,7 +199,7 @@ function bashlets::core::math::icomplex::to_img() {
 }
 
 #@public
-function bashlets::core::math::icomplex::to_s() {
+function icomplex::to_s() {
     declare w="$1"
     declare -i real img
 
@@ -207,7 +210,7 @@ function bashlets::core::math::icomplex::to_s() {
 }
 
 #@public
-function bashlets::core::math::icomplex::compare() {
+function icomplex::compare() {
     declare w="$1" z="$2"
     declare -i w_real w_img z_real z_img
 
@@ -315,3 +318,5 @@ function icomplex::square() {
 
     icomplex::multiply "$w" "$w"
 }
+
+__math_init__

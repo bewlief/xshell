@@ -18,7 +18,6 @@ function __xcloud_init__() {
     }
 
     # set PATH for cloud
-    PATH::append "$CLOUD_VMRUN"
     PATH::append "$CLOUD_AWS"
     PATH::append "$CLOUD_AWS_SAM/bin"
     PATH::append "$CLOUD_BIN"
@@ -28,30 +27,57 @@ function __xcloud_init__() {
     alias tf="terraform.exe "
     alias hm='helm '
     alias sam="$CLOUD_AWS_SAM/bin/sam.cmd "
+
+    # using alpine/dfimage to check history of a docker image
+    # usage: dfimage -sV=1.36 docker.io/sonarqube:v1.0.0
+    alias dfimage="docker run -v /var/run/docker.sock:/var/run/docker.sock --rm alpine/dfimage"
 }
 
-# 先使用 kubectl -n nnnn
-# 然后就可以使用 k 去操作，不用再输入namespace
-# 要切换到其他namespace，则使用 kubectl -n mmmm 操作下
-function k() {
-    local cmdline=$(HISTTIMEFORMAT="" history | awk '$2 == "kubectl" && (/-n/ || /--namespace/) {for(i=2;i<=NF;i++)printf("%s ",$i);print ""}' | tail -n 1)
-    local regs=('\-n [\w\-\d]+' '\-n=[\w\-\d]+' '\-\-namespace [\w\-\d]+' '\-\-namespace=[\w\-\d]+')
-    for i in "${!regs[@]}"; do
-        local reg=${regs[i]}
-        local nsarg=$(echo $cmdline | \grep -o -P "$reg")
-        if [[ "$nsarg" == "" ]]; then
-            continue
+#---------- k8s ---------#
+function xkc(){
+    #
+    local count=${#@}
+    if [[ $count -gt 0 ]]; then
+        if [[ "$1" == "-n" ]]; then
+            _kc_set_namespace "$2"
+            info "kubectl: set default namespace=$2"
+        elif [[ "$1" == "--kubeconfig" ]]; then
+            if [[ -f "$2" ]]; then
+                _kc_set_config "$2"
+                info "kubectl: set config to $2"
+            else
+                error "kubectl: config file not existing: $2"
+            fi
         fi
-        local cmd="kubectl $nsarg $@"
-        echo "$cmd"
-        $cmd
-        return
-    done
-    cmd="kubectl $@"
-    echo "$cmd"
-    $cmd
+    fi
 }
 
+function _kc_set_config(){
+    export KUBECONFIG="$1"
+}
+
+# 设置默认的namespace
+function _kc_set_namespace(){
+    export KUBE_DEFAULT_NAMESPACE="$1"
+    kubectl config set-context --current --namespace=$KUBE_DEFAULT_NAMESPACE
+}
+function _kc_config(){
+    echo "list current kubectl config/default namespace"
+}
+
+# 查询 namespace=$1 中的 name包含$2的完整的pod name
+# todo 
+function kc::get-pod-name(){
+    echo "search in namespace [ $1 ], pod for [ $2 ]"
+    # 默认的namespace？
+    echo $(kubectl get pods --namespace $1 -l "app.kubernetes.io/name=$2,app.kubernetes.io/instance=$2" -o jsonpath="{.items[0].metadata.name}")
+}
+
+function kc::set-default-namespace(){
+    kubectl config set-context --current --namespace=${1:-default}
+}
+
+#---------- PCF ---------#
 # 刷新PCF设置，从PCF_API_ORGS读取
 # PCF_API_ORGS格式： env, api url, orgs list, default space
 function cf-config() {
@@ -243,4 +269,14 @@ function cf-in() {
     fi
 }
 
+#---------- aws ---------#
+function ssha(){
+    if [[ -n "$1" ]]; then
+        local cmd="$(which ssh) -i /d/Download/aws/vm1_key_pair.pem ec2-user@$1";
+        echo "---> $cmd"
+        eval "$cmd"
+    else
+        error "target hostname cannot be null!"
+    fi
+}
 __xcloud_init__

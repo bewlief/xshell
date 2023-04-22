@@ -46,7 +46,7 @@ function __lock_init__() {
 }
 
 # 获取loc，不成功则直接退出
-lock::lock() {
+function lock::lock() {
     if create_lock $1; then
         check_execution "acquire lock"
         lock_log "Created $1 lock."
@@ -59,7 +59,7 @@ lock::lock() {
 # 获取loc，不成功则一直等待
 # spinlock "dd" 20
 # dd: lock name, 20: second, timeout
-lock::spinlock() {
+function lock::spinlock() {
     local max=${2:-3}
     echo "max waittime: $max"
 
@@ -80,7 +80,7 @@ lock::spinlock() {
     done
 }
 
-create_lock() {
+function create_lock() {
     check_lock_dir
     (
         set -o noclobber
@@ -94,7 +94,7 @@ function lock::release() {
     check_execution "release lock"
 }
 
-check_for_locks() {
+function check_for_locks() {
     shopt -s nullglob
 #    if [[ ($LOCK_DIR/*.lock) ]]; then
     local f
@@ -105,7 +105,7 @@ check_for_locks() {
     shopt -u nullglob
 }
 
-check_lock_dir() {
+function check_lock_dir() {
     if [ ! -d $LOCK_DIR ]; then
         lock_log "Creating lock directory: $LOCK_DIR"
         mkdir -p $LOCK_DIR
@@ -113,14 +113,14 @@ check_lock_dir() {
     fi
 }
 
-check_execution() {
+function check_execution() {
     if [ $? -ne 0 ]; then
         lock_log "Could not $1, exiting."
         exit 2
     fi
 }
 
-lock_log() {
+function lock_log() {
     if [ ! "$SILENT" == true ]; then
         local datetime=$(date +"%Y-%m-%d %H:%M:%S")
         printf "$datetime - Keyway: $1\n"

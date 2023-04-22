@@ -21,7 +21,7 @@ __XLIB_IMPORTED__META=1
 function __meta_init__() {
     # 引入core.sh
     [[ -s $XLIB_CORE ]] && source "$XLIB_CORE" || {
-        local script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
+        local script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null 2>&1 && pwd -P)
         source "$script_dir/core.sh"
     }
 
@@ -37,10 +37,11 @@ function __meta_init__() {
 
 # reset to a clean bash shell
 # it will unload all user defined variables and functions
-function meta::reset(){
+function meta::reset() {
     local bash=$(which bash)
-    warn "WARN: this will clear all user defined variables, reset to a clean env using $bash"
-    exec env --ignore-environment $bash
+    warn "this will clear all user-defined variables and reset to a clean env using $bash"
+    #    exec env --ignore-environment $bash
+    exec env -i $bash --login
 }
 
 # 系统os类型：win, mac
@@ -55,7 +56,7 @@ function meta::os() {
 
     local os=$(uname -s)
     # NOTE 转小写 ${os,}：仅小写首字符
-    os=$(echo ${os,,})
+    os=$(echo "${os,,}")
 
     # 设置全局变量 BASE_OS
     case "$os" in
@@ -65,7 +66,7 @@ function meta::os() {
     $_win* | $_cygwin*)
         export BASE_OS="$WIN"
         ;;
-    $_solaris* | $_linux*)
+    $_solaris* | $_sun* | $_linux*)
         export BASE_OS="$LINUX"
         ;;
     *)
@@ -76,26 +77,42 @@ function meta::os() {
 
 # kill by id for mac and win
 function meta::kill() {
-    import math
+    local pids=("$@")
+    local invalid_pids=()
+    for pid in "${pids[@]}"; do
+        local is_digit=$(echo "$pid" | \grep -E "^[0-9]+$" | wc -l)
+        echo "valid: $pid -> $is_digit"
+        if [[ "$is_digit" == "1" ]]; then
+            if [[ "$BASE_OS" == "MAC" ]]; then
+                kill -9 "$pid"
+            else
+                cmd "/C taskkill /F /PID $pid"
+            fi
+        else
+            echo "invalid pid: $pid"
+            invalid_pids+=("$pid")
+        fi
+    done
 
-    # 判断是数字还是字符串
-    local d=$(is-digit "$1")
-    if [[ "$d" == "1" ]]; then
-        if [[ "$BASE_OS" == "MAC" ]]; then
-            # kill -9 $pid
-            echo "mac, using kill"
-        else
-            cmd "/C taskkill /F /PID $1"
-        fi
-    else
-        if [[ "$BASE_OS" == "MAC" ]]; then
-            kill -9 $pid
-        else
-            cmd "/C taskkill /F /PID $1"
-        fi
+    if [[ ${#invalid_pids[@]} -gt 0 ]]; then
+        echo "Invalid PIDs: ${invalid_pids[*]}"
     fi
+}
 
-    # todo 传入多个进程id
+# monitor a command per 2 sec
+# monitor "date -s" [2]
+function monitor() {
+    local cmd="$1"
+    local interval="${2-2}"
+    while true; do
+        local s=$(
+            { $cmd 2>&1 & }
+            echo $!
+        )
+        echo "$s"
+        echo ""
+        sleep $interval
+    done
 }
 
 # NOTE 查找一个function所来源于的shell
@@ -109,13 +126,20 @@ function meta::from() {
 }
 
 # 列出所有变量
-function meta::vars(){
-    # {$1=$2="";print $0;}: 打印第3及之后的列
-    declare -p |\grep -i -E "declare \-A|declare \-a|declare \-r" | \grep -v "\-\-" | awk -F' ' '{$1=$2="";print $0;}'
+function meta::vars() {
+    #    declare -p | \grep -i -E "declare \-A|declare \-a|declare \-r" | \grep -v "\-\-" | awk -F' ' '{$1=$2="";print $0;}'
+    declare -p |
+        # 查找包含 declare -A、declare -a 或 declare -r 的行
+        awk '/declare -(A|a|r)/ {
+            # 去掉开头的前两个字段
+            sub(/^[^ ]+ [^ ]+ /, "");
+            # 打印变量名和值
+            print
+        }'
 }
 
 # 列出所有定义的function
-function meta::funcs() {
+function meta::functions() {
     if [[ -f "$1" ]]; then
         meta::_funcs-file "$1"
     else
@@ -127,6 +151,7 @@ function meta::funcs() {
 # declarations="$(functions)"
 function meta::_funcs-mem() {
     declare -F | cut --delimiter ' ' --fields 3
+    # todo a switch: only_functions
     $only_functions || declare -p | \grep '^declare' |
         cut --delimiter ' ' --fields 3 - | cut --delimiter '=' --fields 1 | sort --unique
 }
@@ -141,22 +166,23 @@ function meta::_funcs-file() {
     #    declare -F | awk '{print $NF}' | sort | egrep -v "^_"
 }
 
-# in git bash, change path from posix to windows
-function path2win() {
-    local path=$1
-    echo "$path" | sed -e 's/^\///' -e 's/\//\\/g' -e 's/^./\0:/'
-
-    # cygpath -w $1
-}
-
 # Check if any of $pid (could be plural) are running
 function check-pid() {
-    local i
-
-    for i in $*; do
-        [ -d "/proc/$i" ] && return 0
+    local not_found=()
+    for pid in "$@"; do
+        if [ -d "/proc/$pid" ]; then
+            continue
+        else
+            not_found+=("$pid")
+        fi
     done
-    return 1
+    if [ ${#not_found[@]} -eq 0 ]; then
+        echo "All PIDs exist"
+        return 0
+    else
+        echo "The following PIDs do not exist: ${not_found[*]}"
+        return 1
+    fi
 }
 
 # mcd <new dir name>
@@ -183,7 +209,7 @@ function meta::aliases() {
     alias | grep '^alias' | cut --delimiter ' ' --fields 2 - | cut --delimiter '=' --fields 1
 }
 
-sleep_until() {
+function sleep_until() {
     # <doc:sleep_until>
     #
     # Causes the running process to wait until the given date.
@@ -224,7 +250,7 @@ function run_as_root() {
 # http://unix.stackexchange.com/a/41388/19157
 # TODO try http://joeyh.name/code/moreutils/ on Cygwin and just wrap chronic
 # if it's on the PATH.
-quiet_success() {
+function quiet_success() {
     local output
     output=$(eval "$*" 2>&1)
     local ret=$?
@@ -242,6 +268,42 @@ function is() {
     local value_a="$2"
     local value_b="$3"
 
+    echo "--- $condition, $value_a, $value_b"
+    if [ "$condition" == "--help" ]; then
+        cat <<EOF
+    Conditions:
+      is equal VALUE_A VALUE_B
+      is matching REGEXP VALUE
+      is substring VALUE_A VALUE_B
+      is empty VALUE
+      is number VALUE
+      is gt NUMBER_A NUMBER_B
+      is lt NUMBER_A NUMBER_B
+      is ge NUMBER_A NUMBER_B
+      is le NUMBER_A NUMBER_B
+      is file PATH
+      is dir PATH
+      is link PATH
+      is existing PATH
+      is readable PATH
+      is writeable PATH
+      is executable PATH
+      is available COMMAND
+      is older PATH_A PATH_B
+      is newer PATH_A PATH_B
+      is true VALUE
+      is false VALUE
+
+    Negation:
+      is not equal VALUE_A VALUE_B
+
+    Optional article:
+      is not a number VALUE
+      is an existing PATH
+      is the file PATH
+EOF
+    fi
+
     if [ "$condition" == "not" ]; then
         shift 1
         ! is "${@}"
@@ -256,6 +318,7 @@ function is() {
 
     case "$condition" in
     file)
+        echo "--- check if a file, $value_a"
         [ -f "$value_a" ]
         return $?
         ;;
@@ -352,8 +415,8 @@ function is() {
         ;;
     # todo 无法处理 string::length 这样的函数！
     function)
-#        meta::is-function "$value_a"
-#        return $?
+        #        meta::is-function "$value_a"
+        #        return $?
         [[ "$value_a" == $(meta::is-function "$value_a") ]]
         return $?
         ;;
@@ -375,16 +438,16 @@ function core::is-defined() {
             ' == "this_variable_is_undefined_!!!" ]]'
         #        exit $?
         echo TRUE
-#        return $?
+        #        return $?
     fi
 }
 
 # 判断函数是否被定义
 # is-function <function-name>
 # 返回函数名表示已定义，为空则未定义
-meta::is-function() {
+function meta::is-function() {
     echo "$(declare -F "$1")"
-#    declare -F "$1"
+    #    declare -F "$1"
 }
 
 # 复制函数到新的函数，名称前面加上前缀
@@ -437,7 +500,6 @@ function meta::wrap() {
     done
 }
 
-
 # 脚本命令行参数处理
 # Example usage:
 # foo() {
@@ -455,12 +517,21 @@ function meta::wrap() {
 # b: 长参数，需要传值过来
 function meta::getopts() {
     local i char last_char var vars=() optstring=${1:-} min_args=${2:-0} max_args=${3:-}
-    optstring="${optstring#:}" # ensure string is not prefixed with :
-    if ! [[ "$optstring" =~ ^[a-zA-Z0-9:]*$ ]] || [[ "$optstring" == *::* ]]; then
-        error "Invalid optstring: $optstring"
-        echo 'return 2' # for eval-ing
+
+    # Ensure optstring is not empty and not prefixed with a colon
+    if [[ -z "$optstring" ]] || [[ "$optstring" == :* ]]; then
+        echo "Invalid optstring: $optstring" >&2
         return 2
     fi
+
+    # ensure string is not prefixed with :
+    optstring="${optstring#:}"
+    if ! [[ "$optstring" =~ ^[a-zA-Z0-9:]*$ ]] || [[ "$optstring" == *::* ]]; then
+        echo "Invalid optstring: $optstring"
+#        echo 'return 2' # for eval-ing
+        return 2
+    fi
+
     for ((i = ${#optstring} - 1; i >= 0; i--)); do
         char=${optstring:i:1}
         if [[ "$char" != ":" ]]; then
@@ -528,6 +599,5 @@ function _getopts_helper() {
         return 2
     fi
 }
-
 
 __meta_init__

@@ -4,11 +4,11 @@ rem cannot use Chinese words !!!
 
 setx -m "JAVA_HOME" "%USERPROFILE%\xsoft\dev\sdk\jdk\jdk11"
 setx -m "GRADLE_HOME" "%USERPROFILE%\xsoft\dev\build\gradle"
-setx -m "GRADLE_USER_HOME" "C:\Temp\repos"
+setx -m "GRADLE_USER_HOME" "D:\Download\aaaa\app-temp\repos"
 setx -m "EXE4J_JAVA_HOME" %JAVA_HOME%
 setx -m "GROOVY_HOME" "%USERPROFILE%\xsoft\dev\sdk\groovy"
 setx -m "GOROOT" "%USERPROFILE%\xsoft\dev\sdk\go"
-setx -m "GOPATH" "%USERPROFILE%\xcodes\mygo"
+rem setx -m "GOPATH" "%USERPROFILE%\xcodes\mygo"
 
 set DEFAULT_TEMP="C:\Temp\winTemp"
 setx -m "TEMP" "%DEFAULT_TEMP%"

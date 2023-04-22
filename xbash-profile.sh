@@ -83,6 +83,7 @@ function loadGlobalVariables() {
     export MAVEN_REPOSITORY=${MAVEN_REPOSITORY:-"$HOME/.m2/repository"}
     export MAVEN_OPTS=${MAVEN_OPTS_STR:-"-Xms512m -Xmx2G -Dfile.encoding=UTF-8"}
     export XLIB_EDITOR=${XLIB_EDITOR:-"vi"}
+    export MY_VMWARE_GROUPS=${MY_VMWARE_GROUPS:-""}
 
     #
     export MY_SOFT=$HOME/xsoft
@@ -97,6 +98,9 @@ function loadGlobalVariables() {
     export MY_BASH_HOME="$MY_OPS/xshell"
 
     export SYSINTERNALS_ROOT="$MY_SOFT/system/sysinternals"
+
+    # go
+    export GOPROXY=https://goproxy.cn
 
 }
 
@@ -138,13 +142,18 @@ function setAppVariables() {
     #     jdk $DEFAULT_JDK_VERSION
 
     # todo 判断 PATH::add等函数是否有效
-    local MY_PATH=$PYTHON_HOME:$MY_SOFT/bin:$MY_BASH_HOME:$MAVEN_HOME/bin:$GIT_HOME/bin:$GRADLE_HOME/bin:$VSCODE_HOME/bin
+    local MY_PATH="$PYTHON_HOME:$MY_SOFT/bin:$MY_BASH_HOME:$MAVEN_HOME/bin:$GIT_HOME/bin:$GRADLE_HOME/bin:$VSCODE_HOME/bin"
 
     PATH::add "$MY_PATH"
     PATH::add "$JAVA_HOME/bin"
     PATH::append "$SYSINTERNALS_ROOT"
     PATH::append "$XLIB_ORIGIN_PATH"
-    PATH::append "$MY_SOFT/documents/NotepadPro"
+    PATH::append "$MY_SOFT/documents/npp"
+
+    export CARGO_HOME="/c/Users/xjming/xsoft/dev/rust/cargo"
+    export RUSTUP_HOME="/c/Users/xjming/xsoft/dev/rust/rustup"
+    PATH::append "$CARGO_HOME/bin"
+    PATH::append "$RUSTUP_HOME/toolchains/stable-x86_64-pc-windows-gnu/bin"
 }
 
 # 创建alias
@@ -175,15 +184,10 @@ function createAlias() {
 
 function main() {
     loadGlobalVariables
-
     setAppVariables
-
     importCommonFunctions
-
     loadExt
-
     createAlias
-
     setPS1
 }
 

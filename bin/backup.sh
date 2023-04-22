@@ -37,6 +37,7 @@ files=(
     "$HOME/.bash_profile"
     "$HOME/.bashrc"
     "$HOME/.profile"
+	"$HOME/.cargo"
     "$HOME/.minttyrc"
     "$HOME/.tmux.conf"
     "$HOME/.sdirs"
@@ -82,6 +83,8 @@ files=(
     "C:\Users\xjming\xopensource\xjenkins\.git\config"
     "C:\Users\xjming\xsoft\documents\nppx64\config.xml"
     "C:\Users\xjming\xsoft\documents\nppx64\session.xml"
+    "C:\Users\xjming\xsoft\documents\NotepadPro\config.xml"
+    "C:\Users\xjming\xsoft\documents\NotepadPro\session.xml"
 )
 
 OLD_IFS="$IFS"

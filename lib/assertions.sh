@@ -40,21 +40,23 @@ function assert::bash-version() {
 # arg-count <actual> <expected> [message]
 # 校验入参个数
 function assert::arg-count() {
-    local actual=$1 expected=$2 message=$3
-    ((actual != expected)) && {
-        [[ $message ]] || message="Expected $expected arguments, got $actual arguments"
+    local actual=$1
+    local expected=$2
+    local message=${3:-"Expected $expected arguments, got $actual arguments"}
+    ((actual == expected)) || {
         error "$message"
         exit $INVALID_ARGUMENTS
     }
-    return 0
+#    return 0
 }
 
 # regex <string> <regex> [message]
 # 校验字符串是否符合指定的正则表达式
 function assert::regex-match() {
-    local string=$1 regex=$2 message=$3
+    local string=$1
+    local regex=$2
+    local message=${3:-"String '$string' does not match regex '$regex'"}
     [[ $string =~ $regex ]] || {
-        [[ $message ]] || message="String '$string' does not match regex '$regex'"
         error "$message"
         exit $STRING_REGX_NOT_MATCH
     }
@@ -66,10 +68,12 @@ function assert::regex-match() {
 # defined "s": s:变量名称，非 $s
 # defined -f: 不存在时强制exit
 function assert::defined() {
-    local fatal var num_null=0
+    local fatal
+    local var
+    local num_null=0
     [[ "$1" = "-f" ]] && {
-        shift
         fatal=1
+        shift
     }
     for var in "$@"; do
         [[ -z "${!var}" ]] && printf '%s\n' "Variable '$var' not set" >&2 && ((num_null++))

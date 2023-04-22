@@ -158,7 +158,7 @@ function handleGitSite() {
     # 仅刷新输入的类目: -t shell,jenkins,java
     if [[ ${TAGS^^} == "ALL" ]]; then
         # 读取要刷新的repo一级目录，即 TAGS
-        cates=($(readIniItems $REPO_CONFIG "cates"))
+        cates=($(string::ini::readIniItems $REPO_CONFIG "cates"))
     else
         cates=($(string::split "$TAGS" ","))
     fi
@@ -185,7 +185,7 @@ function handleGitCate() {
     echo "#$cate" >>$SSH_FILE
 
     # 获取该目录下的所有repo，循环刷新
-    local repos=($(readIniItems $config "$cate"))
+    local repos=($(string::ini::readIniItems $config "$cate"))
     repos=($(array::remove-dups "${repos[@]}"))
     log::debug "$cate --- ${repos[@]}"
 
@@ -472,7 +472,7 @@ function show-status() {
 declare -A -g gitHosts
 function loadSitesConfig() {
     # 从 REPO_CONFIG 中读取 [hosts] 下配置的site=host
-    local hosts=($(readIniItems $REPO_CONFIG "hosts"))
+    local hosts=($(string::ini::readIniItems $REPO_CONFIG "hosts"))
 
     log::debug "load hosts config from $REPO_CONFIG -> ${hosts[@]}"
 

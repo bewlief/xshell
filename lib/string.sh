@@ -44,7 +44,25 @@ function string::random() {
 function string::randomq() {
     local max=${1:-6}
     [[ $max -gt 32 ]] && max=32
-    echo $RANDOM | md5sum | cut -c 1-$max
+    # echo $RANDOM | md5sum | cut -c 1-$max
+
+    # from chatgpt
+    # openssl rand -hex $((max / 2 + 1)) | tr -d '\n' | cut -c -$max
+
+    # from chatgpt
+    </dev/urandom tr -dc 'a-zA-Z0-9' | head -c${max} | xargs
+
+    # 下面是2种方式的测试比较：
+    # 输出表头
+    # printf "| %10s | %16s | %16s |\n" "" "string::randomq1" "string::randomq2"
+
+    # 循环测试
+    # for i in {1..10}; do
+    #   output=$(printf "| Round %-4d ", $i)
+    #   output+="| $(TIMEFORMAT='real:%R, user:%U'; time string::randomq1 2>&1 >/dev/null)"
+    #   output+="| $(TIMEFORMAT='real:%R, user:%U'; time string::randomq2 2>&1 >/dev/null)"
+    #   printf "%s\n" "$output |"
+    # done
 }
 
 # lower ARG
@@ -279,7 +297,7 @@ function string::join() {
 }
 # 连接数组中的各元素
 # 可使用多char的分隔符
-function string::joins(){
+function string::join(){
     local s
     local split="$1"
     shift
@@ -364,36 +382,18 @@ function string::split2() {
 # repeat <string> [length]
 # repeat $1 $2: $1=字符串，$2=重复次数
 function string::repeat() {
-    # char=$1
-    # num=$2
-    # printf "%-${num}s\n" | sed "s/\s/$char/g"
+    local char="${1:- }"
+    local num="${2:-$((COLUMNS-3))}"
 
-    local OLD_IFS="$IFS"
-    IFS=$IFS_MINE
+    # 过长时，设置为当前屏幕长度
+    # local total_length=$((num * ${#char}))
+    # if ((total_length > COLUMNS)); then
+    #     num=$((COLUMNS / ${#char}))
+    # fi
 
-    local N
-    local R
-    local R=" "
-    local N=$(($COLUMNS-3))
-
-    R=${1:-" "}
-    N=${2:-$N}
-
-    while true; do
-        ((N -= 1))
-        [[ $N -ge 0 ]] || break
-        R+=$1
-    done
-    echo "$R"
-
-    IFS="$OLD_IFS"
+    printf -v result "%*s" "$num" ""
+    echo "${result// /$char}"
 }
-
-# 水平分割线，默认为*，全屏长度
-function ui::hr() {
-    string::repeat "${1:-"-"}"
-}
-
 
 # zconfig.yml:
 # development:
@@ -405,28 +405,31 @@ function ui::hr() {
 #   address: ddddd
 #     add1: addddddd
 
-# 去除字符串两头的空格
-#  trim "$d" 注意双引号括起来！
+# 仅去除字符串两头的空格
+# trim "$d" 注意双引号括起来！
 function string::trim() {
-    local var=$1
-    echo "${var}" | awk '{gsub(/^ +| +$/,"")} {print $0}'
+    # 使用了两个命令和一个管道+awk 命令，
+    # 相对来说比较耗费系统资源
+    # local var=$1
+    # echo "${var}" | awk '{gsub(/^ +| +$/,"")} {print $0}'
+
+    # 去除头部空格
+    local var="${1#"${1%%[![:space:]]*}"}"
+
+    # 去除尾部空格
+    echo "${var%"${var##*[![:space:]]}"}"
 }
 
-# 移除所有空格
-# var="'Hello', \"World\""
-# trim_quotes "$var" -> Hello,World
+# 移除所有空格，包括中间的空格在内
 function string::trimAll() {
-    # Usage: trim_all "   example   string    "
-    set -f
-    set -- $*
-    printf '%s\n' "$*"
-    set +f
+    local var="$*"
+    echo "${var// /}"
 }
 
 #$ var="'Hello', \"World\""
 #$ trim_quotes "$var"
 #Hello, World
-trim_quotes() {
+function string::trim-quotes() {
     # Usage: trim_quotes "string"
     : "${1//\'/}"
     printf '%s\n' "${_//\"/}"
@@ -562,9 +565,10 @@ function string::endWith() {
 # c=user3/repo1
 # d=user4/repo2
 
-# readSectionField 1.repo jenkins a
-# 读取1.repo中的[jenkins]部分的key=a的值
-function readSectionField() {
+# s=$(readSectionField 1.repo jenkins a)
+# 读取1.repo中的[jenkins]的key=a的值
+# key重复时读取第一个，其他忽略掉
+function string::ini::readSectionField() {
     local INIFILE=$1
     local SECTION=$2
     local ITEM=$3
@@ -573,23 +577,10 @@ function readSectionField() {
     echo ${_readIni}
 }
 
-# load section from ini format
-# todo 怎么用的？？？
-function readIniKeyValue() {
-    if [ "$#" -eq "2" ] && [ -f "$1" ] && [ -n "$2" ]; then
-        local INIFILE=$1
-        local SECTION=$2
-        local ITEM=$3
-        local _readIni=$(awk -F '=' '/\['$SECTION'\]/{a=1}a==1&&$1~/'$ITEM'/{print $2;exit}' $INIFILE)
-        echo ${_readIni}
-    else
-        echo ""
-    fi
-}
-
-# readRepos 1.repo jenkins
+# dataArray=($(readIniItems 1.repo jenkins))
 # 读取 1.repo 中，[jenins]部分的所有item
-function readIniItems() {
+# 1.repo的第一行需要为空行或写点注释，不能是[je]！
+function string::ini::readIniItems() {
     local CONFIG=$1
     local SECTION=$2
     if [[ -e $CONFIG ]]; then
@@ -598,7 +589,7 @@ function readIniItems() {
 
         # 去掉 ;和#开头的元素
         declare -a newvv=(${vv[@]/[;#]*/})
-        # echo "${vv[@]}"
+#         echo "${vv[@]}"
         echo "${newvv[@]}"
     else
         echo ""
@@ -606,7 +597,7 @@ function readIniItems() {
 }
 
 # Get INI section
-function readIniSections() {
+function string::ini::readIniSections() {
     local filename="$1"
     gawk '{ if ($1 ~ /^\[/) section=tolower(gensub(/\[(.+)\]/,"\\1",1,$1)); configuration[section]=1 } END {for (key in configuration) { print key} }' ${filename}
 }
@@ -693,59 +684,58 @@ function string::field() {
     printf -- "%s" "$_str"
 
 }
-
-# below are from: D:\Download\aaaa\free\shell\acmesh-official\acme.sh\acme.sh
-
-function string::char2dec() {
-    local _ch=$1
-    case "${_ch}" in
-    a | A)
-        printf "10"
-        ;;
-    b | B)
-        printf "11"
-        ;;
-    c | C)
-        printf "12"
-        ;;
-    d | D)
-        printf "13"
-        ;;
-    e | E)
-        printf "14"
-        ;;
-    f | F)
-        printf "15"
-        ;;
-    *)
-        printf "%s" "$_ch"
-        ;;
-    esac
-}
-
-# todo how to use?
-function string::ord() {
-    local __string__VAR="$1"
-    local __string__CHAR="$2"
-
-    printf -v "$__string__VAR" '%d' "'$__string__CHAR"
-}
-
-function string::ascii2hex() {
-    _str="$1"
-    _str_len=${#_str}
-    _h_i=1
-    while [ "$_h_i" -le "$_str_len" ]; do
-        _str_c="$(printf "%s" "$_str" | cut -c "$_h_i")"
-        printf " %02x" "'$_str_c"
-        _h_i=$(($_h_i + 1))
-    done
-}
 #a + b
 _math() {
     _m_opts="$@"
     printf "%s" "$(($_m_opts))"
 }
+
+# below are from: D:\Download\aaaa\free\shell\acmesh-official\acme.sh\acme.sh
+
+function string::char2dec() {
+    local _ch=$1
+    declare -A char2dec=(
+        [a]=10
+        [A]=10
+        [b]=11
+        [B]=11
+        [c]=12
+        [C]=12
+        [d]=13
+        [D]=13
+        [e]=14
+        [E]=14
+        [f]=15
+        [F]=15
+    )
+    printf "%s" "${char2dec[$_ch]:-$_ch}"
+}
+
+# 把字符转换为ASCII码值
+function string::ord() {
+    if [[ $# -ne 1 ]]; then
+        echo "Usage: string::ord " >&2
+        return 1
+    fi
+
+    local char="$1"
+
+    if [[ ${#char} -ne 1 ]]; then
+        echo "Error: must be a single character" >&2
+        return 1
+    fi
+
+    printf '%d' "'$char"
+}
+
+# 字符串转为十六进制串，如"Hello" -> "48 65 6c 6c 6f"
+function string::ascii2hex() {
+    local str="$1"
+    for (( i=0; i<${#str}; i++ )); do
+        printf " %02x" "'${str:i:1}"
+    done
+}
+
 
 
 # 对空格分割的字符串中的元素进行排序
@@ -820,26 +810,60 @@ function array::is() {
 # *************** ui *************** #
 # 打印ascii图标
 function ui::icon() {
-    local i=''
-    case "$1" in
-        check | checkmark) i='\xE2\x9C\x93' ;;
-        X | x | xmark) i='\xE2\x9C\x98' ;;
-        '<3' | heart) i='\xE2\x9D\xA4' ;;
-        sun) i='\xE2\x98\x80' ;;
-        '*' | star) i='\xE2\x98\x85' ;;
-        darkstar) i='\xE2\x98\x86' ;;
-        umbrella) i='\xE2\x98\x82' ;;
-        flag) i='\xE2\x9A\x91' ;;
-        snow | snowflake) i='\xE2\x9D\x84' ;;
-        music) i='\xE2\x99\xAB' ;;
-        scissors) i='\xE2\x9C\x82' ;;
-        tm | trademark) i='\xE2\x84\xA2' ;;
-        copyright) i='\xC2\xA9' ;;
-        apple) i='\xEF\xA3\xBF' ;;
-        skull | bones) i='\xE2\x98\xA0' ;;
-        ':-)' | ':)' | smile | face) i='\xE2\x98\xBA' ;;
-    esac
-    echo -ne "$i"
+    declare -A icons=(
+        [check]='\xE2\x9C\x93'
+        [checkmark]='\xE2\x9C\x93'
+        [X]='\xE2\x9C\x98'
+        [x]='\xE2\x9C\x98'
+        [xmark]='\xE2\x9C\x98'
+        ['<3']='\xE2\x9D\xA4'
+        [heart]='\xE2\x9D\xA4'
+        [sun]='\xE2\x98\x80'
+        ['*']='\xE2\x98\x85'
+        [star]='\xE2\x98\x85'
+        [darkstar]='\xE2\x98\x86'
+        [umbrella]='\xE2\x98\x82'
+        [flag]='\xE2\x9A\x91'
+        [snow]='\xE2\x9D\x84'
+        [snowflake]='\xE2\x9D\x84'
+        [music]='\xE2\x99\xAB'
+        [scissors]='\xE2\x9C\x82'
+        [tm]='\xE2\x84\xA2'
+        [trademark]='\xE2\x84\xA2'
+        [copyright]='\xC2\xA9'
+        [apple]='\xEF\xA3\xBF'
+        [skull]='\xE2\x98\xA0'
+        [bones]='\xE2\x98\xA0'
+        [':-)']='\xE2\x98\xBA'
+        [':)']='\xE2\x98\xBA'
+        [smile]='\xE2\x98\xBA'
+        [face]='\xE2\x98\xBA'
+        [thumbsup]='\xF0\x9F\x91\x8D'
+        [thumbsdown]='\xF0\x9F\x91\x8E'
+        [sunglasses]='\xF0\x9F\x98\x8E'
+        [cryingface]='\xF0\x9F\x98\xA2'
+        [laughingface]='\xF0\x9F\x98\x82'
+        [rollingeyes]='\xF0\x9F\x99\x84'
+        [medicalmask]='\xF0\x9F\x98\xB7'
+        [nerdface]='\xF0\x9F\xA4\x93'
+        [rocket]='\xF0\x9F\x9A\x80'
+        [airplane]='\xE2\x9C\x88'
+        [envelope]='\xE2\x9C\x89'
+        [pencil]='\xE2\x9C\x8F'
+        [lock]='\xF0\x9F\x94\x92'
+        [key]='\xF0\x9F\x94\x91'
+        [magnifyingglass]='\xF0\x9F\x94\x8D'
+        [hourglass]='\xE2\x8C\x9B'
+        [calendar]='\xF0\x9F\x93\x85'
+    )
+    printf "${icons[$1]}"
+}
+
+# 水平分割线，默认为"-"，全屏长度
+# 仅重复第一个char，如需重复多个，则用 string::repeat
+function ui::hr() {
+    local char="${1:--}"
+    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' "${char}"
 }
 
 # todo
@@ -920,8 +944,8 @@ function array::reverse() {
 }
 
 # 移除数组中的重复元素 "${aa[@]}"
-function array::remove-dups() {
-    # Usage: remove_array_dups "array"
+# Usage: remove_array_dups "array"
+function array::remove-duplicates() {
     declare -A tmp_array
 
     for i in "$@"; do

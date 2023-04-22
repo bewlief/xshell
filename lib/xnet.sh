@@ -25,13 +25,13 @@ function __xnet_init__() {
     # Show active network interfaces
     alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
 
-    setup-proxy
+    net::setup-proxy
 }
 
 # 配置命令行的proxy
 # todo 依赖于xbash-profile中导入的global.ini，需解耦！
 # setup-proxy <proxy user> <proxy pass> <proxy url> <no proxy list>
-function setup-proxy() {
+function net::setup-proxy() {
     # proxy的密码中需要转义的特殊字符
     # ~: 0x7e
     # !: 0x21：无需转义
@@ -67,24 +67,8 @@ function setup-proxy() {
     fi
 }
 
-function check-ip4() {
-    local IP=$1
-    if [[ $IP =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
-        local FIELD1=$(echo $IP | cut -d. -f1)
-        local FIELD2=$(echo $IP | cut -d. -f2)
-        local FIELD3=$(echo $IP | cut -d. -f3)
-        local FIELD4=$(echo $IP | cut -d. -f4)
-        if [[ $FIELD1 -le 255 && $FIELD2 -le 255 && $FIELD3 -le 255 && $FIELD4 -le 255 ]]; then
-            echo "$IP available."
-        else
-            echo "$IP not available!"
-        fi
-    else
-        echo "Format error!"
-    fi
-}
-
-function getNetworkStatus() {
+# todo need implment for win
+function net::getNetworkStatus() {
     echo ""
     if [[ $centosVersion -lt 7 ]]; then
         /sbin/ifconfig -a | \grep -v packets | \grep -v collisions | \grep -v inet6
@@ -116,8 +100,12 @@ function getNetworkStatus() {
     fi
 }
 
-validate_ip4() {
+# 验证IPv4地址的有效性
+# 参数：IPv4地址
+# 返回值：0 表示有效，1 表示无效
+function net::validate-ip4() {
     local arr element
+    # 以"."为分隔符分隔到数组中
     IFS=. read -r -a arr <<<"$1"
     [[ ${#arr[@]} != 4 ]] && return 1
     for element in "${arr[@]}"; do
@@ -131,13 +119,13 @@ validate_ip4() {
 
 #
 # check if URL is valid.  Credit: https://stackoverflow.com/a/12199125/6862601
-#
-is_valid_url() {
+# 需检查 $? 确定是否可访问
+function net::validate-url() {
     #    assert_arg_count $# 1 "is_valid_url: expected 1 argument, got $#"
     curl --output /dev/null --silent --head --fail "$1"
 }
 
-is_valid_url_no_head() {
+function net::is_valid_url_no_head() {
     #    assert_arg_count $# 1 "is_valid_url_no_head: expected 1 argument, got $#"
     curl --output /dev/null --silent --fail -r 0-0 "$1"
 }

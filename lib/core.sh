@@ -57,15 +57,16 @@ function __core_init__() {
     export DEFAULT_DATE_TIME_FORMAT="%Y-%m-%d %H:%M:%S"
 
     export LIB_IMPORTED_TIMESTAMP="%F+%T"
+    export CPATH=$HOME
 
     # 添加基础路径到PATH
     PATH::add $XLIB_BASE
     PATH::add $XLIB_BASE_EXT
     PATH::add $XLIB_BASE_BIN
     PATH::add "$XLIB_BASE_PARENT/tool"
-    PATH::add "$XLIB_BASE_PARENT/tool"
     PATH::add "$XLIB_BASE_PARENT/test"
     PATH::add "$XLIB_BASE_PARENT/win"
+    PATH::add "$CPATH"
 
     # 缩短路径时保留的层数
     PROMPT_DIRTRIM=5
@@ -125,7 +126,8 @@ function _core-alias() {
     alias mkdir='mkdir -pv'
 
     #   lrd: list only dir recursive
-    alias lrd='find . -type d| sort | sed -e "s/[^--][^\/]*\//  |/g" -e "s/|\([^ ]\)/|--\1/" '
+    #    alias lrd='find . -type d| sort | sed -e "s/[^--][^\/]*\//  |/g" -e "s/|\([^ ]\)/|--\1/" '
+    alias lrd='find . -depth -type d -printf "%d %p\n" | sort -n | cut -d" " -f2- | sed -e "s/[^--][^\/]*\// |/g" -e "s/|\([^ ]\)/|--\1/"'
 }
 
 # 定义常用错误代码 0~255
@@ -146,7 +148,7 @@ function _define-error-codes() {
 }
 
 # 下面的color等变量和函数用于显示加粗的INFO WARN ERROR等
-_color() {
+function _color() {
     # \e[1;... :加粗设置
     local RED_COLOR='\E[1;31m'
     local YELLOW_COLOR='\E[1;33m'
@@ -186,40 +188,43 @@ _color() {
         echo -e "${CYAN_COLOR}$1${RES}"
         ;;
     *)
-        echo -e "请输入指定的颜色代码：{red|yellow|green}"
+        echo -e "请输入指定的颜色代码：{red|yellow|green|blue|pink|white|cyan}"
         ;;
     esac
 }
 
 #显示绿色
 #showGreen CONTENT
-showGreen() {
+function showGreen() {
     _color "$1" green
 }
-showRed() {
+function showRed() {
     _color "$1" red
 }
-showYellow() {
+function showYellow() {
     _color "$1" yellow
 }
-showBlue() {
+function showWhite() {
+    _color "$1" white
+}
+function showBlue() {
     _color "$1" blue
 }
-showCyan() {
+function showCyan() {
     _color "$1" cyan
 }
 
 # Print prompt message to screen
 # msg "INFO" "Hello World"
 function _msg() {
-    [ $# -ne 2 ] && showRed "Usage: msg message_level message_info"
+    [ $# -ne 2 ] && showRed "Usage: _msg message_level message_info"
 
     local msg_level=$1
     local msg_info=$2
 
-    [[ "${msg_level}" == "$INFO" ]] && showGreen "${msg_level}: ${msg_info}"
-    [[ "${msg_level}" == "$WARN" ]] && showYellow "${msg_level}: ${msg_info}"
-    [[ "${msg_level}" == "$ERROR" ]] && showRed "${msg_level}: ${msg_info}"
+    [[ "${msg_level}" == "$INFO" ]] && showGreen "$INFO: ${msg_info}"
+    [[ "${msg_level}" == "$WARN" ]] && showYellow "$WARN: ${msg_info}"
+    [[ "${msg_level}" == "$ERROR" ]] && showRed "$ERROR: ${msg_info}"
 }
 
 function info() {
@@ -288,11 +293,12 @@ function import() {
 # reload log, will ignore the __XLIB_IMPORTED_xxx
 # xxx: 文件名称，需要在该sh中设置 __LIB_IMORTED_XXX
 function reload() {
-    # NOTE 转为全部大写
-    local var_name="__XLIB_IMPORTED__${1^^}"
-
-    unset ${var_name}
-    import "$1"
+    for file in "$@"; do
+        # NOTE 转为全部大写
+        local var_name="__XLIB_IMPORTED__${file^^}"
+        unset ${var_name}
+        import "$file"
+    done
 }
 
 # 从当前shell中移除引入的函数和变量
@@ -300,6 +306,7 @@ function unload() {
     local lib=$1
     [[ -s $lib ]] && {
         warn "unload $lib"
+        unset -f "$lib"
     }
     # todo TBC
 }
@@ -316,6 +323,7 @@ function loadExt() {
     for d in $XLIB_BASE_EXT/*.sh; do
         if [[ -s $d ]]; then
             source "$d"
+            # 依赖于下层代码，应优化掉！
             string::formatKeyValue "ext $d" "LOADED"
         else
             string::formatKeyValue "ext $d" "IGNORED"
@@ -323,37 +331,45 @@ function loadExt() {
     done
 }
 
-# list all scripts in ./ext, ./lib
+# todo list all scripts in ./ext, ./lib
 function libs() {
-    echo "list scripts in ./ext/, ./lib/"
+    local dirs=("$CORE/ext" "$CORE/lib")
+    for f in "${dirs[@]}"; do
+        for file in $f/*.sh; do
+            echo "$file"
+        done
+    done
 }
 
 # 类似于tree：http://gnuwin32.sourceforge.net/packages/tree.htm
 # 和上面的alias lr 功能类似
 # 不如tree
 function lra() {
+    local depth=10
+    if [[ "$1" =~ ^-[0-9]+$ ]]; then
+        depth=${1#-}
+        shift
+    fi
     echo ". [ $PWD ]"
-
-    # depth: 目录层次最大10层
-    # offset：每一层次增加 2 个空格作为分隔
-    find . | sort | awk -F'/' '{ 
-        depth=10;
-        offset=2;
-        str="|  ";
-        path="";
-        if(NF >= 2 && NF < depth + offset) {
-            while(offset < NF) {
-                path = path "|  ";
-                offset ++;
-            }
-            print path "|-- "$NF;
-        }}'
+    find . | sort | awk -F'/' -v depth=$depth -v offset=2 '
+NF >= 2 && NF < depth + offset {
+path = "";
+for (i = offset; i < NF; i++) {
+path = path "| ";
+}
+if ($NF ~ /^[^.]+$/) {
+print path "|-- "$NF"/";
+} else {
+print path "|-- "$NF"*";
+}
+}
+'
 }
 
 #@override
 # 常用的 cdl 函数=cd+ll
 function cdl() {
-    cd "$@" && info "cd && ll $(pwd)"
+    cd "$@" && echo "---> cd && ll $(pwd)"
     setPS1
     ls -lah --color=auto
 }
@@ -364,26 +380,25 @@ function length() {
 
 # $PATH变量的添加、删除、去重
 function PATH::append() {
-    local l=$(length "$1")
-
-    if [[ $l -gt 0 ]]; then
-        local m=$(cygpath -u -a $1)
-        PATH::remove $m
-        export PATH="$PATH:$m"
+    local path=$(cygpath -u -a "$1")
+    if [[ -n "$path" ]]; then
+        PATH::remove "$path"
+        export PATH="$PATH:$path"
     fi
 }
 function PATH::add() {
-    local l=$(length "$1")
-
-    if [[ $l -gt 0 ]]; then
-        local m=$(cygpath -u -a $1)
-        PATH::remove $m
-        export PATH="$m:$PATH"
+    local path=$(cygpath -u -a "$1")
+    if [[ -n "$path" ]]; then
+        PATH::remove "$path"
+        export PATH="$path:$PATH"
     fi
 }
 function PATH::remove() {
-    export PATH=$(echo -n $PATH | awk -v RS=: -v ORS=: '$0 != "'$1'"' | sed 's/:$//')
-    PATH::dedup "$1"
+    local path=$(cygpath -u -a "$1")
+    if [[ -n "$path" ]]; then
+        export PATH=$(echo -n "$PATH" | awk -v RS=: -v ORS=: '$0 != "'"$path"'"' | sed 's/:$//')
+        PATH::dedup
+    fi
 }
 
 function PATH::dedup() {

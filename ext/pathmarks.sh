@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # 避免重复导入
-#[[ -n $__XLIB_IMPORTED__PATHMARKS ]] && return 0
-#__XLIB_IMPORTED__PATHMARKS=1
+[[ -n $__XLIB_IMPORTED__PATHMARKS ]] && return 0
+__XLIB_IMPORTED__PATHMARKS=1
 
 function __pathmarks_init__() {
     # 引入core.sh
@@ -73,18 +73,19 @@ function pathmark::goto {
     pathmark::help $1
 
     # 首先直接获取变量值，为空，则重新读取下 $SDIRS
-    target="$(eval $(echo echo $(echo \$DIR_$1)))"
+    target="$(eval echo \$DIR_$1)"
     if [[ -z "$target" ]]; then
-        source $SDIRS
+        source "$SDIRS"
 
-        target="$(eval $(echo echo $(echo \$DIR_$1)))"
+        target="$(eval echo \$DIR_$1)"
     fi
 
     if [[ -d "$target" ]]; then
+        # todo 是否改成 cdl，从而自动更新PATH？
         cd "$target" || error "$target not accessable now"
         \ls -lah --color=auto
         setPS1
-    elif [[ ! -n "$target" ]]; then
+    elif [[ -z "$target" ]]; then
         error "'${1}' bashmark does not exist"
     else
         error "'${target}' does not exist"
@@ -95,7 +96,7 @@ function pathmark::goto {
 function pathmark::print {
     pathmark::help $1
     #    source $SDIRS
-    echo "$(eval $(echo echo $(echo \$DIR_$1)))"
+    echo "$(eval echo \$DIR_$1)"
 }
 
 # delete bookmark
@@ -124,11 +125,12 @@ function pathmark::help {
 
 # list pathmarks with dirnam
 function pathmark::list {
-    pathmark::help $1
-    source $SDIRS
+    pathmark::help "$1"
+    source "$SDIRS"
 
     # if color output is not working for you, comment out the line below '\033[1;32m' == "red"
-    env | sort | awk '/^DIR_.+/{split(substr($0,5),parts,"="); printf("\033[0;33m%-20s\033[0m %s\n", parts[1], parts[2]);}'
+#    env | sort | awk '/^DIR_.+/{split(substr($0,5),parts,"="); printf("\033[0;33m%-20s\033[0m %s\n", parts[1], parts[2]);}'
+    env | awk -F= '/^DIR_/ {printf("\033[0;33m%-20s\033[0m %s\n", substr($1, 5), $2)}' | sort
 
     # uncomment this line if color output is not working with the line above
     # env | grep "^DIR_" | cut -c5- | sort |grep "^.*="
@@ -136,7 +138,7 @@ function pathmark::list {
 
 # validate bookmark name
 function _bookmark_name_valid {
-    if [[ -z $1 || "$1" != "$(echo $1 | sed 's/[^A-Za-z0-9_]//g')" ]]; then
+    if [[ -z $1 || ! "$1" =~ ^[A-Za-z0-9_]+$ ]]; then
         echo "$1 invalid"
     fi
 }
@@ -149,11 +151,13 @@ function _purge_line {
         trap "/bin/rm -f -- '$t'" EXIT
 
         # purge line
-        sed "/$2/d" "$1" >"$t"
-        /bin/mv "$t" "$1"
+#        sed "/$2/d" "$1" >"$t"
+#        /bin/mv "$t" "$1"
+        sed -i "/$2/d" "$1"
 
         # cleanup temp file
-        /bin/rm -f -- "$t"
+        # will clean automatically when script exist(?)
+#        /bin/rm -f -- "$t"
         trap - EXIT
     fi
 }
@@ -168,7 +172,7 @@ function _comp {
 }
 # list bookmarks without dirname
 function _l {
-    source $SDIRS
+    source "$SDIRS"
     env | \grep "^DIR_" | cut -c5- | sort | \grep "^.*=" | cut -f1 -d "="
 }
 

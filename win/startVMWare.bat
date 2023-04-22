@@ -12,4 +12,4 @@ net start "VMware NAT Service"
 net start "VMUSBArbService"
 net start "VMwareHostd"
 
-start "" "C:\Program Files (x86)\VMware\vmware.exe"
+rem start "" "C:\Program Files (x86)\VMware\vmware.exe"

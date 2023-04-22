@@ -17,10 +17,11 @@ function __xsecure_init__() {
 # encrypt <plain-string> <password>
 # echo 'rusty!herring.pitshaft' | openssl enc -aes-256-cbc -md sha512 -a -pbkdf2 -iter 100000 -salt -pass pass:'pick.your.password'
 function openssl::encrypt() {
-    if [ -z "$1" ]; then return 1; fi
-    if [ -z "$2" ]; then return 2; fi
+    [[ -z "$1" ]] && return 1
+    [[ -z "$2" ]] && return 2
     local status=1
-    echo -n "$1" | openssl enc -aes-256-cbc -md sha512 -a -pbkdf2 -iter 100000 -salt -pass pass:"$2" && status=0 || status=1
+    # encrypt using AES-256-CBC, SHA-512/PBKDF2
+    echo -n "$1" | openssl enc -aes-256-cbc -md sha512 -a -pbkdf2 -iter 100000 -salt -k pass:"$2" && status=0 || status=3
     return $status
 }
 

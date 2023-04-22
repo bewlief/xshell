@@ -2,9 +2,9 @@
 
 [devops]
 erda-project/erda/master
-alibaba/derrick/master
-LarryDpk/pkslow-samples/master
 n8n-io/n8n/master
+dennyzhang/devops_public/master
+HariSekhon/DevOps-Bash-tools/master
 
 [open-hand]
 open-hand/kubeadm-ha/release-1.21
@@ -20,8 +20,16 @@ open-hand/choerodon-gateway/master
 open-hand/gitlab-service/master
 open-hand/choerodon-framework/master
 
+[k8s]
+kubesphere/kubekey/master
+
+
+[go]
+kubesphere/kubekey/master
+geektutu/7days-golang/master
 
 [jenkins]
+jenkins-infra/jenkins.io/master
 jenkinsci/java-client-api/master
 jenkinsci/docker/master
 openshift/jenkins/master
@@ -66,18 +74,45 @@ binarywang/useful-scripts/
 
 [terraform]
 
+[rust]
+lsd-rs/lsd/master
+ogham/exa/master
+vmchale/tin-summer/master
+sighol/tree-rs/master
+fafhrd91/fectl/master
+dalance/procs/master
+clap-rs/clap/master
+tyrchen/geektime-rust/master
+kyclark/command-line-rust/main
+chineseLiux/magic-scanner/1.0.0
+SmileXie/cdls/main
+lencx/ChatGPT/main
+nushell/nushell/main
+
+[ai]
+kenshin1983/ChatGPTAPIFree/main
+GaiZhenbiao/ChuanhuChatGPT/main
+Yidadaa/ChatGPT-Next-Web/main
+Bin-Huang/chatbox/main
+chathub-dev/chathub/main
+dice2o/BingGPT/main
+tokio-rs/tokio/master
+bevyengine/bevy/main
+starship/starship/master
+
 [ansible]
 dev-sec/ansible-os-hardening/master
-lizhenliang/ansible-install-k8s/master
 easzlab/kubeasz/master
 erichll/ansible-etcd3/master
 erichll/ansible-docker/master
-wangyinlong9527/ansible/master
 
+[aws]
+natonic/CloudFormation-Deep-Dive/master
+natonic/DevOpsPro/master
+natonic/DeploymentPipeline/master
+natonic/AWS_SA_Pro/master
+awslabs/aws-cloudformation-templates/
 
-[cloud]
-apache/jclouds/master
-apache/jclouds/master
 
 [java]
 hollischuang/toBeTopJavaer/master
@@ -85,7 +120,7 @@ ninechapter-algorithm/linghu-algorithm-templete/master
 xwjie/jvm/master
 xwjie/j2ee-study-path/master
 JosephZhu1983/java-common-mistakes/master
-JosephZhu1983/summer-webmvc/master
+JosephZhu1983/summer-webmvc/
 JosephZhu1983/Java8InActionc
 javastacks/javastack/master
 JosephZhu1983/java-concurrent-test/master
@@ -100,11 +135,8 @@ kdn251/interviews/master
 kubernetes-client/java/master
 labuladong/fucking-algorithm/master
 LarryDpk/pkslow-samples/master
-
-[jpa]
-icnws/spring-data-jpa-demo/master
 zhangzhenhuajack/spring-data-jpa-guide/master
-gaohanghang/spring-data-jpa-guide/master
+
 
 [spring]
 zhangyd-c/architect-awesome
@@ -116,8 +148,6 @@ zhangyd-c/simple-http/master
 spring-cloud/spring-cloud-jenkins-dsl/master
 suisui2019/springboot-study/master
 spring-cloud-samples/spring-cloud-contract-samples/main
-
-[spring-projects]
 spring-projects/spring-mvc-showcase/master
 spring-projects/spring-integration/main
 spring-projects/spring-data-examples/main
@@ -133,8 +163,6 @@ spring-projects/spring-framework/main
 spring-projects/jenkins-common/main
 spring-projects/spring-data-jpa/main
 spring-cloud/spring-cloud-contract/main
-
-[spring-mvc]
 in28minutes/SpringMvcStepByStep/master
 gaussic/SpringMVCDemo/master
 lenve/JavaEETest/master
@@ -150,44 +178,10 @@ dn-jack/DN-springmvc/master
 longjiazuo/springMvc4.x-project/master
 MartinDai/SpringMVC-Project/master
 karasatishkumar/SpringMVC-REST/master
-
-[spring-starter]
 erichll/grpc-spring-boot-starter/master
 yinjihuan/elastic-job-spring-boot-starter/master
 xkcoding/magic-starter/master
 spring-io/initializr/main
-
-[java-suite]
-dianping/cat/master
-junit-team/junit5-samples/main
-Wechat-Group/awesome-wechat-weapp/master
-Wechat-Group/weapp-demo/master
-Wechat-Group/WxJava/develop
-google/guava/master
-ctripcorp/apollo/master
-bbossgroups/elasticsearch-springboot-example/master
-bbossgroups/elasticsearch-task/master
-bbossgroups/eshelloword-booter/master
-bbossgroups/eshelloword-spring-boot-starter/master
-bbossgroups/security/master
-dromara/Sa-Token/dev
-fenixsoft/awesome-fenix/master
-ctripcorp/apollo/master
-ctripcorp/dal/master
-ctripcorp/kbear/master
-bbossgroups/bboot/master
-bbossgroups/bboss/master
-lets-mica/mica/master
-Ahoo-Wang/govern-eventbus/master
-bbossgroups/bboss/master
-bbossgroups/elasticsearchdemo/master
-bbossgroups/elasticsearch-example/master
-seata/seata/2.x
-heyuxian/mcloud/master
-Javen205/IJPay/dev
-JustryDeng/PublicRepository/master
-
-[spring-boot-cloud]
 apkkids/spring_security_exam/master
 LandGrey/spring-boot-upload-file-lead-to-rce-tricks/main
 LandGrey/SpringBootVulExploit/master
@@ -209,7 +203,7 @@ jfeng45/order/master
 jfeng45/glogger/master
 jfeng45/gmessaging/master
 jfeng45/gtransaction/master
-jfeng45/grpcservice/master
+jfeng45/grpcservice/
 jfeng45/reservegrpcchensheng
 chensheng/tamboot-admin/master
 chensheng/wechatty-project/master
@@ -242,11 +236,42 @@ wuyouzhuguli/SpringAll/master
 zhoutaoo/SpringCloud/master
 eugenp/tutorials/master
 ZHENFENG13/spring-boot-projects/main
-ZHENFENG13/JavaGuide/master
+ZHENFENG13/JavaGuide/
 ZHENFENG13/spring-boot-cloud/master
 ZHENFENG13/blog/master
 ZHENFENG13/java-design-patterns/master
 chetwhy/cloud-flow/master
+
+[java-suite]
+dianping/cat/master
+junit-team/junit5-samples/main
+Wechat-Group/awesome-wechat-weapp/master
+Wechat-Group/weapp-demo/master
+Wechat-Group/WxJava/develop
+google/guava/master
+ctripcorp/apollo/master
+bbossgroups/elasticsearch-springboot-example/master
+bbossgroups/elasticsearch-task/master
+bbossgroups/eshelloword-booter/master
+bbossgroups/eshelloword-spring-boot-starter/master
+bbossgroups/security/master
+dromara/Sa-Token/dev
+fenixsoft/awesome-fenix/master
+ctripcorp/apollo/master
+ctripcorp/dal/master
+ctripcorp/kbear/master
+bbossgroups/bboot/master
+bbossgroups/bboss/master
+lets-mica/mica/master
+Ahoo-Wang/govern-eventbus/master
+bbossgroups/bboss/master
+bbossgroups/elasticsearchdemo/master
+bbossgroups/elasticsearch-example/master
+seata/seata/2.x
+heyuxian/mcloud/master
+Javen205/IJPay/dev
+JustryDeng/PublicRepository/master
+
 
 [ddd]
 e-commerce-sample/ecommerce-order-service/master
@@ -256,7 +281,6 @@ e-commerce-sample/ecommerce-inventory-service/master
 e-commerce-sample/ecommerce-order-query-service/master
 e-commerce-sample/ecommerce-spring-common/master
 e-commerce-sample/ecommerce-shared-model/master
-AlanRoco/burnlino/master
 jmgarridopaz/bluezone/master
 jmgarridopaz/lib-portsadapters/master
 ddd-by-examples/library/master
@@ -265,7 +289,6 @@ ddd-by-examples/all-things-cqrs/master
 ddd-by-examples/event-source-cqrs-sample/master
 wkrzywiec/library-hexagonal/master
 dustinsand/hex-arch-kotlin-spring-boot/master
-draphyz/DDD/entityframework
 pedromoraisf/hexagonal-architecture-distilled/main
 LucasRGoes/ports-adapters-sample/master
 vloth/ports-and-adapters/master
@@ -274,23 +297,11 @@ trzpiot/spring-gradle-hexagonal-example/main
 yuraxdrumz/ports-and-adapters-golang/master
 damonkelley/ports-and-adapters-examples/main
 purnima-jain/ports-and-adapters-kafka-with-avro/master
-Hyunk3l/hexagonal-architecture-kotlin-template/main
 ricardohsmello/hexagonal-architecture/main
 Codeflix-FullCycle/hexagonal-architecture/main
-FrederikS/rest-api-blueprint-clean-architecture/main
 LucasRGoes/ports-adapters-sample/master
 yuraxdrumz/golang-starter-kit/master
 
-[ja-netfilter]
-ja-netfilter/ja-netfilter/
-ja-netfilter/plugin-power/
-ja-netfilter/ja-netfilter/
-ja-netfilter/plugin-mymap/
-ja-netfilter/plugin-hideme/
-ja-netfilter/plugin-dump/
-ja-netfilter/plugin-native/
-ja-netfilter/plugin-url/
-ja-netfilter/plugin-dns/
 
 [secure]
 OWASP/CheatSheetSeries/master
@@ -354,6 +365,13 @@ rtyley/bfg-repo-cleaner/master
 acmesh-official/acme.sh/master
 arzzen/git-quick-stats/master
 bash-my-aws/bash-my-aws/master
+DevelopersToolbox/bash-snippets/master
+DevelopersToolbox/validate-json/master
+DevelopersToolbox/os-detect/master
+DevelopersToolbox/draw-lines/main
+DevelopersToolbox/trapper/master
+DevelopersToolbox/bash-flock-wrapper/master
+DevelopersToolbox/bash-colour-testcard/master
 vlisivka/bash-modules/master
 dylanaraps/pure-bash-bible/master
 dylanaraps/pure-sh-bible/master
@@ -370,10 +388,11 @@ mateusz-kolecki/rlock-sh/master
 sio/homelab/master
 b4b4r07/gomi/master
 kdabir/has/master
-suewonjp/lf.sh/
+suewonjp/lf.sh/master
 cal2195/q/master
 rauchg/spot/master
 vigneshwaranr/bd/master
+qiaobangzhu-cn/AliyunLinuxWeb/main
 
 [spider]
 dataabc/weiboSpider/master

@@ -133,8 +133,8 @@ function parseFromDateExample() {
 }
 
 # leap <year>
-# 判断是否是平年
-function date::leap() {
+# 判断是否是闰年
+function date::is-leap() {
     # based on http://cfajohnson.com/shell/date-functions/?is_leap_year
 
     local year="$1"
@@ -160,7 +160,7 @@ function date::leap() {
     fi
 }
 
-function to_path() {
+function date::to_path() {
     local timestamp="${1:-$(date +%s)}" depth="${2:-day}"
     local fmt
 
@@ -213,7 +213,7 @@ function date::days() {
         #               February alone
         # Which has but twenty-eight
         # Or twenty-nine each leap year
-        year is_leap "$year" &&
+        year date::is-leap "$year" &&
             days_in_month=29 ||
             days_in_month=28
         ;;

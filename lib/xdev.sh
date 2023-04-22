@@ -22,7 +22,6 @@ function __xdev_init__() {
     _git-common
     _maven-common
     _alias
-
 }
 
 function _alias() {
@@ -45,6 +44,19 @@ function _maven-common() {
 
 # 覆盖xbash-profile中的cdl，因xdev后导入，因此会覆盖之前的定义
 function cdl() {
+    # 将目录加入到PATH中
+    # 与CPATH作比较，不同，则更新CPATH为当前目录并设置PATH
+    local target="$1"
+    if [[ $target != "-" ]]; then
+        target=$(cygpath -u -a "$1")
+        if [[ -n $target && ! $CPATH == "$target" ]]; then
+            # 如果目录不存在于CPATH中，则加入到PATH中
+            PATH::remove "${CPATH}"
+            PATH::append "$target"
+            export CPATH=$target
+        fi
+    fi
+
     cd "$@" && info "cd && ll $(pwd)"
     setPS1
     ls -lah --color=auto
@@ -83,7 +95,7 @@ function setPS1() {
             gitRepo=$(getGitRepoShort $gitRepo)
             #            echo "4. == $gitRepo =="
             # gitRepo=$(echo $gitRepo | awk -F'/' '{print $4"/"$5}')
-            _git_ps="[\[\033[1;32m\]\w\[\033[0m\]] \[\033[0m\]\[\033[1;36m\]\$gitRepo (\$(git::current)) \[\033[0;31m\]\$(git::status)\[\033[0m\]$ "
+            _git_ps="[\[\033[1;32m\]\w\[\033[0m\]] \[\033[0m\]\[\033[1;36m\]\$gitRepo (\$(git::target)) \[\033[0;31m\]\$(git::status)\[\033[0m\]$ "
         fi
         export PS1="$_git_ps"
         return 0
@@ -95,9 +107,8 @@ function setPS1() {
 
 # 被setPS1调用
 function git::status() {
-    local git_status git_now
-
-    git_status=$(git status 2>/dev/null)
+    local git_status=$(git status 2>/dev/null)
+    local git_now="UNKNOWN -"
 
     case $git_status in
     *'not a git repository'*) git_now="NOT GIT -" ;;
@@ -115,28 +126,6 @@ function git::status() {
     *'000'*) git_now="0000" ;;
     *) git_now="UNKNOWN -" ;;
     esac
-
-    #    if [[ "$git_status" != "" ]]; then
-    #        if [[ "$git_status" =~ "fatal: not a git repository" ]]; then
-    #            git_now="NOT GIT -"
-    #        elif [[ "$git_status" =~ "no changes added" ]]; then
-    #            git_now="CHANGED +"
-    #        elif [[ "$git_status" =~ "have diverged" ]]; then
-    #            git_now="UNPUSHED +"
-    #        elif [[ "$git_status" =~ "nothing to commit, working tree clean" ]]; then
-    #            git_now="CLEAN -"
-    #        elif [[ "$git_status" =~ "Changes to be committed" ]]; then
-    #            git_now="UNOMMITED +"
-    #        elif [[ "$git_status" =~ "Changes not staged for commit" ]]; then
-    #            git_now="UNOMMITED +"
-    #        elif [[ "$git_status" =~ "Untracked files" ]]; then
-    #            git_now="UNTRACKED +"
-    #        else
-    #            git_now="UNKNOWN -"
-    #        fi
-    #    else
-    #        git_now="-"
-    #    fi
     echo "${git_now} "
 }
 
@@ -159,7 +148,7 @@ function git::acp() {
     # save commit msg to last_commit
     local last=$(file::absolute ".")
     last="$last/last_commit"
-    echo "$msg @ $now" >"$last"
+    echo "$msg" >"$last"
 
     ui::banner "$(pwd)" "git add ." "git commit -m \"$msg\"" "git push"
 
@@ -168,7 +157,7 @@ function git::acp() {
     git push
 }
 
-# git update in current directory
+# git update in target directory
 function git::au() {
     local old=$(pwd)
 
@@ -232,7 +221,7 @@ function git::refresh() {
     fi
 }
 
-# todo rollback current branch, not completed
+# todo rollback target branch, not completed
 function git::rollback() {
     git stash clear && git reset --hard && git clean -xdf && git pull --rebase
 }
@@ -298,8 +287,8 @@ function getGitRepoShort() {
 }
 
 # 当前的branch name
-# git::current [target path]
-function git::current() {
+# git::target [target path]
+function git::target() {
     local old="$PWD"
     if [[ -n $1 ]]; then
         cd "$1" || error "$1 invalud"
@@ -312,7 +301,7 @@ function git::current() {
 
 # 使用worktree初始化一个repo
 # git::init <repo url> <branch>
-function git::init(){
+function git::init() {
     local repo=$1
     local branch=$2
 
@@ -420,7 +409,7 @@ function mvn::install() {
 }
 
 # 使用pmd扫描
-function mvn::pmd(){
+function mvn::pmd() {
     _mvn-execute "$1" "-q -f pom.xml -Dmaven.test.skip=true clean install"
 }
 
@@ -727,7 +716,7 @@ function _jdk-help() {
     echo "Usage: ${txtgrn}jdk [list | info | help | {jdk-version}${txtrst}"
     echo "jdk: show usage"
     echo "jdk list: list available jdk vesions"
-    echo "jdk info: show current jdk version"
+    echo "jdk info: show target jdk version"
     echo "jdk help: show usage"
     echo "jdk {jdk-version}: switch to target version"
     string::repeat "-"

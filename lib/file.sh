@@ -86,10 +86,9 @@ function file::new() {
 
     local file=$(cygpath -u "$1")
     local basename=$(basename $file)
+    local parent_dir=$(dirname "$1")
 
-    local p=$(file::parent $file)
-
-    path::new $p && touch "$p/$basename"
+    path::new $parent_dir && touch "$parent_dir/$basename"
 }
 
 # 创建新目录
@@ -100,6 +99,8 @@ function path::new() {
 
 # 获取指定文件的parent目录的绝对路径，即使文件不存在
 function file::parent() {
+    [[ -z "$1" ]] && echo $(pwd) && return 0
+    
     local file=$(cygpath -a "$1")
     echo $(dirname "$file")
 }
@@ -169,6 +170,15 @@ function file::lastExt() {
 function file::ext() {
     local file=$1
     echo "${file#*.}"
+}
+
+# in git bash, change path from posix to windows
+# 和file::absolute结合使用更佳
+function path2win() {
+    local path=$1
+    echo "$path" | sed -e 's/^\///' -e 's/\//\\/g' -e 's/^./\0:/'
+
+    # cygpath -w $1
 }
 
 # 获取文件/目录的绝对路径
