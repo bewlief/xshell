@@ -186,7 +186,7 @@ function handleGitCate() {
 
     # 获取该目录下的所有repo，循环刷新
     local repos=($(string::ini::readIniItems $config "$cate"))
-    repos=($(array::remove-dups "${repos[@]}"))
+    repos=($(array::remove-duplicates "${repos[@]}"))
     log::debug "$cate --- ${repos[@]}"
 
     local count=${#repos[@]}
@@ -313,7 +313,7 @@ function handleGitRepo() {
         cd $target_path || exit
 
         #
-        local CURRENT_BRANCH=$(git::current)
+        local CURRENT_BRANCH=$(git::target)
         log::debug "$target_path -> [$CURRENT_BRANCH]"
 
         # stash当前分支的修改后，切换到默认分支
@@ -407,7 +407,7 @@ function saveBranchPath() {
     local project="$3"
     local target="$4"
 
-    local default=$(git::current $target)
+    local default=$(git::target $target)
     saveBranchName $repo $author $project $default
 
     #    # replace-all中的sed使用"/"作为分隔符，因此这里要转义
@@ -441,7 +441,7 @@ function checkTargetStatus() {
 
     if [[ -e $target ]]; then
         cd "$target" || error "invalid $target"
-        local CURRENT_BRANCH=$(git::current)
+        local CURRENT_BRANCH=$(git::target)
         if [[ -z $CURRENT_BRANCH ]]; then
             rm -rf $target
 #            rm -rf $target/* 2>&1

@@ -180,6 +180,12 @@ function createAlias() {
     # figlet
     alias fl='figlet0 -f $HOME/xsoft/bin/flf/standard.flf '
 
+    # vmware groups
+    alias k8s2='start-vm-group $MY_VMWARE_GROUPS k8s2'
+    alias stop-k8s2='stop-vm-group $MY_VMWARE_GROUPS k8s2'
+    alias k8s-cluster='start-vm-group $MY_VMWARE_GROUPS cluster'
+    alias stop-k8s-cluster='stop-vm-group $MY_VMWARE_GROUPS cluster'
+
 }
 
 function main() {

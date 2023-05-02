@@ -120,7 +120,7 @@ ninechapter-algorithm/linghu-algorithm-templete/master
 xwjie/jvm/master
 xwjie/j2ee-study-path/master
 JosephZhu1983/java-common-mistakes/master
-JosephZhu1983/summer-webmvc/
+JosephZhu1983/summer-webmvc/master
 JosephZhu1983/Java8InActionc
 javastacks/javastack/master
 JosephZhu1983/java-concurrent-test/master
@@ -203,7 +203,7 @@ jfeng45/order/master
 jfeng45/glogger/master
 jfeng45/gmessaging/master
 jfeng45/gtransaction/master
-jfeng45/grpcservice/
+jfeng45/grpcservice/master
 jfeng45/reservegrpcchensheng
 chensheng/tamboot-admin/master
 chensheng/wechatty-project/master
@@ -212,7 +212,7 @@ zhoutaoo/SpringCloud/master
 zhangyd-c/springboot-learning/master
 JosephZhu1983/SpringCloudK8S/master
 JosephZhu1983/SpringSecurity101/master
-yinjihuan/spring-boot-elasticsearch/master
+yinjihuan/spring-boot-elasticsearch/
 yinjihuan/spring-boot-starter-cache/master
 yinjihuan/spring-boot-starter-encrypt-example/master
 yinjihuan/spring-boot-starter-es-security/master
@@ -231,12 +231,12 @@ ishuibo/SpringAll/
 wuyouzhuguli/SpringAll/master
 TyCoding/cloud-template/master
 yinjihuan/micro-service-dubbo/master
-yinjihuan/monkey-spring-cloud/master
+yinjihuan/monkey-spring-cloud/
 wuyouzhuguli/SpringAll/master
 zhoutaoo/SpringCloud/master
 eugenp/tutorials/master
 ZHENFENG13/spring-boot-projects/main
-ZHENFENG13/JavaGuide/
+ZHENFENG13/JavaGuide/master
 ZHENFENG13/spring-boot-cloud/master
 ZHENFENG13/blog/master
 ZHENFENG13/java-design-patterns/master
@@ -322,7 +322,7 @@ chillzhuang/blade-tool/master
 liumiaocn/easypack/master
 ciphermagic/spring-tools/master
 didi/kafka-manager/master
-JustDoPython/python-100-day/master
+JustDoPython/python-100-day/
 mrdear/JavaWEB/master
 qq53182347/liugh-parent/master
 shenfeng/nio-httpserver/dir-list

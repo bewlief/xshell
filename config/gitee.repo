@@ -4,6 +4,7 @@
 [go]
 koderover/zadig/main
 nonsense/nkone
+extrame/dget
 
 [ddd]
 jonathxhoeyf/uhy-ddd-hexagonal/master
@@ -332,7 +333,6 @@ wewwww/open_shop_applet_mall/master
 xm721806280/healthy-security-oauth2/master
 thomasweb/spring-security-ldap-AD/master
 yadong.zhang/JustAuth/master
-yadong.zhang/JustAuth/master
 yadong.zhang/justauth-tutorial
 yu120/neural/master
 zbl1996/authmore/master
@@ -346,6 +346,7 @@ xnng/bash/master
 rxys/shell-script/master
 hebor/shell/master
 skyisfuck/shell
+mirrorvim/vim-fast
 
 [spider]
 ssssssss-team/spider-flow/master

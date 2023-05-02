@@ -63,7 +63,9 @@ function _vm-group-action() {
         vmrun "$action" "$s" nogui
         echo "--- $s: ${action}ed"
     done
-    echo "$target $action"ed
+    echo "$target ${action}ed"
+    echo ""
+    echo ""
     # list all running instances
     vmrun list
 }
