@@ -1,7 +1,13 @@
 # xops lib: 让你的开发更加迅速！
 
+### github上的xops lib：https://github.com/bewlief/xshell
+
+### gitee上的xops lib: https://gitee.com/bewlief/xshell <sup>Gitee Recommended Project
+
 ## 简介
+
 这是一个基于git bash的bash脚本开发库！如果你是一个程序员，且是重度自动化爱好者，那么，这个库应该会对你有所裨益。
+
 + 基于git bash，无需顾虑跨平台问题；
 + git，必不可少的大杀器，装了git，即有了本库的运行环境；
 + 规范化的目录架构，让你的系统快速恢复开发环境；
@@ -9,40 +15,40 @@
 + 灵活实用的引入机制
 
 ## 目录说明
+
 + /config/： 配置文件，包含系统全局变量、git repo config等
 + /ext/： 扩展，该目录下的 *.sh 在bash初始化时会自动导入
 + /lib/： xops lib，核心部分，包含core、meta、string等开发库
 + /tool/： 基于本库开发的一些工具
 + /win/： 适用于windows环境
 + /\*.\*：多个实用工具，如：
-  + xbash-profile.sh： 由.bash_profile引入，构建本机开发环境
-  + git-refresh.sh: 基于xops lib的git repo刷新工具，用于批量刷新repo
-  + backup.sh：基于xops lib的备份工具，备份内容在脚本中设置
-  + clean.sh：清理垃圾文件
-  + set-win-variables.bat：设置windows系统的环境变量，运行时需要管理员权限
-  + start.jsh：用于jshell，初始化环境
-
+    + xbash-profile.sh： 由.bash_profile引入，构建本机开发环境
+    + git-refresh.sh: 基于xops lib的git repo刷新工具，用于批量刷新repo
+    + backup.sh：基于xops lib的备份工具，备份内容在脚本中设置
+    + clean.sh：清理垃圾文件
+    + set-win-variables.bat：设置windows系统的环境变量，运行时需要管理员权限
+    + start.jsh：用于jshell，初始化环境
 
 ## 如何使用
 
 1. 克隆本repo
 
 2. 以我的.bash_profile为例说明如何使用
-   1) 修改 $HOME/.bash_profile.sh，加入xbash-profile.sh的引用
+    1) 修改 $HOME/.bash_profile.sh，加入xbash-profile.sh的引用
 
-      ```shell
-      # global configuration file
-      export GLOBAL_INI="$HOME/xcodes/xops/xshell/config/global-xjming.ini"
-   
-      xprofile=$HOME/xcodes/xops/xshell/xbash-profile.sh
-      [[ -f $xprofile ]] && source $xprofile
-      ```
+       ```shell
+       # global configuration file
+       export GLOBAL_INI="$HOME/xcodes/xops/xshell/config/global-xjming.ini"
+    
+       xprofile=$HOME/xcodes/xops/xshell/xbash-profile.sh
+       [[ -f $xprofile ]] && source $xprofile
+       ```
 
-      + GLOBAL_INI：该变量指向系统全局变量 global-xjming.ini，实际上也是一个sh文件，用于设置一些全局变量
+        + GLOBAL_INI：该变量指向系统全局变量 global-xjming.ini，实际上也是一个sh文件，用于设置一些全局变量
 
-      + source $xprofile：调用了 xbash-profile.sh
+        + source $xprofile：调用了 xbash-profile.sh
 
-   2) 重启git bash即可
+    2) 重启git bash即可
 
 ## xops lib代码介绍
 
@@ -52,23 +58,23 @@
 
    ### 库文件介绍
 
-   + **core.sh**：最最核心的文件，要使用xops lib，必须首先导入该sh！其他的lib也都是首先引入了它。
+    + **core.sh**：最最核心的文件，要使用xops lib，必须首先导入该sh！其他的lib也都是首先引入了它。
 
-     + 定义了多个关键的全局变量：
-       + XLIB_BASE： lib所在的路径，如 $HOME/xcodes/xops/xshell/lib
-       + XLIB_BASE_PARENT： lib所在路径的父目录，如 $HOME/xcodes/xops/xshell
-       + XLIB_BASE_EXT： ext目录的绝对路径
-       + XLIB_BASE_BIN: bin目录的绝对路径
-       + XLIB_BASE_CONFIG： config目录的绝对路径
-       + XLIB_CORE： core.sh的绝对路径 
+        + 定义了多个关键的全局变量：
+            + XLIB_BASE： lib所在的路径，如 $HOME/xcodes/xops/xshell/lib
+            + XLIB_BASE_PARENT： lib所在路径的父目录，如 $HOME/xcodes/xops/xshell
+            + XLIB_BASE_EXT： ext目录的绝对路径
+            + XLIB_BASE_BIN: bin目录的绝对路径
+            + XLIB_BASE_CONFIG： config目录的绝对路径
+            + XLIB_CORE： core.sh的绝对路径
 
-   + 定义了最基本的alias
+    + 定义了最基本的alias
 
-   + 定义了最基本的 info，warn，error函数
+    + 定义了最基本的 info，warn，error函数
 
-   + 定义了ext、lib等的引入函数：import，reload
+    + 定义了ext、lib等的引入函数：import，reload
 
-   + 实现了$PATH的添加、去重、移除
+    + 实现了$PATH的添加、去重、移除
 
    #### 如何导入：
 
@@ -84,25 +90,26 @@
    }
 ```
 
-   这是xbash-profile.sh中的core.sh的引入。注意source部分，需要指明core.sh的路径。
+这是xbash-profile.sh中的core.sh的引入。注意source部分，需要指明core.sh的路径。
 
-   在core.sh导入后，即可使用 import color; import xwin等形式去引入其他lib。
+在core.sh导入后，即可使用 import color; import xwin等形式去引入其他lib。
 
- + meta.sh：系统相关，其中的 meta::getopts 比较重要，用于命令行参数的解析。
++ meta.sh：系统相关，其中的 meta::getopts 比较重要，用于命令行参数的解析。
 
- + string.sh：string操作相关的函数，如随机字符串、截取、大小写转换、格式化、拆分等。
++ string.sh：string操作相关的函数，如随机字符串、截取、大小写转换、格式化、拆分等。
 
- + cache.sh：以文件系统实现的cache
++ cache.sh：以文件系统实现的cache
 
- + dict.sh：内存中的key-value存取
++ dict.sh：内存中的key-value存取
 
- + color.sh：ansi color的操作
++ color.sh：ansi color的操作
 
- + --
-
++ --
 
 # xlib使用举例
+
 ## 分享下我的开发环境设置
+
 其实xlib最初的目的是要构造一个脚本，用于快速的搭建起本地的开发环境。很多时候在重装系统后，各种软件的安装配置、环境配置等都是非常烦人的。
 
 后来又扩大到了mac系统上。
@@ -110,10 +117,13 @@
 综合考量之后，选择了git bash作为基础运行环境。因为git，这是必须要用的东西，而bash，则是linux下默认的shell。
 
 ### 基本目录结构
+
 有3个基本目录，都在$HOME/下，windows环境下，一般是 C:\Users\{your-account}\
+
 + /xsoft/
-尽量使用绿色化软件，除非像vmware workstation之类的必须安装的。
-下面是我收集的一些常用软件，包含很多命令行应用。
+  尽量使用绿色化软件，除非像vmware workstation之类的必须安装的。
+  下面是我收集的一些常用软件，包含很多命令行应用。
+
 ```shell
 .                                                                                  
 |-- Media                                                                          
@@ -218,34 +228,37 @@
     |-- sysinternals                                                               
     `-- tools                                                                      
 ```
-+ /bin/：所有的命令行应用都放在这里，并加入到$PATH中。目前你可以从这里找到我精心收集的命令行工具： [https://github.com/bewlief/myrepo/tree/master/xops-bin](https://github.com/bewlief/myrepo/tree/master/xops-bin)
+
++
+
+/bin/：所有的命令行应用都放在这里，并加入到$PATH中。目前你可以从这里找到我精心收集的命令行工具： [https://github.com/bewlief/myrepo/tree/master/xops-bin](https://github.com/bewlief/myrepo/tree/master/xops-bin)
 
 + /database/：database server及client
 
 + /dev/：开发用
 
-  + /architect/
+    + /architect/
 
-  + /build/：git、maven、gradle等
+    + /build/：git、maven、gradle等
 
-  + /sdk/：java，golang的sdk
+    + /sdk/：java，golang的sdk
 
-    + /jdk/：该目录下的所有目录都会被自动处理为jdk
-    + /go/： golang的sdk
-    + /lua/
-
-    
+        + /jdk/：该目录下的所有目录都会被自动处理为jdk
+        + /go/： golang的sdk
+        + /lua/
 
     + /servers/：tomcat，jetty，nginx等
     + /test/：测试相关
 
 + /xdata/
 + /xcodes/ ：存放我的代码，如：
-  + mycodes: 我的测试代码所在目录
-  + xops/：用于OPS代码存放，本库代码即放在该目录的 /xshell/下
+    + mycodes: 我的测试代码所在目录
+    + xops/：用于OPS代码存放，本库代码即放在该目录的 /xshell/下
 
 ## 相关下载
+
 本库使用到的一些命令行工具的下载路径：
+
 + git bash: https://git-scm.com/download/win
 + putty: https://www.puttygen.com/download-putty#Download_PuTTY_073_for_Windows
 + ctags: https://sourceforge.net/projects/ctags/
@@ -260,14 +273,12 @@
 + xxd: from vim, https://www.vim.org/download.php
 + zip: 使用7zip的7z.exe复制、更名为zip.exe, https://www.7-zip.org/
 + lsof: from sysinternals, handle64.exe, https://docs.microsoft.com/en-us/sysinternals/downloads/
-+ rsync: 
-  + https://gist.github.com/hisplan/ee54e48f17b92c6609ac16f83073dde6
-  + rsync: http://repo.msys2.org/msys/x86_64/rsync-3.2.3-1-x86_64.pkg.tar.zst
-  + libxxhash: http://repo.msys2.org/msys/x86_64/libxxhash-0.8.0-1-x86_64.pkg.tar.zst
-  + liblzr: http://repo.msys2.org/msys/x86_64/liblz4-1.9.3-1-x86_64.pkg.tar.zst
-  + libzstd: http://repo.msys2.org/msys/x86_64/libzstd-1.4.8-1-x86_64.pkg.tar.zst
-
-
++ rsync:
+    + https://gist.github.com/hisplan/ee54e48f17b92c6609ac16f83073dde6
+    + rsync: http://repo.msys2.org/msys/x86_64/rsync-3.2.3-1-x86_64.pkg.tar.zst
+    + libxxhash: http://repo.msys2.org/msys/x86_64/libxxhash-0.8.0-1-x86_64.pkg.tar.zst
+    + liblzr: http://repo.msys2.org/msys/x86_64/liblz4-1.9.3-1-x86_64.pkg.tar.zst
+    + libzstd: http://repo.msys2.org/msys/x86_64/libzstd-1.4.8-1-x86_64.pkg.tar.zst
 
 ## 欢迎bash爱好者的fork与push！
 
@@ -275,6 +286,5 @@
 
 + 我还建了个微信群，欢迎您的入伙。加了我的微信后，拉你入伙。
 + 公众号：吃土的阿土哥<br/> [![344.jpg](https://i.postimg.cc/rpCgcxcL/344.jpg)](https://postimg.cc/sBx54Bvn)
-
 
 让我们一起来聊shell！
