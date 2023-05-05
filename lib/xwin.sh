@@ -50,8 +50,7 @@ function monitor::help() {
     local c
 
     cat <<EOF
-
-switch monitor mode between internal/extend/external/PBP/PIB using mmt.
+switch monitor mode using mmt.
 
 Usage
     monitor [=monitor::help]: list all pre-defined configurations by mmt
@@ -84,10 +83,12 @@ function nosleep() {
 
     # bash下调用windows下的环境变量，把%{name}%替换为${name}即可
     # start $XLIB_BASE_PARENT/win/_no-sleep.bast
-    start cmd /k cscript "$USERPROFILE/xcodes/xops/xshell/win/nosleep.vbs"
+    local file="$USERPROFILE/xcodes/xops/xshell/win/nosleep.vbs"
+    showRed "...... sleep is disabled now. Press Ctrl+C to enable again"
+    cscript //nologo "$file"
 
-    ui::figlet "NO SLEEP"
-    ui::banner "close the windows of cscript then sleep again"
+#    ui::figlet "NO SLEEP"
+#    ui::banner "close the windows of cscript then sleep again"
 }
 
 __xwin_init__

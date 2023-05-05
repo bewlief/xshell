@@ -4,7 +4,7 @@
 [go]
 koderover/zadig/main
 nonsense/nkone
-extrame/dget
+extrame/dget/master
 
 [ddd]
 jonathxhoeyf/uhy-ddd-hexagonal/master
@@ -346,7 +346,7 @@ xnng/bash/master
 rxys/shell-script/master
 hebor/shell/master
 skyisfuck/shell
-mirrorvim/vim-fast
+mirrorvim/vim-fast/master
 
 [spider]
 ssssssss-team/spider-flow/master

@@ -40,7 +40,7 @@ NorseLZJ/lzj-config/master
 prontera/ideavimrc/master
 TesterlifeRaymond/dotfile
 showerlee/Jenkins-Pipeline-CI-CD-with-Helm-on-Kubernetes/master
-jfeng45/k8sdemo/master
+jfeng45/k8sdemo/
 docker-archive/jenkins-pipeline-scripts/master
 fabric8io/fabric8-jenkinsfile-library/master
 fabric8io/fabric8-pipeline-library/master
@@ -99,6 +99,7 @@ dice2o/BingGPT/main
 tokio-rs/tokio/master
 bevyengine/bevy/main
 starship/starship/master
+lencx/ChatGPT
 
 [ansible]
 dev-sec/ansible-os-hardening/master
@@ -111,7 +112,7 @@ natonic/CloudFormation-Deep-Dive/master
 natonic/DevOpsPro/master
 natonic/DeploymentPipeline/master
 natonic/AWS_SA_Pro/master
-awslabs/aws-cloudformation-templates/
+awslabs/aws-cloudformation-templates/master
 
 
 [java]
@@ -163,7 +164,7 @@ spring-projects/spring-framework/main
 spring-projects/jenkins-common/main
 spring-projects/spring-data-jpa/main
 spring-cloud/spring-cloud-contract/main
-in28minutes/SpringMvcStepByStep/master
+in28minutes/SpringMvcStepByStep/
 gaussic/SpringMVCDemo/master
 lenve/JavaEETest/master
 brianway/springmvc-mybatis-learning/master
@@ -194,7 +195,7 @@ hryou0922/spring_cloud/master
 HuangFromJYU/JSpring-IoC/master
 zhangyd-c/spring-boot-demo/master
 zhoutaoo/SpringCloud/master
-qiurunze123/miaosha/master
+qiurunze123/miaosha/
 lord-of-code/loc-cloud-component/master
 lord-of-code/loc-framework/master
 jfeng45/servicetmpl/master
@@ -212,7 +213,7 @@ zhoutaoo/SpringCloud/master
 zhangyd-c/springboot-learning/master
 JosephZhu1983/SpringCloudK8S/master
 JosephZhu1983/SpringSecurity101/master
-yinjihuan/spring-boot-elasticsearch/
+yinjihuan/spring-boot-elasticsearch/master
 yinjihuan/spring-boot-starter-cache/master
 yinjihuan/spring-boot-starter-encrypt-example/master
 yinjihuan/spring-boot-starter-es-security/master
@@ -231,7 +232,7 @@ ishuibo/SpringAll/
 wuyouzhuguli/SpringAll/master
 TyCoding/cloud-template/master
 yinjihuan/micro-service-dubbo/master
-yinjihuan/monkey-spring-cloud/
+yinjihuan/monkey-spring-cloud/master
 wuyouzhuguli/SpringAll/master
 zhoutaoo/SpringCloud/master
 eugenp/tutorials/master
@@ -310,7 +311,7 @@ OWASP/Top10/master
 OWASP/ASVS/master
 
 [unknown]
-aalansehaiyang/technology-talk/master
+aalansehaiyang/technology-talk/
 ali-sdk/ali-oss/master
 Wolox/wolox-ci/development
 AutoGraphQL/AutoGraphQL/master
@@ -322,7 +323,7 @@ chillzhuang/blade-tool/master
 liumiaocn/easypack/master
 ciphermagic/spring-tools/master
 didi/kafka-manager/master
-JustDoPython/python-100-day/
+JustDoPython/python-100-day/master
 mrdear/JavaWEB/master
 qq53182347/liugh-parent/master
 shenfeng/nio-httpserver/dir-list

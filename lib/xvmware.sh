@@ -34,6 +34,11 @@ function __xvmware_init__() {
 
 }
 
+# todo: check is vmware service is running
+function _vm-check-running(){
+  echo "vmware service: NOT ACTIVE"
+}
+
 # _vm-group-action "start|stop" "ini-file" "group-name"
 function _vm-group-action() {
     local action="$1"
