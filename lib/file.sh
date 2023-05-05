@@ -483,12 +483,12 @@ function path::sync() {
     local target="$2"
     shift 2
 
-    log::debug "0. $source -> $target"
+    log::debug "[$FUNCNAME,L$LINENO] $source -> $target"
 
     source=$(file::absolute "$source")
     target=$(file::absolute "$target")
 
-    log::debug "1. $source -> $target"
+    log::debug "[$FUNCNAME,L$LINENO] $source -> $target"
 
     eval "$(meta::getopts 'X:I:x:i:p')"
 
