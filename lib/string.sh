@@ -912,6 +912,15 @@ function ui::banner() {
     echo ""
 }
 
+# 输出断行
+# ui::blank [number:1]
+function ui::blank(){
+  local count=${1:-1}
+    for (( i=0; i<count; i++ )); do
+      echo ""
+    done
+}
+
 # urlencode "https://github.com/dylanaraps/pure-bash-bible"
 # -> https%3A%2F%2Fgithub.com%2Fdylanaraps%2Fpure-bash-bible
 function url-encode() {
