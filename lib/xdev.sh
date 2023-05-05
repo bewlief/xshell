@@ -150,7 +150,7 @@ function git::acp() {
     last="$last/last_commit"
     echo "$msg" >"$last"
 
-    ui::banner "$(pwd)" "git add ." "git commit -m \"$msg\"" "git push"
+#    ui::banner "$(pwd)" "git add ." "git commit -m \"$msg\"" "git push"
 
     git add .
     git commit -m "$msg"
