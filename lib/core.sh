@@ -324,11 +324,29 @@ function loadExt() {
         if [[ -s $d ]]; then
             source "$d"
             # 依赖于下层代码，应优化掉！
-            string::formatKeyValue "ext $d" "LOADED"
+            _format "ext $d" "LOADED"
         else
-            string::formatKeyValue "ext $d" "IGNORED"
+            _format "ext $d" "IGNORED"
         fi
     done
+}
+# same function with string::formatKeyValue
+# just avoid dependency lower layer from higher layer
+function _format() {
+    local k="$1"
+    local v="$2"
+    local char=${3:-"-"}
+    local d=$(($COLUMNS / 2))
+    local length=${4:-$d}
+
+    # NOTE 另一个生成重复字符串的方法，但不知如何使用变量
+    # R=$(printf '%0.1s' ${char}{1..${length}})
+
+    local R=$(string::repeat "$char" $length)
+
+    # echo $line
+    #printf "${color} %s %s $v\E[0m\n" "$k" "${R:${#k}}"
+    printf " %s %s $v\n" "$k" "${R:${#k}}"
 }
 
 # todo list all scripts in ./ext, ./lib

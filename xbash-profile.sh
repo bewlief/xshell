@@ -5,7 +5,8 @@
 # Version:   0.1
 # Date: 2022/03/09
 # 在$HOME/.bash_profile中调用，读取指定的global config文件
-#
+# 建议这里定义常用的不易改变的功能，一些临时使用或者不普适的需求，
+# 可以定义到 ext/下， 将会被自动引入
 # ------------------------------------------
 
 function __xbash_init__() {
@@ -180,12 +181,6 @@ function createAlias() {
   # figlet
   alias fl='figlet0 -f $HOME/xsoft/bin/flf/standard.flf '
 
-  # vmware groups
-  # ini="/c/Users/xjming/xcodes/xops/xshell/bin/vmx.ini"
-  alias k8s2='start-vm-group $MY_VMWARE_GROUPS k8s2'
-  alias stop-k8s2='stop-vm-group $MY_VMWARE_GROUPS k8s2'
-  alias k8s='start-vm-group $MY_VMWARE_GROUPS cluster'
-  alias stop-k8s='stop-vm-group $MY_VMWARE_GROUPS cluster'
 }
 
 function main() {

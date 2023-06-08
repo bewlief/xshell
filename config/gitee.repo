@@ -125,6 +125,7 @@ jenkins_pip_demo/pipeline-folder-library
 jenkins_pip_demo/jenkins-update-site/master
 mirrors/jenkins-pipeline-utilities/1.x
 comsince/kubeadm-ha/master
+Dray/jenkinslib/master
 
 [terraform]
 
@@ -165,6 +166,7 @@ cookeem/chatgpt-stream/master
 
 [devops]
 jianmu-dev/jianmu/master
+
 
 [java-suite]
 choerodon/agile-service

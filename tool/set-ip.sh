@@ -24,6 +24,11 @@ echo "set ip to $1, hostname to $2, and add DNS"
 iface=$(ip link | awk '/state UP/{print $2}' | sed 's/://')
 
 # Get the current configuration file for the network interface
+# Red Hat / CentOS / Fedora: /etc/sysconfig/network-scripts/ifcfg-<interface>
+# Debian / Ubuntu: /etc/network/interfaces
+# Arch Linux: /etc/netctl/<profile>
+# openSUSE: /etc/sysconfig/network/ifcfg-<interface>
+
 cfg_file=$(ls /etc/sysconfig/network-scripts/ifcfg-$iface 2>/dev/null)
 
 # If the configuration file exists, modify it
@@ -38,6 +43,7 @@ if [[ -n "$cfg_file" ]]; then
 
   # Update BOOTPROTO to static
   sed -i 's/^BOOTPROTO=.*/BOOTPROTO=static/' "$cfg_file"
+  sed -i 's/^ONBOOT=no/ONBOOT=yes/g' "${cfg_file}"
 
   # Change the hostname to a specific value (e.g., myhost)
   hostnamectl set-hostname "$2"

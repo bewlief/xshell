@@ -40,7 +40,7 @@ NorseLZJ/lzj-config/master
 prontera/ideavimrc/master
 TesterlifeRaymond/dotfile
 showerlee/Jenkins-Pipeline-CI-CD-with-Helm-on-Kubernetes/master
-jfeng45/k8sdemo/
+jfeng45/k8sdemo/master
 docker-archive/jenkins-pipeline-scripts/master
 fabric8io/fabric8-jenkinsfile-library/master
 fabric8io/fabric8-pipeline-library/master
@@ -99,7 +99,7 @@ dice2o/BingGPT/main
 tokio-rs/tokio/master
 bevyengine/bevy/main
 starship/starship/master
-lencx/ChatGPT
+lencx/ChatGPT/main
 
 [ansible]
 dev-sec/ansible-os-hardening/master
@@ -119,7 +119,7 @@ awslabs/aws-cloudformation-templates/master
 hollischuang/toBeTopJavaer/master
 ninechapter-algorithm/linghu-algorithm-templete/master
 xwjie/jvm/master
-xwjie/j2ee-study-path/master
+xwjie/j2ee-study-path/
 JosephZhu1983/java-common-mistakes/master
 JosephZhu1983/summer-webmvc/master
 JosephZhu1983/Java8InActionc
@@ -164,7 +164,7 @@ spring-projects/spring-framework/main
 spring-projects/jenkins-common/main
 spring-projects/spring-data-jpa/main
 spring-cloud/spring-cloud-contract/main
-in28minutes/SpringMvcStepByStep/
+in28minutes/SpringMvcStepByStep/master
 gaussic/SpringMVCDemo/master
 lenve/JavaEETest/master
 brianway/springmvc-mybatis-learning/master
@@ -187,7 +187,7 @@ apkkids/spring_security_exam/master
 LandGrey/spring-boot-upload-file-lead-to-rce-tricks/main
 LandGrey/SpringBootVulExploit/master
 javastacks/spring-boot-best-practice/master
-balajich/resilience4j-helloworld/master
+balajich/resilience4j-helloworld/
 bbossgroups/springboot-elasticsearch-webservice/master
 chanjarster/spring-boot-all-callbacks/master
 forezp/SpringCloudLearning/master
@@ -224,7 +224,7 @@ xkcoding/spring-boot-demo/master
 macrozheng/mall/master
 yifxhoeheng/spring-security-jwt/master
 Exrick/xboot/master
-Exrick/xmall/master
+Exrick/xmall/
 macrozheng/springcloud-learning/master
 spring-cloud/spring-cloud-jenkins-jobs/main
 spring-cloud/spring-cloud-pipelinesxwjie
@@ -276,7 +276,7 @@ JustryDeng/PublicRepository/master
 
 [ddd]
 e-commerce-sample/ecommerce-order-service/master
-e-commerce-sample/ecommerce-devops/master
+e-commerce-sample/ecommerce-devops/
 e-commerce-sample/ecommerce-product-service/master
 e-commerce-sample/ecommerce-inventory-service/master
 e-commerce-sample/ecommerce-order-query-service/master
@@ -295,7 +295,7 @@ LucasRGoes/ports-adapters-sample/master
 vloth/ports-and-adapters/master
 full-stack-engineering/java-clean-architecture/master
 trzpiot/spring-gradle-hexagonal-example/main
-yuraxdrumz/ports-and-adapters-golang/master
+yuraxdrumz/ports-and-adapters-golang/master  
 damonkelley/ports-and-adapters-examples/main
 purnima-jain/ports-and-adapters-kafka-with-avro/master
 ricardohsmello/hexagonal-architecture/main
@@ -308,10 +308,21 @@ yuraxdrumz/golang-starter-kit/master
 OWASP/CheatSheetSeries/master
 OWASP/wstg/master
 OWASP/Top10/master
+OWASP/Go-SCP/master
+OWASP/API-Security/master
+OWASP/DevGuide/master
+OWASP/DevSecOpsGuideline/master
 OWASP/ASVS/master
+Tencent/secguide/main
+Qihoo360/safe-rules/main
+FallibleInc/security-guide-for-developers/master
+LyleMi/Learn-Web-Hacking/master
+shieldfy/API-Security-Checklist/master
+projectdiscovery/nuclei/main
+
 
 [unknown]
-aalansehaiyang/technology-talk/
+aalansehaiyang/technology-talk/master
 ali-sdk/ali-oss/master
 Wolox/wolox-ci/development
 AutoGraphQL/AutoGraphQL/master
