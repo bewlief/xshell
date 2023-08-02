@@ -36,7 +36,7 @@ function file::count() {
 # for v in "${mm[@]}" ...
 #
 # 注意，在消费完 $mm 后，最好unset掉！
-function file::read() {
+function file::read2array() {
     local source=$1
     local -n arr=$2
     local k1 k2
@@ -54,6 +54,13 @@ function file::read() {
         #    done <$source  # while read ... done < $source
     done
 }
+
+function file::read2str(){
+    local file=$1
+    local content=$(tr '\n' ' ' < "$file")
+    echo "$content"
+}
+
 
 # check if a command existing in $PATH
 function file::exist() {
@@ -163,6 +170,28 @@ function file::lastExt() {
     echo "${file##*.}"
     return 1
 }
+
+# search  "text-to-search" ["file"]
+function file::search() {
+    if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
+        echo "Usage: func1 text [file]"
+        return 1
+    fi
+
+    local text="$1"
+
+    if [ "$#" -eq 2 ]; then
+        local file="$2"
+        if [ ! -f "$file" ]; then
+            echo "Error: $file not found."
+            return 1
+        fi
+        grep "$text" "$file"
+    else
+        grep -r "$text" .
+    fi
+}
+
 
 # fullExt <file>
 # 除文件名之外的所有ext的字段，不含路径
@@ -612,11 +641,13 @@ function file::extract() {
 }
 
 # targz <target file name> <file list>
+# package <file list> to a tar.gz
 function file::targz() {
     local target="$1"
     shift
 
     #    local tmpFile="${@%/}.tar"
+    import string
     local tmpFile="$(string::randomq).tar"
 
     # todo 需要一个默认排除文件的设置
@@ -649,9 +680,10 @@ function file::targz() {
         stat -c"%s" "${tmpFile}.gz" 2>/dev/null # GNU `stat`
     )
 
-    # todo 计算耗时
+    # mv to target
+    mv ${tmpFile}.gz ${target}.gz
 
-    ui::banner "${tmpFile}.gz ($((zippedSize / 1000)) kB) created successfully." "${@}"
+    echo "${target}.gz ($((zippedSize / 1000)) kB) created successfully." "${@}"
 }
 
 # 获取文件或目录的大小
