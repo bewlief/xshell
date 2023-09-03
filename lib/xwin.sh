@@ -24,8 +24,10 @@ function __xwin_init__() {
     # 添加windows的系统路径，git bash无法自动继承
     # 而conemu下的bash是会自动继承的
     PATH::add "$WINDIR"
-    PATH::add "$WINDIR/System32"
-    PATH::add "$WINDIR/System32/Wbem"
+
+        # todo 会导致 find 命令出错
+#    PATH::add "$WINDIR/System32"
+#    PATH::add "$WINDIR/System32/Wbem"
 }
 
 function _set-win-global() {

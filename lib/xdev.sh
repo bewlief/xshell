@@ -27,6 +27,7 @@ function __xdev_init__() {
 function _alias() {
     alias pkg='mvn clean package -Dmaven.test.skip=true'
     alias pmd='mvn -q -f pom.xml -Dmaven.test.skip clean install'
+    alias gwt='git worktree '
 }
 
 function _git-common() {
@@ -300,23 +301,21 @@ function git::target() {
 }
 
 # 使用worktree初始化一个repo
-# git::init <repo url> <branch>
-function git::init() {
+# git::wt::init <repo url> <branch>
+function git::wt::init() {
     local repo=$1
     local branch=$2
-
-    ui::banner "Using worktree to manager your reopistiory"
 
     git::worktree::init $repo $branch
 }
 
 # 在当前目录下初始化 worktree
-# worktree::init <repo url> <branch:dev,test,b1,b2>
-function git::worktree::init() {
+# git::wt::init <repo url> <branch:dev,test,b1,b2>
+function git::wt::init() {
     local repo=$1
     local branches=$2
 
-    ui::banner "git worktree init" "$repo" "worktree: $branches"
+    info "git worktree init" "$repo" "worktree: $branches"
 
     local dir="${repo##*/}"
     dir="${dir%.*}"
@@ -325,6 +324,7 @@ function git::worktree::init() {
     path::new $dir
     cd $dir || error "$dir: invalid"
 
+    #
     git clone --bare $repo .bare
     echo "gitdir: ./.bare" >.git
     echo -e "\tfetch = +refs/heads/*:refs/remotes/origin/*" >>./.bare/config
@@ -338,10 +338,10 @@ function git::worktree::init() {
     done
 }
 
-function git::worktree::add() {
+function git::wt::add() {
     git worktree add $1
 }
-function git::worktree::list() {
+function git::wt::list() {
     echo "git worktree list"
 }
 

@@ -175,7 +175,6 @@ choerodon/asgard-service
 choerodon/base-service
 choerodon/choerodon/master
 majunwei2017/jbone/master
-loolly/hutool
 choerodon/choerodon/master
 choerodon/cibase/master
 choerodon/securitydemo.config-server
@@ -252,6 +251,16 @@ dromara/TLog/master
 dromara/MaxKey/main
 dromara/hertzbeat/master
 dromara/dynamic-tp/master
+dromara/northstar/master
+dromara/dante-cloud/master
+dromara/open-capacity-platform/master
+dromara/stream-query/main
+dromara/disjob/master
+dromara/hutool/v5-master
+dromara/sms4j
+dromara/forest/master
+dromara/mendmix/master
+dromara/data-compare/master
 
 [unknown]
 zxporz/ESClientRHL/es7
@@ -306,7 +315,6 @@ qipengpai/surge-security-oauth2
 renrenio/renren-security/master
 roncoocom/roncoo-pay/master
 sanluan/PublicCMS/master
-shimingxy/MaxKey
 shuzheng/zheng/master
 smallc/Saber/master
 smallc/SpringBlade/master

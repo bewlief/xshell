@@ -181,6 +181,8 @@ function createAlias() {
   # figlet
   alias fl='figlet0 -f $HOME/xsoft/bin/flf/standard.flf '
 
+  alias mvp='mvn clean package -Dmaven.test.skip=true'
+
 }
 
 function main() {
