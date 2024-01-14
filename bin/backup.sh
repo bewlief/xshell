@@ -20,7 +20,7 @@ info "start to backup all important files"
 ui::hr "+"
 
 # home of current user
-export soft="$HOME/xsoft/w/"
+export soft="$HOME/xsoft/"
 
 #sourceFile=$1
 #[[ ! -f $sourceFile ]] && die "cannot read from $sourceFile"
@@ -37,7 +37,7 @@ files=(
     "$HOME/.bash_profile"
     "$HOME/.bashrc"
     "$HOME/.profile"
-	"$HOME/.cargo"
+	  "$HOME/.cargo"
     "$HOME/.minttyrc"
     "$HOME/.tmux.conf"
     "$HOME/.sdirs"
@@ -82,6 +82,7 @@ files=(
     "C:\Users\xjming\xsoft\documents\nppx\config.xml"
     "C:\Users\xjming\xsoft\documents\nppx\session.xml"
     "C:\Users\xjming\AppData\Roaming\Sublime Text\Packages\User\Preferences.sublime-settings"
+	"C:\Users\xjming\AppData\Roaming\marktext\preferences.json"
 )
 
 OLD_IFS="$IFS"

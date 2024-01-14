@@ -329,6 +329,32 @@ function dk::check(){
   docker images --filter "reference=*$1*"
 }
 
+#---------- openshift ---------#
+function oc_login(){
+  # todo need define constants for openshift
+  OPENSHIFT_SERVER="https://api.openshift.com:6443"
+  OPENSHIFT_USERNAME="root"
+  OPENSHIFT_PASSWORD="123456"
 
+  oc login -u "$OPENSHIFT_USERNAME" -p "$OPENSHIFT_PASSWORD" --server="$OPENSHIFT_SERVER" --insecure-skip-tls-verify > /dev/null 2>&1
+  if [[ $? -eq 0 ]]; then
+    TOKEN=$(oc whoami --show-token)
+    if [[ -n "$TOKEN" ]]; then
+      echo "Successfully logged in. Access token: $TOKEN"
+      export OC_TOKEN="$OTKEN"
+    else
+      echo "Faield to extract the access token. Please check he user information."
+    fi
+  else
+    echo "Login faile。 Please chec your credentials."
+  fi
+}
+
+function oc_getpod(){
+  current_pod=$(oc get pods|grep "$1" | awk '$3=="Running" {print $1}')
+  return $current_pod
+}
+
+#---------- ALL CLOUD function end ---------#
 
 __xcloud_init__

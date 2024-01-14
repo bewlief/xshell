@@ -2,7 +2,7 @@ rem This should be executed using ADMIN role!
 rem wmic is good!!!! 
 rem cannot use Chinese words !!!
 
-setx -m "JAVA_HOME" "%USERPROFILE%\xsoft\dev\sdk\jdk\jdk11"
+setx -m "JAVA_HOME" "%USERPROFILE%\xsoft\dev\sdk\jdk\jdk17"
 setx -m "GRADLE_HOME" "%USERPROFILE%\xsoft\dev\build\gradle"
 setx -m "GRADLE_USER_HOME" "D:\Download\aaaa\app-temp\repos"
 setx -m "EXE4J_JAVA_HOME" %JAVA_HOME%

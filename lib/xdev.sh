@@ -287,17 +287,19 @@ function getGitRepoShort() {
     echo "$short: ${repo}"
 }
 
-# 当前的branch name
+# 获取当前的branch name
 # git::target [target path]
+# todo 网络故障时也返回空！
+# 重装系统后，因为目录所有者id发生变化，会报错：detected dubious ownership in repository
+# 解决： git config --global --add safe.directory '*'
 function git::target() {
-    local old="$PWD"
-    if [[ -n $1 ]]; then
-        cd "$1" || error "$1 invalud"
-    fi
-    local ref=$(git symbolic-ref HEAD 2>/dev/null) || return
-    echo "${ref#refs/heads/}"
-    cd $old
-    setPS1
+  local target=${1:-.}
+  [[ -n "$target" ]]  || error "$1 invalid"
+
+  # git -C: 指定git命令的工作目录，这样就不必进入该目录后才能执行git命令了
+  local ref=$(git -C "$target" rev-parse --abbrev-ref HEAD 2>/dev/null) || return
+  echo "$ref"
+  setPS1
 }
 
 # 使用worktree初始化一个repo

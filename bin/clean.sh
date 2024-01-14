@@ -20,7 +20,7 @@ showGreen "Clean tools"
 showGreen "1. clean java target directories"
 
 CONFIG_FILE="$SCRIPT_PATH/../config/clean.list"
-file::read $CONFIG_FILE filesRemoved
+file::read2array $CONFIG_FILE filesRemoved
 
 for s in "${filesRemoved[@]}"; do
     # todo file::read中已经做了断行和换行处理，但此处仍需要再次处理，何故？？？

@@ -24,6 +24,7 @@ Do While True
     objResult=objShell.sendkeys("{NUMLOCK}{NUMLOCK}")
     Wscript.Sleep(intervalSec * 1000)
     cnt=cnt+1
+    WScript.Echo "Cooooool, no sleep: " & cnt
 
     if durationSec <= (intervalSec*cnt) Then
         Exit Do
