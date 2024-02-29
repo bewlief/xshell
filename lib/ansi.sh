@@ -495,7 +495,7 @@ ansi::noInverse() {
 }
 
 ansi::normal() {
-#    printf '%s22m' "$ANSI_CSI"
+    #    printf '%s22m' "$ANSI_CSI"
     echo $ANSI_RESET
 }
 
@@ -841,7 +841,6 @@ ansi::yellow() {
 ansi::yellowIntense() {
     printf '%s93m' "$ANSI_CSI"
 }
-
 
 # Run if not sourced
 #if [[ "$0" == "${BASH_SOURCE[0]}" ]]; then

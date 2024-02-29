@@ -1,5 +1,3 @@
-
-
 do_install() {
     local repo="ssh://git@github.com:codeforester/base.git"
     if [[ -d $BASE_HOME ]]; then
@@ -32,7 +30,6 @@ do_install() {
 
     exit 0
 }
-
 
 do_embrace() {
     if ! verify_base; then

@@ -47,7 +47,7 @@ function assert::arg-count() {
         error "$message"
         exit $INVALID_ARGUMENTS
     }
-#    return 0
+    #    return 0
 }
 
 # regex <string> <regex> [message]
@@ -127,8 +127,8 @@ function assert::check-cmd() {
     die $? "check-cmd: $cmd failure"
 
     # 注意中间不能有其他操作，否则$?不准确！
-#    [[ $? -gt 0 ]] && exit 1
-#    return $?
+    #    [[ $? -gt 0 ]] && exit 1
+    #    return $?
 }
 
 # chec-files <file or file list>
@@ -255,6 +255,5 @@ assert::array-equals() {
         [ "${a1[$i]}" = "${a2[$i]}" ] || error "fail element $i: [${a1[$i]}] != [${a2[$i]}]${failMsg:+: $failMsg}"
     done
 }
-
 
 __assertions_init__

@@ -76,20 +76,20 @@ function log::level() {
     info "log level is [ $s ], print stacktrace: [ $LOG_STACKTRACE ]"
 }
 
-function log::d(){
+function log::d() {
     log::level "debug"
 }
-function log::i(){
+function log::i() {
     log::level "info"
 }
-function log::w(){
+function log::w() {
     log::level "warn"
 }
-function log::e(){
+function log::e() {
     log::level "error"
 }
 
-function log::stack(){
+function log::stack() {
     export LOG_STACKTRACE=${1:-$FALSE}
 }
 

@@ -96,7 +96,7 @@ function lock::release() {
 
 function check_for_locks() {
     shopt -s nullglob
-#    if [[ ($LOCK_DIR/*.lock) ]]; then
+    #    if [[ ($LOCK_DIR/*.lock) ]]; then
     local f
     for f in $LOCK_DIR/*.log; do
         lock_log "Dirty exit -- lock files found in $LOCK_DIR."

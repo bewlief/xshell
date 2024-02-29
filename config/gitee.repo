@@ -57,15 +57,15 @@ zhou_jie_0722/spring-ldap/master
 zuihou111/zuihou-admin-boot/master
 zuihou111/zuihou-admin-cloud/master
 zuihou111/zuihou-admin-ui/master
-zuihou111/lamp-web/master
+zuihou111/lamp-web/4.x_java17
 zuihou111/j2cache-boot/master
 zuihou111/lamp-job/main
 zuihou111/zuihou-admin-rp/master
 zuihou111/lamp-test-new/master
 zuihou111/lamp-generator/master
-zuihou111/lamp-util/java17
-zuihou111/lamp-boot/java17
-zuihou111/lamp-cloud/java17
+zuihou111/lamp-util/4.x_java17
+zuihou111/lamp-boot/4.x_java17
+zuihou111/lamp-cloud/4.x_java17
 itwanger/paicoding/main
 
 [java]

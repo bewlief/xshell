@@ -25,7 +25,7 @@ function date::format() {
     local format=$2
 
     if [[ -z "$1" ]]; then
-      cat <<EOF
+        cat <<EOF
   %%   a literal %
   %a   locale's abbreviated weekday name (e.g., Sun)
   %A   locale's full weekday name (e.g., Sunday)
@@ -287,8 +287,6 @@ time_timer_get_elapsed() {
     local elapsed_time_in_ms=$(($elapsed_time_in_ns / 1000000))
     echo "$elapsed_time_in_ms"
 }
-
-
 
 function date::help() {
     cat <<EOD

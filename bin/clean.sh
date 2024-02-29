@@ -28,14 +28,14 @@ for s in "${filesRemoved[@]}"; do
     k2=$(echo "$k1" | awk '{gsub(/^ +| +$/,"")} {print $0}')
     k3=$(cygpath -u $k2)
     k3=$(string::trim "$k3")
-#     ls -l
-#     echo "clean $k3 -> $(cygpath -u $k3)"
-     if [[ -d "$k3" ]]; then
-#         echo ">>> $k3"
-         rm -rf ${k3}/*
-     else
-         warn "$k2 not existing"
-     fi
+    #     ls -l
+    #     echo "clean $k3 -> $(cygpath -u $k3)"
+    if [[ -d "$k3" ]]; then
+        #         echo ">>> $k3"
+        rm -rf ${k3}/*
+    else
+        warn "$k2 not existing"
+    fi
 
     string::formatKeyValue "$k2" "end"
 done

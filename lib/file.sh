@@ -55,12 +55,11 @@ function file::read2array() {
     done
 }
 
-function file::read2str(){
+function file::read2str() {
     local file=$1
-    local content=$(tr '\n' ' ' < "$file")
+    local content=$(tr '\n' ' ' <"$file")
     echo "$content"
 }
-
 
 # check if a command existing in $PATH
 function file::exist() {
@@ -107,7 +106,7 @@ function path::new() {
 # 获取指定文件的parent目录的绝对路径，即使文件不存在
 function file::parent() {
     [[ -z "$1" ]] && echo $(pwd) && return 0
-    
+
     local file=$(cygpath -a "$1")
     echo $(dirname "$file")
 }
@@ -191,7 +190,6 @@ function file::search() {
         grep -r "$text" .
     fi
 }
-
 
 # fullExt <file>
 # 除文件名之外的所有ext的字段，不含路径
@@ -612,7 +610,7 @@ function path::clean() {
 }
 
 # 生成windows下rsync所需要的 "/cygdrive/d/Download/...."
-function _cygpath(){
+function _cygpath() {
     local source=$(file::absolute $1)
     echo "/cygdrive$source"
 }

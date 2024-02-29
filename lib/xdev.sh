@@ -151,7 +151,7 @@ function git::acp() {
     last="$last/last_commit"
     echo "$msg" >"$last"
 
-#    ui::banner "$(pwd)" "git add ." "git commit -m \"$msg\"" "git push"
+    #    ui::banner "$(pwd)" "git add ." "git commit -m \"$msg\"" "git push"
 
     git add .
     git commit -m "$msg"
@@ -293,13 +293,13 @@ function getGitRepoShort() {
 # 重装系统后，因为目录所有者id发生变化，会报错：detected dubious ownership in repository
 # 解决： git config --global --add safe.directory '*'
 function git::target() {
-  local target=${1:-.}
-  [[ -n "$target" ]]  || error "$1 invalid"
+    local target=${1:-.}
+    [[ -n "$target" ]] || error "$1 invalid"
 
-  # git -C: 指定git命令的工作目录，这样就不必进入该目录后才能执行git命令了
-  local ref=$(git -C "$target" rev-parse --abbrev-ref HEAD 2>/dev/null) || return
-  echo "$ref"
-  setPS1
+    # git -C: 指定git命令的工作目录，这样就不必进入该目录后才能执行git命令了
+    local ref=$(git -C "$target" rev-parse --abbrev-ref HEAD 2>/dev/null) || return
+    echo "$ref"
+    setPS1
 }
 
 # 使用worktree初始化一个repo
@@ -347,6 +347,56 @@ function git::wt::list() {
     echo "git worktree list"
 }
 
+# git::get mkk master dir1
+# quick checkout mkk into dir1, branch=master
+# must source quick-git.ini before call this function
+function git::get() {
+    local config=${QUICK_GIT_CONFIG:-"../config/quick-git.ini"}
+    # 检查文件是否存在
+    if [ ! -f "$config" ]; then
+        echo "Error: $config not found."
+        return 1
+    fi
+
+    # 读取文件内容并设置系统变量
+    while IFS='=' read -r key value; do
+        export "$key=$value"
+    done <"$config"
+
+    local repoTag="$1"
+    local branch=${2:-"master"}
+    local target=${3:-"."}
+
+    # 无法处理 : / @等特殊字符
+    #    local repoName="${!repoTag}"
+    eval "repoName=\$$repoTag"
+
+    log::debug "repoTag=$repoTag, repoName=$repoName"
+
+    git clone -b $branch $repoName $target
+}
+
+function git::find-deleted() {
+    if [[ -z "$1" ]]; then
+        error "which file do you want to find?"
+        return 1
+    fi
+
+    local target="$1"
+    local logOutput=$(git log -- "$target" 2>&1)
+    if [[ $? -ne 0 ]]; then
+        warn "unable to find log history of $target"
+        return 1
+    fi
+
+    local commitId=$(echo "$logOutput" | grep -B 1 "deleted file" | grep -oP "(?<=commit )[a-f0-9]+")
+    if [[ -z $commitId ]]; then
+        warn "unable to find log history of $target"
+        return 1
+    fi
+
+    info "File $target was deleted in commit $commitId"
+}
 #----------------- maven -----------------#
 
 # clean *lastUpdate* in $HOME/.m2/

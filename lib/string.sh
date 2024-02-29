@@ -50,7 +50,7 @@ function string::randomq() {
     # openssl rand -hex $((max / 2 + 1)) | tr -d '\n' | cut -c -$max
 
     # from chatgpt
-    </dev/urandom tr -dc 'a-zA-Z0-9' | head -c${max} | xargs
+    tr </dev/urandom -dc 'a-zA-Z0-9' | head -c${max} | xargs
 
     # 下面是2种方式的测试比较：
     # 输出表头
@@ -229,15 +229,15 @@ function string::substr() {
     local s="$1"
     local start=${2-0}
     local end=${3-${#s}}
-#    if [ $# -eq 2 ]; then
-#        s=$1
-#        start=$2
-#        end=${#s}
-#    elif [ $# -eq 3 ]; then
-#        s=$1
-#        start=$2
-#        end=$3
-#    fi
+    #    if [ $# -eq 2 ]; then
+    #        s=$1
+    #        start=$2
+    #        end=${#s}
+    #    elif [ $# -eq 3 ]; then
+    #        s=$1
+    #        start=$2
+    #        end=$3
+    #    fi
 
     echo "${s:start:end}"
     return $?
@@ -247,13 +247,13 @@ function string::substr() {
 # todo 注意nameref的使用！
 # 使用： v="abba"; insert v 2 "cc"; v->"abccba"
 function string::insert() {
-  local -n source="$1"
-  local position="$2"
-  local val="${3:-}"
+    local -n source="$1"
+    local position="$2"
+    local val="${3:-}"
 
-  val="${source::$position}${val}${source:$position}"
+    val="${source::$position}${val}${source:$position}"
 
-  source="$val"
+    source="$val"
 }
 
 # strip "The Quick Brown Fox" "[aeiou]" -> Th Qck Brwn Fx
@@ -283,8 +283,8 @@ function string::replace() {
 }
 
 # 大小写反转
-function string::reverse(){
-    printf '%s' "${1~~}"
+function string::reverse() {
+    printf "%s" "${1~~}"
 }
 
 # 连接数组中的元素
@@ -297,7 +297,7 @@ function string::join() {
 }
 # 连接数组中的各元素
 # 可使用多char的分隔符
-function string::join(){
+function string::join() {
     local s
     local split="$1"
     shift
@@ -308,7 +308,6 @@ function string::join(){
     s=$(printf '%s' "${s##$split}")
     echo $s
 }
-
 
 # 对输出中的特定字符着色处理
 # noisy_command | highlight ERROR INFO
@@ -383,7 +382,7 @@ function string::split2() {
 # repeat $1 $2: $1=字符串，$2=重复次数
 function string::repeat() {
     local char="${1:- }"
-    local num="${2:-$((COLUMNS-3))}"
+    local num="${2:-$((COLUMNS - 3))}"
 
     # 过长时，设置为当前屏幕长度
     # local total_length=$((num * ${#char}))
@@ -589,7 +588,7 @@ function string::ini::readIniItems() {
 
         # 去掉 ;和#开头的元素
         declare -a newvv=(${vv[@]/[;#]*/})
-#         echo "${vv[@]}"
+        #         echo "${vv[@]}"
         echo "${newvv[@]}"
     else
         echo ""
@@ -625,7 +624,6 @@ function string::uuid() {
         esac
     done
 }
-
 
 # 比较版本号，返回：0=，1>，2<
 # ver-cmp 2.3 2.5.9 版本号要用 . 分隔
@@ -731,12 +729,10 @@ function string::ord() {
 # 字符串转为十六进制串，如"Hello" -> "48 65 6c 6c 6f"
 function string::ascii2hex() {
     local str="$1"
-    for (( i=0; i<${#str}; i++ )); do
+    for ((i = 0; i < ${#str}; i++)); do
         printf " %02x" "'${str:i:1}"
     done
 }
-
-
 
 # 对空格分割的字符串中的元素进行排序
 # echo "c b a"     | sort_list       #==> a b c
@@ -867,12 +863,12 @@ function ui::hr() {
 }
 
 # todo
-function ui::head(){
+function ui::head() {
     ui::hr "-"
     echo -e "$1"
     ui::hr "-"
 }
-function ui::foot(){
+function ui::foot() {
     ui::hr "-"
     echo -e "$1"
     ui::hr "-"
@@ -914,10 +910,10 @@ function ui::banner() {
 
 # 输出断行
 # ui::blank [number:1]
-function ui::blank(){
-  local count=${1:-1}
-    for (( i=0; i<count; i++ )); do
-      echo ""
+function ui::blank() {
+    local count=${1:-1}
+    for ((i = 0; i < count; i++)); do
+        echo ""
     done
 }
 
@@ -1129,6 +1125,5 @@ function array::slice() {
     let "start=(( start + 1 ))"
     echo "${@:$start:$length}"
 }
-
 
 __string_init__

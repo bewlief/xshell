@@ -528,7 +528,7 @@ function meta::getopts() {
     optstring="${optstring#:}"
     if ! [[ "$optstring" =~ ^[a-zA-Z0-9:]*$ ]] || [[ "$optstring" == *::* ]]; then
         echo "Invalid optstring: $optstring"
-#        echo 'return 2' # for eval-ing
+        #        echo 'return 2' # for eval-ing
         return 2
     fi
 

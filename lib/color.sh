@@ -61,7 +61,6 @@ function __color_init__() {
     # 使用举例：
     # echo "${bakwht}[ notice ] : ${undgrn}underline green${undblu}hello you ${txtrst}"
 
-
     #
     alias fg="color::fg"
     alias bg="color::bg"
@@ -93,21 +92,29 @@ function color::fg() {
 
     case "$1" in
     end | off | reset)
-        __color=$__end ;;
+        __color=$__end
+        ;;
     black)
-        __color="$txtblk" ;;
+        __color="$txtblk"
+        ;;
     red)
-        __color="$txtred" ;;
+        __color="$txtred"
+        ;;
     green)
-        __color="$txtgrn" ;;
+        __color="$txtgrn"
+        ;;
     yellow)
-        __color="$txtylw" ;;
+        __color="$txtylw"
+        ;;
     blue)
-        __color="$txtblu" ;;
+        __color="$txtblu"
+        ;;
     magenta)
-        __color="$txtpur" ;;
+        __color="$txtpur"
+        ;;
     cyan)
-        __color="$txtcyn" ;;
+        __color="$txtcyn"
+        ;;
         #    gray) __color='\033[90m' ;;
         #    darkgray) __color='\033[91m' ;;
         #    lightgreen | 00fe0) __color='\033[92m' ;;
@@ -132,23 +139,32 @@ function color::bg() {
 
     case "$1" in
     end | off | reset)
-    __color=$__end ;;
+        __color=$__end
+        ;;
     black)
-        __color="$bakblk" ;;
+        __color="$bakblk"
+        ;;
     red)
-        __color="$bakred" ;;
+        __color="$bakred"
+        ;;
     green)
-        __color="$bakgrn" ;;
+        __color="$bakgrn"
+        ;;
     yellow)
-        __color="$bakylw" ;;
+        __color="$bakylw"
+        ;;
     blue)
-        __color="$bakblu" ;;
+        __color="$bakblu"
+        ;;
     magenta)
-        __color="$bakpur" ;;
+        __color="$bakpur"
+        ;;
     cyan)
-        __color="$bakcyn" ;;
+        __color="$bakcyn"
+        ;;
     gray)
-        __color="$bakwht" ;;
+        __color="$bakwht"
+        ;;
         #    darkgray) __color='\033[100m' ;;
         #    lightred) __color='\033[101m' ;;
         #    lightgreen) __color='\033[102m' ;;

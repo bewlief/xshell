@@ -21,9 +21,9 @@ function __dict_init__() {
 }
 
 # 列出所有的数据
-function dict::all(){
-   declare -p|grep "dictionary__store" | awk -F' ' '{$1=$2="";print $0;}'
-     dictionary__store_namex=([meng]="888" [zhang]="40" [xjm]="20" [li]="2873" )
+function dict::all() {
+    declare -p | grep "dictionary__store" | awk -F' ' '{$1=$2="";print $0;}'
+    dictionary__store_namex=([meng]="888" [zhang]="40" [xjm]="20" [li]="2873")
 }
 
 # set names xjm 20
@@ -95,7 +95,7 @@ function dict::values() {
 }
 
 # 删除dict中的元素
-function dict::remove(){
+function dict::remove() {
     local name="$1"
     local key="$2"
     if [[ ${BASH_VERSINFO[0]} -lt 4 ]]; then
@@ -107,7 +107,7 @@ function dict::remove(){
 }
 
 # dump一个dict
-function dict::dump(){
+function dict::dump() {
     local name="$1"
     local keys key
     local store="dictionary__store_${name}"

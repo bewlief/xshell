@@ -25,9 +25,9 @@ function __xwin_init__() {
     # 而conemu下的bash是会自动继承的
     PATH::add "$WINDIR"
 
-        # todo 会导致 find 命令出错
-#    PATH::add "$WINDIR/System32"
-#    PATH::add "$WINDIR/System32/Wbem"
+    # todo 会导致 find 命令出错
+    #    PATH::add "$WINDIR/System32"
+    #    PATH::add "$WINDIR/System32/Wbem"
 }
 
 function _set-win-global() {
@@ -79,7 +79,6 @@ function update-win-vars() {
     echo "update-win-vars"
 }
 
-
 function nosleep() {
     import string
 
@@ -89,8 +88,8 @@ function nosleep() {
     showRed "...... sleep is disabled now. Press Ctrl+C to enable again"
     cscript //nologo "$file"
 
-#    ui::figlet "NO SLEEP"
-#    ui::banner "close the windows of cscript then sleep again"
+    #    ui::figlet "NO SLEEP"
+    #    ui::banner "close the windows of cscript then sleep again"
 }
 
 __xwin_init__
