@@ -121,11 +121,11 @@ function log::debug() {
 }
 
 function log::info() {
-    [[ $LOG_LEVEL_n -ge $LOG_INFO ]] && _log_message "INFO" "$@"
+    [[ $LOG_LEVEL_n -ge $LOG_INFO ]] && _log_message "INFO " "$@"
 }
 
 function log::warn() {
-    [[ $LOG_LEVEL_n -ge $LOG_WARN ]] && _log_message "WARN" "$@"
+    [[ $LOG_LEVEL_n -ge $LOG_WARN ]] && _log_message "WARN " "$@"
 }
 
 function log::error() {

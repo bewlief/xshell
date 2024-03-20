@@ -67,7 +67,7 @@ function net::setup-proxy() {
     fi
 }
 
-# todo need implment for win
+# todo need implement for win
 function net::getNetworkStatus() {
     echo ""
     if [[ $centosVersion -lt 7 ]]; then

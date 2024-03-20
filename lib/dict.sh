@@ -23,7 +23,7 @@ function __dict_init__() {
 # 列出所有的数据
 function dict::all() {
     declare -p | grep "dictionary__store" | awk -F' ' '{$1=$2="";print $0;}'
-    dictionary__store_namex=([meng]="888" [zhang]="40" [xjm]="20" [li]="2873")
+#    dictionary__store_namex=([meng]="888" [zhang]="40" [xjm]="20" [li]="2873")
 }
 
 # set names xjm 20

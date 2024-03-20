@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+# ------------------------------------------
+# Filename: pathmarks.sh
+# Version:   0.1
+# Date: 2022/03/09
+# 命令行下的目录快捷方式管理
+#    l, g, s, d
+# ------------------------------------------
+
+
 # 避免重复导入
 [[ -n $__XLIB_IMPORTED__PATHMARKS ]] && return 0
 __XLIB_IMPORTED__PATHMARKS=1
