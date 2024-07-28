@@ -3,6 +3,9 @@
 > -cur_console:b -cur_console:d:%HOMEPATH% -cur_console:t:~ -cur_console:%HOMEPATH%\xcodes\xops\xshell %HOMEPATH%\xsoft\dev\build\git\bin\bash
 
 -cur_console:b -cur_console:d:%HOMEPATH%\xcodes\mycodes -cur_console:t:xcodes -cur_console:%HOMEPATH%\xcodes\xops\xshell %HOMEPATH%\xsoft\dev\build\git\bin\bash
+-cur_console:b -cur_console:d:%HOMEPATH%\xcodes\mycodes -cur_console:t:xcodes -cur_console:%HOMEPATH%\xcodes\xops\xshell %HOMEPATH%\xsoft\dev\build\git\bin\bash
+-cur_console:b -cur_console:d:%HOMEPATH%\xcodes\mycodes -cur_console:t:xcodes -cur_console:%HOMEPATH%\xcodes\xops\xshell %HOMEPATH%\xsoft\dev\build\git\bin\bash
+-cur_console:b -cur_console:d:%HOMEPATH%\xcodes\mycodes -cur_console:t:xcodes -cur_console:%HOMEPATH%\xcodes\xops\xshell %HOMEPATH%\xsoft\dev\build\git\bin\bash
 
 -cur_console:b -cur_console:d:%HOMEPATH%\xsoft -cur_console:t:xsoft -cur_console:%HOMEPATH%\xcodes\xops\xshell %HOMEPATH%\xsoft\dev\build\git\bin\bash
 
